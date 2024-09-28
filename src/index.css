@@ -1,0 +1,9 @@
+@import url('@fontsource/poppins/index.css');
+
+body{
+  font-family: 'Poppins', sans-serif;
+  background: url("assets//images/background.jpg") rgba(0, 0, 0, 0.5);
+  background-size: cover;
+  background-blend-mode: overlay;
+  margin: 0;
+}

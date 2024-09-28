@@ -1,11 +1,17 @@
-import './App.css'
+import "./App.css";
+import Login from "./screens/login/Login";
+import lightTheme from "./assets/theme/light";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 
 function App() {
   return (
-    <div>
-      hello-world
-    </div>
-  )
+    <ThemeProvider theme={lightTheme}>
+      <CssBaseline />
+      <div>
+        <Login />
+      </div>
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
