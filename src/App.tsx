@@ -1,15 +1,14 @@
-import "./App.css";
-import Login from "./screens/login/Login";
-import lightTheme from "./assets/theme/light";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import Dashboard from "./screens/dashboard/Dashboard";
+import "./App.css";
+import lightTheme from "./assets/theme/light";
+import Home from "./screens/home/Home";
 
 function App() {
   return (
     <ThemeProvider theme={lightTheme}>
       <CssBaseline />
       <div>
-        <Dashboard />
+        <Home />
       </div>
     </ThemeProvider>
   );

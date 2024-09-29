@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 import ContainedButton from "../../components/buttons/ContainedButton";
-import CustomTypography, { fontSizes, fontWeights } from "../../components/CustomTypography";
+import CustomTypography, { fontSizes, fontWeights } from "../../components/typography/CustomTypography";
 import OutlinedPasswordField from "../../components/textFields/OutlinedPasswordField";
 import OutlinedTextField from "../../components/textFields/OutlinedTextField";
 import TataCommunicationsImage from "../../assets/images/tata-communications.png"

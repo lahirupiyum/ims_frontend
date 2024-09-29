@@ -2,10 +2,10 @@ import { Box } from "@mui/material";
 import TataCommunicationFlatImage from "../../assets/images/tata-communications-flat.png";
 import CustomTypography, {
   fontWeights,
-} from "../../components/CustomTypography";
+} from "../../components/typography/CustomTypography";
 import ElementBoxImage from "../../assets/images/elementbox-image.jpeg";
 
-const Dashboard = () => {
+const Home = () => {
   return (
     <div
       style={{
@@ -62,4 +62,4 @@ const ElementBox: React.FC<{ name: string; onClick: () => void }> = ({
   );
 };
 
-export default Dashboard;
+export default Home;
