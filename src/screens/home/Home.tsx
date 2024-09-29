@@ -12,15 +12,22 @@ const Home = () => {
         width: "100%",
         height: "100vh",
         backgroundColor: "rgba(255,255,255,0.9)",
-        display:"flex",
-        flexDirection:"column",
-        alignItems:"center",
-        justifyContent:"center",
-        gap:"110px"
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "110px",
       }}
     >
       <img src={TataCommunicationFlatImage} width="862px" />
-      <Box sx={{display:"flex", alignItems:"center", justifyContent:"center", gap:"72px"}}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "72px",
+        }}
+      >
         <ElementBox name="Customer Management" onClick={() => {}} />
         <ElementBox name="Inventory Management" onClick={() => {}} />
       </Box>
@@ -45,7 +52,8 @@ const ElementBox: React.FC<{ name: string; onClick: () => void }> = ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        cursor:"pointer",
+        cursor: "pointer",
+        
         ":hover": {
           backgroundImage: `linear-gradient(rgba(0, 32, 96, 0.8), rgba(0, 32, 96, 0.8)), url(${ElementBoxImage})`,
         },

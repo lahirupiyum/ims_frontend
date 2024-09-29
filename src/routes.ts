@@ -1,15 +1,15 @@
-import App from "./App"
-import Login from './screens/login/Login'
+import Home from "./screens/home/Home";
+import Login from './screens/login/Login';
 
 interface Route {
     path: string;
-    component: React.ComponentType;
+    component: React.ElementType;
 }
 
 export const routesList:Route[] = [
     {
-        path:"hello",
-        component:App
+        path:"",
+        component:Home
     },
     {
         path:"auth/login",
