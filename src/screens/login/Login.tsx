@@ -62,14 +62,14 @@ const Login = () => {
             flexDirection="column"
             gap={"15px"}
           >
-            <Box width={"100%"}>
+            <Box width={"100%"} display={"flex"} flexDirection={"column"} gap={"5px"}>
               <FieldName>Email</FieldName>
               <OutlinedTextField
                 fullWidth
                 placeholder="Enter your email address"
               />
             </Box>
-            <Box width={"100%"}>
+            <Box width={"100%"} display={"flex"} flexDirection={"column"} gap={"5px"}>
               <FieldName>Password</FieldName>
               <OutlinedPasswordField fullWidth placeholder="Enter password" />
             </Box>
@@ -90,7 +90,7 @@ const FieldName: React.FC<{
       fontSize={fontSizes.md}
       fontColor="secondary"
     >
-      {children} <span style={{ color: "red" }}>*</span>
+      &nbsp;&nbsp;{children} <span style={{ color: "red" }}>*</span>
     </CustomTypography>
   );
 };
