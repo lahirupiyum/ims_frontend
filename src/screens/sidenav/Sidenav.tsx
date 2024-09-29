@@ -1,22 +1,21 @@
-import { useTheme } from "@emotion/react";
 import { Box } from "@mui/material";
+import lightTheme from "../../assets/theme/light";
 import CustomTypography, {
   fontSizes,
 } from "../../components/typography/CustomTypography";
 import { useAppSelector } from "../../redux/hooks";
 
 const Sidenav = () => {
-  const theme = useTheme();
-  const secondaryColor = theme.palette.secondary.main;
+  const secondaryColor = lightTheme.palette.secondary.main;
   const sidenavState = useAppSelector((state) => state.sidenav);
   if (!sidenavState) return null;
   else {
     const { title, elements } = sidenavState;
-    const finalTitle = title.split(" ").map((part) => (
-      <>
+    const finalTitle = title.split(" ").map((part, index) => (
+      <span key={index}>
         <span>{part}</span>
         <br />
-      </>
+      </span>
     ));
     return (
       <div
@@ -26,6 +25,7 @@ const Sidenav = () => {
           left: "0",
           backgroundColor: "white",
           padding: "20px 20px",
+          zIndex:5
         }}
       >
         <Box
@@ -38,9 +38,9 @@ const Sidenav = () => {
             {finalTitle}
           </CustomTypography>
           <Box display="flex" flexDirection="column">
-            {elements.map((element) => (
+            {elements.map((element, index) => (
               <Box
-                key={element.contextPath}
+                key={index}
                 display="flex"
                 alignItems="center"
                 gap="10px"

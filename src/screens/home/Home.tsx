@@ -62,6 +62,7 @@ const ElementBox: React.FC<{ name: string; onClick: () => void }> = ({
       <CustomTypography
         fontWeight={fontWeights.lg}
         fontSize={"48px"}
+        fontColor="primary"
         sx={{ color: "white" }}
       >
         {name}

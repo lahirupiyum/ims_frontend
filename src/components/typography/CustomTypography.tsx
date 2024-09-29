@@ -1,6 +1,6 @@
-import { useTheme } from "@emotion/react";
 import { Typography } from "@mui/material";
 import { forwardRef } from "react";
+import lightTheme from "../../assets/theme/light";
 
 export enum fontWeights {
   xs = "200",
@@ -34,15 +34,25 @@ interface MUITypographyProps {
 
 const CustomTypography = forwardRef<HTMLDivElement, MUITypographyProps>(
   ({ fontWeight, fontSize, fontColor, children, ...rest }, ref) => {
-    const theme = useTheme();
-    const textColor = theme.palette.text;
+    const colorThemes = lightTheme.palette.text;
+    
+    const getTextColor: () => string = () => {
+      switch (fontColor) {
+        case fontColors.primary:
+          return colorThemes.primary;
+        case fontColors.secondary:
+          return colorThemes.secondary
+        default:
+          return "#000"
+      }
+    }
 
     return (
       <Typography
         fontFamily={"Poppins, sans-serif"}
         fontSize={fontSize}
         fontWeight={fontWeight}
-        color={textColor[fontColor]}
+        color={getTextColor()}
         ref={ref}
         {...rest}
       >
