@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
+import ElementBoxImage from "../../assets/images/elementbox-image.jpeg";
 import TataCommunicationFlatImage from "../../assets/images/tata-communications-flat.png";
 import CustomTypography, {
   fontWeights,
 } from "../../components/typography/CustomTypography";
-import ElementBoxImage from "../../assets/images/elementbox-image.jpeg";
 
 const Home = () => {
   return (

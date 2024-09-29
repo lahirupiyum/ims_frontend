@@ -4,8 +4,13 @@ import CustomTypography, {
   fontSizes,
 } from "../../components/typography/CustomTypography";
 import { useAppSelector } from "../../redux/hooks";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Sidenav = () => {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  console.log(location);
+
   const secondaryColor = lightTheme.palette.secondary.main;
   const sidenavState = useAppSelector((state) => state.sidenav);
   if (!sidenavState) return null;
@@ -21,11 +26,13 @@ const Sidenav = () => {
       <div
         style={{
           height: "100vh",
+          width: "225px",
           position: "fixed",
+          top:"0",
           left: "0",
           backgroundColor: "white",
-          padding: "20px 20px",
-          zIndex:5
+          padding: "32px 16px",
+          zIndex: 5,
         }}
       >
         <Box
@@ -40,15 +47,16 @@ const Sidenav = () => {
           <Box display="flex" flexDirection="column">
             {elements.map((element, index) => (
               <Box
+                onClick = {() => navigate(element.contextPath)}
                 key={index}
                 display="flex"
                 alignItems="center"
                 gap="10px"
                 sx={{
-                  bgcolor: secondaryColor,
+                  bgcolor: pathname === element.contextPath ? secondaryColor : "white" ,
                   p: "16px 24px",
                   borderRadius: "10px",
-                  cursor:"pointer"
+                  cursor: "pointer",
                 }}
               >
                 <element.icon.selected fontSize={fontSizes.lg} />

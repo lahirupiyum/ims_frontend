@@ -6,7 +6,6 @@ import lightTheme from "./assets/theme/light";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { inventory } from "./redux/slices/sidenavSlice";
 import router from "./route";
-import Sidenav from "./screens/sidenav/Sidenav";
 
 function App() {
   const sidenavState = useAppSelector((state) => state.sidenav);
@@ -20,7 +19,6 @@ function App() {
   return (
     <ThemeProvider theme={lightTheme}>
       <CssBaseline />
-      <Sidenav />
       <RouterProvider router={router} />
     </ThemeProvider>
   );
