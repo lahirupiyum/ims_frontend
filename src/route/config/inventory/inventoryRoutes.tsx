@@ -5,17 +5,34 @@ import Devices from "../../../screens/management/inventory/networkassets/devices
 import Manufacturers from "../../../screens/management/inventory/networkassets/manufacturers";
 import Models from "../../../screens/management/inventory/networkassets/models";
 import Type from "../../../screens/management/inventory/networkassets/types";
-import { getChildren, getPathElement } from "../routesConfig";
+import {
+  inventory,
+  inventory_dashboard,
+  inventory_network,
+  inventory_network_devices,
+  inventory_network_manufacturers,
+  inventory_network_models,
+  inventory_network_types,
+} from "../../../utils/context-paths";
+import { getPathElement } from "../routesConfig";
 
-const networkRoutes = {
-  devices: getPathElement("devices", <Devices />, []),
-  manufacturers: getPathElement("manufacturers", <Manufacturers />, []),
-  types: getPathElement("types", <Type />, []),
-  model: getPathElement("models", <Models />, []),
-}
+const getNetworkRoutes = () => ({
+  devices: getPathElement(inventory_network_devices, <Devices />, []),
+  manufacturers: getPathElement(
+    inventory_network_manufacturers,
+    <Manufacturers />,
+    []
+  ),
+  types: getPathElement(inventory_network_types, <Type />, []),
+  model: getPathElement(inventory_network_models, <Models />, []),
+});
 
-export const inventoryRoutes = {
-  networkAsset: getPathElement("asset/network", <NetworkAssets />, getChildren(networkRoutes)),
-  dashboard: getPathElement("dashboard", <Dashboard />, []),
-  fixedAsset: getPathElement("asset/fixed", <FixedAssets />, [])
-};
+export const getInventoryRoutes = () => ({
+  networkAsset: getPathElement(
+    inventory_network,
+    <NetworkAssets />,
+    Object.values(getNetworkRoutes())
+  ),
+  dashboard: getPathElement(inventory_dashboard, <Dashboard />, []),
+  fixedAsset: getPathElement(inventory, <FixedAssets />, []),
+});
