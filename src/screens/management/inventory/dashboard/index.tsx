@@ -1,7 +1,8 @@
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
+    <div style={{backgroundColor:"green"}}>
+    </div>
   )
 }
 

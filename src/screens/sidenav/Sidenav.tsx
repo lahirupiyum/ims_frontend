@@ -5,6 +5,7 @@ import CustomTypography, {
 } from "../../components/typography/CustomTypography";
 import { useAppSelector } from "../../redux/hooks";
 import { useLocation, useNavigate } from "react-router-dom";
+import { fontWeights } from '../../components/typography/CustomTypography';
 
 const Sidenav = () => {
   const { pathname } = useLocation();
@@ -22,11 +23,17 @@ const Sidenav = () => {
         <br />
       </span>
     ));
+
+    const isSelected = (contextPath:string) => {
+      const contextPathLength = contextPath.length;
+      return pathname.substring(0, contextPathLength) === contextPath;
+    }
+
     return (
       <div
         style={{
           height: "100vh",
-          width: "225px",
+          width: "250px",
           position: "fixed",
           top:"0",
           left: "0",
@@ -53,14 +60,15 @@ const Sidenav = () => {
                 alignItems="center"
                 gap="10px"
                 sx={{
-                  bgcolor: pathname === element.contextPath ? secondaryColor : "white" ,
+                  bgcolor: isSelected(element.contextPath) ? secondaryColor : "white" ,
+                  color: "black",
                   p: "16px 24px",
                   borderRadius: "10px",
                   cursor: "pointer",
                 }}
               >
-                <element.icon.selected fontSize={fontSizes.lg} />
-                <CustomTypography>{element.label}</CustomTypography>
+               {isSelected(element.contextPath)? <element.icon.selected fontSize={fontSizes.lg} /> : <element.icon.default fontSize={fontSizes.lg} />}
+                <CustomTypography fontSize={fontSizes.sm} fontWeight={isSelected(element.contextPath)? fontWeights.lg: fontWeights.xs}>{element.label}</CustomTypography>
               </Box>
             ))}
           </Box>
