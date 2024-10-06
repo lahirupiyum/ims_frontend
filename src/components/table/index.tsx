@@ -1,8 +1,6 @@
 import {
   Box,
-  Fade,
-  Menu,
-  MenuItem,
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -13,8 +11,7 @@ import {
   TableRow,
 } from "@mui/material";
 import React, { useState } from "react";
-import { MdOutlineArrowDropDown } from "react-icons/md";
-import ContainedButton from "../buttons/ContainedButton";
+import { CiEdit, CiTrash } from "react-icons/ci";
 import { fontSizes, fontWeights } from "../typography/CustomTypography";
 
 const CustomTable = <T,>({
@@ -50,14 +47,11 @@ const CustomTable = <T,>({
                 {columns.map((column) => (
                   <TableCell
                     sx={{
-                      bgcolor: "#2f5a8a",
+                      bgcolor: "black",
                       color: "white",
                       fontSize: fontSizes.xs,
                       fontWeight: fontWeights.xl,
                       textTransform: "uppercase",
-                      ":hover": {
-                        bgcolor: "darkgray",
-                      },
                     }}
                     key={column.id}
                     align={"center"}
@@ -123,7 +117,25 @@ export interface Column {
   id: string;
   label: string;
   minWidth: number;
-  align: "left" | "center" | "right";
 }
+export enum ActionIcontype {
+  edit,
+  delete,
+}
+
+const getActionTypeIcon = (icon: ActionIcontype) => {
+  switch (icon) {
+    case ActionIcontype.edit:
+      return <CiEdit />;
+    case ActionIcontype.delete:
+      return <CiTrash />;
+    default:
+      return null;
+  }
+};
+
+export const actionButton = (icon: ActionIcontype, onClick: () => void) => {
+  return <IconButton sx={{fontSize:fontSizes.md}} onClick={onClick}>{getActionTypeIcon(icon)}</IconButton>;
+};
 
 export default CustomTable;
