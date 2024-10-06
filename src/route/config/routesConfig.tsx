@@ -5,6 +5,7 @@ import Login from "../../screens/login/Login";
 import Inventory from "../../screens/management/inventory";
 import { home, inventory, login } from "../../utils/context-paths";
 import { getInventoryRoutes } from "./inventory/inventoryRoutes";
+import NotFound from "../../screens/notfound";
 
 export const getPathElement: (
   path: string,
@@ -20,6 +21,7 @@ const getRoutesConfig = () => ({
     <Inventory />,
     Object.values(getInventoryRoutes())
   ),
+  notfound: getPathElement("*", <NotFound />, [])
 });
 
 export default getRoutesConfig;

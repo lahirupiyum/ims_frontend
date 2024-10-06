@@ -1,21 +1,25 @@
+import { useEffect } from "react";
 import CustomTable, {
   actionButton,
   ActionIcontype,
   Column,
 } from "../../../../components/table";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { fetchPage } from "../../../../redux/slices/network/device/page";
 
 const Devices = () => {
+  const dispatch = useAppDispatch();
+  const state = useAppSelector(state => state.networkDevicePage);
+
+  useEffect(() => {
+    dispatch(fetchPage({page: 0, pageSize:10}));
+  },[])
+
+  console.log(state);
+  
   const columns: Column[] = [
-    {
-      id: "actions",
-      label: "Actions",
-      minWidth: 50,
-    },
-    {
-      id: "serialNumber",
-      label: "Serial Number",
-      minWidth: 50,
-    },
+    {id: "actions", label: "Actions",  minWidth: 50 },
+    {id: "serialNumber", label: "Serial Number",   minWidth: 50,  },
     {
       id: "quantity",
       label: "Quantity",
