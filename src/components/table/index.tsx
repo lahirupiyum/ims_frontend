@@ -10,23 +10,39 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
-import React, { useState } from "react";
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
+import React, { useEffect, useState } from "react";
 import { CiEdit, CiTrash } from "react-icons/ci";
+import { useAppDispatch } from "../../redux/hooks";
+import { PageFormat, PageState } from "../../redux/slices/config/pageSlice";
 import { fontSizes, fontWeights } from "../typography/CustomTypography";
 
-const CustomTable = <T,>({
+const CustomTable = ({
   columns,
-  rows,
+  rowsFormatter,
+  pageState,
+  pageAction,
 }: {
   columns: Column[];
-  rows: T[];
+  rowsFormatter: (rows: any[]) => any[];
+  pageState: PageState;
+  pageAction: ActionCreatorWithPayload<PageFormat, `${string}/fetchPage`>
 }): React.ReactNode => {
-  const [rowsPerPage, setRowsPerPage] = useState("10");
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
+
+  const dispatch = useAppDispatch();
+  const { data, totalCount } = pageState;
 
   const handleChangePage = (_event: any, newPage: number) => {
     setPage(newPage);
   };
+
+  useEffect(() => {
+    dispatch(pageAction({page, pageSize: rowsPerPage}));
+  },[page, rowsPerPage])
+
+  const rows = rowsFormatter(data);
 
   return (
     <Box>
@@ -101,11 +117,11 @@ const CustomTable = <T,>({
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage as unknown as number}
+            count={totalCount}
+            rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
-            onRowsPerPageChange={(event) => setRowsPerPage(event.target.value)}
+            onRowsPerPageChange={(event) => setRowsPerPage(event.target.value as unknown as number)}
           />
         </Paper>
       </Paper>

@@ -1,8 +1,8 @@
 import { Box, IconButton } from "@mui/material";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 
-const PopupWindow: React.FC<{ title: string, maxWidth:number, maxHeight:number }> = ({ title, maxHeight, maxWidth }) => {
+const PopupWindow: React.FC<{ title: string, maxWidth:number, maxHeight:number, children:ReactNode }> = ({ title, maxHeight, maxWidth, children }) => {
   const [open, setOpen] = useState(true);
 
   const handleClose = () => {
@@ -57,6 +57,10 @@ const PopupWindow: React.FC<{ title: string, maxWidth:number, maxHeight:number }
             >
               <IoMdCloseCircle fontSize={"30px"} />
             </IconButton>
+          </Box>
+
+          <Box px="20px" mt="20px">
+            {children}
           </Box>
         </div>
       </div>

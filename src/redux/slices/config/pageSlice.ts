@@ -1,14 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const initialState = {
+export interface PageState {
+    data: [],
+    totalCount: number,
+    loading: boolean,
+    error: string
+}
+
+const initialState:PageState = {
   data: [],
   totalCount: 0,
   loading: false,
-  error: null,
+  error: "",
 };
 
-interface PageFormat {
+export interface PageFormat {
   page: number;
   pageSize: number;
 }
