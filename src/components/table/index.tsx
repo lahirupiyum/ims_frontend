@@ -25,7 +25,10 @@ const CustomTable = ({
   columns: Column[];
   rowsFormatter: (rows: any[]) => any[];
   pageState: PageState;
-  pageAction: (page: number, pageSize: number) => (dispath: ReturnType<typeof useAppDispatch>) => Promise<void>;
+  pageAction: (
+    page: number,
+    pageSize: number
+  ) => (dispath: ReturnType<typeof useAppDispatch>) => Promise<void>;
 }): React.ReactNode => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
@@ -151,12 +154,31 @@ const getActionTypeIcon = (icon: ActionIcontype) => {
   }
 };
 
-export const actionButton = (icon: ActionIcontype, onClick: () => void) => {
+export const actionButton = (icon: ActionIcontype, onClick: () => void, key: number) => {
   return (
-    <IconButton sx={{ fontSize: fontSizes.md }} onClick={onClick}>
+    <IconButton key={key} sx={{ fontSize: fontSizes.md }} onClick={onClick}>
       {getActionTypeIcon(icon)}
     </IconButton>
   );
 };
+
+export const wrapActionButtons = (
+  actionButtonList: ReturnType<typeof actionButton>[]
+) => {
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "10px",
+      }}
+    >
+      {actionButtonList.map((actionButton) => actionButton)}
+    </Box>
+  );
+};
+
+export type  ActionButtonType = ReturnType<typeof actionButton>
 
 export default CustomTable;
