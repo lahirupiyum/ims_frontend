@@ -10,11 +10,10 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
-import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 import React, { useEffect, useState } from "react";
 import { CiEdit, CiTrash } from "react-icons/ci";
 import { useAppDispatch } from "../../redux/hooks";
-import { PageFormat, PageState } from "../../redux/slices/config/pageSlice";
+import { PageState } from "../../redux/slices/config/globalPageSlice";
 import { fontSizes, fontWeights } from "../typography/CustomTypography";
 
 const CustomTable = ({
@@ -26,7 +25,7 @@ const CustomTable = ({
   columns: Column[];
   rowsFormatter: (rows: any[]) => any[];
   pageState: PageState;
-  pageAction: ActionCreatorWithPayload<PageFormat, `${string}/fetchPage`>
+  pageAction: (page: number, pageSize: number) => (dispath: ReturnType<typeof useAppDispatch>) => Promise<void>;
 }): React.ReactNode => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
@@ -39,8 +38,8 @@ const CustomTable = ({
   };
 
   useEffect(() => {
-    dispatch(pageAction({page, pageSize: rowsPerPage}));
-  },[page, rowsPerPage])
+    dispatch(pageAction(page, rowsPerPage));
+  }, [page, rowsPerPage]);
 
   const rows = rowsFormatter(data);
 
@@ -121,7 +120,9 @@ const CustomTable = ({
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
-            onRowsPerPageChange={(event) => setRowsPerPage(event.target.value as unknown as number)}
+            onRowsPerPageChange={(event) =>
+              setRowsPerPage(event.target.value as unknown as number)
+            }
           />
         </Paper>
       </Paper>
@@ -151,7 +152,11 @@ const getActionTypeIcon = (icon: ActionIcontype) => {
 };
 
 export const actionButton = (icon: ActionIcontype, onClick: () => void) => {
-  return <IconButton sx={{fontSize:fontSizes.md}} onClick={onClick}>{getActionTypeIcon(icon)}</IconButton>;
+  return (
+    <IconButton sx={{ fontSize: fontSizes.md }} onClick={onClick}>
+      {getActionTypeIcon(icon)}
+    </IconButton>
+  );
 };
 
 export default CustomTable;

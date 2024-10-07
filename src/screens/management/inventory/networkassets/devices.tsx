@@ -1,11 +1,8 @@
-import CustomTable, {
-  Column
-} from "../../../../components/table";
+import { Column } from "../../../../components/table";
 import { useAppSelector } from "../../../../redux/hooks";
-import { fetchPage } from "../../../../redux/slices/network/device/page";
 
 const Devices = () => {
-  const pageState = useAppSelector((state) => state.networkDevicePage);
+  const pageState = useAppSelector((state) => state.networkDevice.page);
 
   const columns: Column[] = [
     { id: "actions", label: "Actions", minWidth: 50 },
@@ -44,11 +41,7 @@ const Devices = () => {
 
   const rowsFormatter = (rows: any[]) => rows;
 
-  return (
-    <>
-      <CustomTable columns={columns} pageState={pageState} pageAction={fetchPage} rowsFormatter={rowsFormatter}  />
-    </>
-  );
+  return <></>;
 };
 
 export default Devices;

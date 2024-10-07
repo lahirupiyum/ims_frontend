@@ -1,12 +1,12 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import networkDevicePage from "../slices/network/device/page";
-import networkDeviceCreate from "../slices/network/device/create";
+import networkDevice from "../slices/network/device/reducer";
+import networkDeviceManufacturer from "../slices/network/manufacturer/reducer";
 import sidenav from "../slices/sidenavSlice";
 
 const allReducers = combineReducers({
   sidenav,
-  networkDevicePage,
-  networkDeviceCreate,
+  networkDevice,
+  networkDeviceManufacturer,
 });
 
 export default allReducers;

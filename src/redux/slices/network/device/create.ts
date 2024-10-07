@@ -1,6 +1,6 @@
 import { networkDeviceUrl } from "../../../../utils/url-properties/urls/network";
-import getCreateSlice from "../../config/createSlice";
-import NetworkDevice from "./deviceInterface";
+import getCreateSlice from "../../config/globalCreateSlice";
+import NetworkDevice from "./typeConfig";
 
 const deviceCreateSlice = getCreateSlice<NetworkDevice>(
   "networkDeviceCreate",
