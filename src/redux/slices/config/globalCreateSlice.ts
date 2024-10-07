@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
 
 export interface CreateState {
   loading: boolean;
@@ -13,27 +12,20 @@ const initialState: CreateState = {
   error: "",
 };
 
-const getCreateSlice = <T>(name: string, url: string) =>
+const getCreateSlice = <T>(name: string) =>
   createSlice({
     name,
     initialState,
     reducers: {
-      create: (state, action: PayloadAction<{ data: T }>) => {
-        const createAction = async (data: T) => {
-          state.loading = true;
-          await axios
-            .post(url, data)
-            .then((res) => {
-              state.loading = false;
-              state.data = res.data;
-            })
-            .catch((err) => {
-              state.loading = false;
-              state.error = err.message;
-            });
-        };
-        const { data } = action.payload;
-        createAction(data);
+      request: (state) => {
+        state.loading = true;
+      },
+      success: (state, action: PayloadAction<T>) => {
+        state.loading = false;
+        state.data = action.payload;
+      },
+      reject: (state, action: PayloadAction<string>) => {
+        state.error = action.payload;
       },
       reset: (state) => {
         state = initialState;

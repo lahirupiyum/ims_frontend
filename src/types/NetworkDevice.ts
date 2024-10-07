@@ -1,5 +1,5 @@
-export default interface NetworkDevice {
-  serialNumber: string;
+export type NetworkDeviceRequest = {
+    serialNumber: string;
   quantity: number;
   typeId: number;
   manufacturerId: number;
@@ -8,3 +8,5 @@ export default interface NetworkDevice {
   vendorId: number;
   branchId: number;
 }
+
+//TODO: add response type after required types created

@@ -1,20 +1,22 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PageResponse } from "../../actions/globalPageAction";
-export interface PageState {
-  data: [];
-  totalCount: number;
-  loading: boolean;
-  error: string;
+import { createSlice, Draft, PayloadAction } from "@reduxjs/toolkit";
+import { PageReponse } from "../../actions/globalPageAction";
+
+export type PageState<T> = {
+  data: T[],
+  loading: boolean,
+  totalCount: number,
+  error: string
 }
 
-const initialState: PageState = {
-  data: [],
-  totalCount: 0,
-  loading: false,
-  error: "",
-};
+const getPageSlice = <ResponseType> (name: string) => {
 
-const getPageSlice = (name: string) => {
+  const initialState: PageState<ResponseType> = {
+    data: [],
+    loading: false,
+    totalCount: 0,
+    error: "",
+  }
+
   return createSlice({
     name,
     initialState,
@@ -22,10 +24,10 @@ const getPageSlice = (name: string) => {
       request: (state) => {
         state.loading = true;
       },
-      success: (state, action: PayloadAction<PageResponse>) => {
+      success: (state, action: PayloadAction<PageReponse<ResponseType>>) => {
         const { data, totalCount } = action.payload;
         state.loading = false;
-        state.data = data;
+        state.data = [...data] as Draft<ResponseType>[];
         state.totalCount = totalCount;
       },
       reject: (state, action: PayloadAction<string>) => {
@@ -33,7 +35,10 @@ const getPageSlice = (name: string) => {
         state.error = action.payload;
       },
       reset: (state) => {
-        state = initialState;
+        state.data = [];
+        state.error = "",
+        state.loading = false;
+        state.totalCount = 0;
       },
     },
   });

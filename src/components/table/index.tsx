@@ -10,26 +10,23 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { CiEdit, CiTrash } from "react-icons/ci";
 import { useAppDispatch } from "../../redux/hooks";
 import { PageState } from "../../redux/slices/config/globalPageSlice";
 import { fontSizes, fontWeights } from "../typography/CustomTypography";
 
-const CustomTable = ({
-  columns,
-  rowsFormatter,
-  pageState,
-  pageAction,
-}: {
+type TableType<T> = {
   columns: Column[];
   rowsFormatter: (rows: any[]) => any[];
-  pageState: PageState;
+  pageState: PageState<T>;
   pageAction: (
     page: number,
     pageSize: number
   ) => (dispath: ReturnType<typeof useAppDispatch>) => Promise<void>;
-}): React.ReactNode => {
+};
+
+const CustomTable = <ResponseType,>({ columns, rowsFormatter, pageState, pageAction }: TableType<ResponseType>) => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
 
@@ -154,7 +151,11 @@ const getActionTypeIcon = (icon: ActionIcontype) => {
   }
 };
 
-export const actionButton = (icon: ActionIcontype, onClick: () => void, key: number) => {
+export const actionButton = (
+  icon: ActionIcontype,
+  onClick: () => void,
+  key: number
+) => {
   return (
     <IconButton key={key} sx={{ fontSize: fontSizes.md }} onClick={onClick}>
       {getActionTypeIcon(icon)}
@@ -179,6 +180,6 @@ export const wrapActionButtons = (
   );
 };
 
-export type  ActionButtonType = ReturnType<typeof actionButton>
+export type ActionButtonType = ReturnType<typeof actionButton>;
 
 export default CustomTable;
