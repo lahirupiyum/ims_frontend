@@ -18,7 +18,7 @@ const TabContainer: React.FC<{ elements: TabElement[] }> = ({ elements }) => {
         borderRadius: "20px",
       }}
     >
-     {elements.map(element => <TabButton element={element} />)}
+     {elements.map((element, index) => <TabButton key={index} element={element} />)}
     </Box>
   );
 };

@@ -34,7 +34,7 @@ const DropdownButton: React.FC<DropDownButton> = ({ name, elements }) => {
         onClick={handleClick}
         sx={{
           border: "1px solid white",
-          textTransform:"capitalize",
+          textTransform: "capitalize",
           bgcolor: "white",
           color: "black",
           fontSize: fontSizes.xs,
@@ -54,8 +54,12 @@ const DropdownButton: React.FC<DropDownButton> = ({ name, elements }) => {
         onClose={handleClose}
         TransitionComponent={Fade}
       >
-        {elements.map((element) => (
-          <MenuItem onClick={element.onClick} sx={{ fontSize: fontSizes.xs }}>
+        {elements.map((element, index) => (
+          <MenuItem
+            key={index}
+            onClick={element.onClick}
+            sx={{ fontSize: fontSizes.xs }}
+          >
             {element.label}
           </MenuItem>
         ))}

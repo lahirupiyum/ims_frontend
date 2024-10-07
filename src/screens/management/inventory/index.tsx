@@ -1,6 +1,8 @@
 import { Box } from "@mui/material";
 import { useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../../redux/hooks";
+import { inventory as inventoryAction } from "../../../redux/slices/sidenavSlice";
 import { inventory_dashboard } from "../../../utils/context-paths";
 import Sidenav from "../../sidenav/Sidenav";
 import Header from "./Header";
@@ -8,8 +10,11 @@ import Header from "./Header";
 const Inventory = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
-    if(location.pathname==="inventory") navigate(inventory_dashboard);
+    dispatch(inventoryAction());
+    if (location.pathname === "inventory") navigate(inventory_dashboard);
   }, []);
   return (
     <Box sx={{ bgcolor: "#f8f4f4", height: "100vh" }}>
