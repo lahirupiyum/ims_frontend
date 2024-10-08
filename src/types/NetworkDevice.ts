@@ -1,3 +1,10 @@
+import { BranchResponse } from "./Branch";
+import { NetworkDeviceManufacturerResponse } from "./NetworkDeviceManufacturer";
+import { NetworkDeviceModelResponse } from "./NetworkDeviceModel";
+import { NetworkDeviceStatusResponse } from "./NetworkDeviceStatus";
+import { NetworkDeviceTypeResponse } from "./NetworkDeviceType";
+import { VendorResponse } from "./Vendor";
+
 export type NetworkDeviceRequest = {
     serialNumber: string;
   quantity: number;
@@ -9,4 +16,14 @@ export type NetworkDeviceRequest = {
   branchId: number;
 }
 
-//TODO: add response type after required types created
+export type NetworkDeviceResponse = {
+  id: number;
+  serialNumber:string;
+  quantity: number;
+  type: NetworkDeviceTypeResponse;
+  manufacturer: NetworkDeviceManufacturerResponse;
+  model: NetworkDeviceModelResponse;
+  status: NetworkDeviceStatusResponse;
+  branch: BranchResponse;
+  vendor: VendorResponse;  
+}
