@@ -1,5 +1,6 @@
 import {
   Box,
+  CircularProgress,
   IconButton,
   Paper,
   Table,
@@ -10,7 +11,7 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
-import React, { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CiEdit, CiTrash } from "react-icons/ci";
 import { useAppDispatch } from "../../redux/hooks";
 import { PageState } from "../../redux/slices/config/globalPageSlice";
@@ -26,12 +27,17 @@ type TableType<T> = {
   ) => (dispath: ReturnType<typeof useAppDispatch>) => Promise<void>;
 };
 
-const CustomTable = <ResponseType,>({ columns, rowsFormatter, pageState, pageAction }: TableType<ResponseType>) => {
+const CustomTable = <ResponseType,>({
+  columns,
+  rowsFormatter,
+  pageState,
+  pageAction,
+}: TableType<ResponseType>) => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
 
   const dispatch = useAppDispatch();
-  const { data, totalCount } = pageState;
+  const { data, totalCount, loading } = pageState;
 
   const handleChangePage = (_event: any, newPage: number) => {
     setPage(newPage);
@@ -125,6 +131,9 @@ const CustomTable = <ResponseType,>({ columns, rowsFormatter, pageState, pageAct
             }
           />
         </Paper>
+        {rows.length === 0 && !loading ? (
+          <Box sx={{ position: "absolute", top:"55%", left:"55%", zIndex:10 }}>No data found!</Box>
+        ) : loading? <Box sx={{ position: "absolute", top:"55%", left:"55%", zIndex:10 }}><CircularProgress /></Box>: null}
       </Paper>
     </Box>
   );
