@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
 import ContainedButton from "../../../../components/buttons/ContainedButton";
+import DeleteDialog from "../../../../components/delete-dialog";
 import CustomTable, {
   actionButton,
   ActionIcontype,
@@ -11,10 +12,11 @@ import {
   fontSizes,
   fontWeights,
 } from "../../../../components/typography/CustomTypography";
-import { useAppSelector } from "../../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { branchPageAction } from "../../../../redux/slices/branch/page";
 import { BranchResponse } from "../../../../types/Branch";
 import CreateForm from "./CreateForm";
+import { branchDeleteAction } from "../../../../redux/slices/branch/delete";
 
 const columns: Column[] = [
   { id: "actions", label: "Actions", minWidth: 50 },
@@ -24,11 +26,20 @@ const columns: Column[] = [
 ];
 
 const Branch = () => {
+  const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
+  const [selectedIdtoDelete, setSelectedIdtoDelete] = useState<number>(-1);
+  
   const [open, setOpen] = useState<boolean>(false);
   const [selectedBranch, setSelectedBranch] = useState<BranchResponse | null>(null);
   const [activeIndex, setActiveIndex] = useState<number>(-1);
 
+  const dispatch = useAppDispatch();
   const branchPageState = useAppSelector((state) => state.branch.page);
+
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialog(false);
+    setSelectedIdtoDelete(-1);
+  };
 
   const handleClose = () => {
     setOpen(false)
@@ -43,11 +54,20 @@ const Branch = () => {
     handleOpen();
   }
 
+  const handleOpenDeleteDialog = (id: number) => {
+    setSelectedIdtoDelete(id);
+    setOpenDeleteDialog(true);
+  }
+
+  const handleDelete = () => {
+    dispatch(branchDeleteAction(selectedIdtoDelete));
+  }
+
   const rowsFormatter = (rows: BranchResponse[]) =>
     rows.map(({ id, name, address }, index) => ({
       actions: wrapActionButtons([
         actionButton(ActionIcontype.edit, () => {handleEdit(index, {id, name, address})}, 1),
-        actionButton(ActionIcontype.delete, () => {}, 2),
+        actionButton(ActionIcontype.delete, () => {handleOpenDeleteDialog(id)}, 2),
       ]),
       id,
       name,
@@ -76,6 +96,7 @@ const Branch = () => {
         pageAction={branchPageAction}
       />
       <CreateForm open={open} handleClose={handleClose} selectedBranch={selectedBranch} index={activeIndex} />
+      <DeleteDialog open={openDeleteDialog} handleClose={handleCloseDeleteDialog} name="Branch" deleteFunction={handleDelete} />
     </>
   );
 };
