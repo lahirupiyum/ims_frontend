@@ -3,9 +3,9 @@ import { RouteObject } from "react-router-dom";
 import Home from "../../screens/home/Home";
 import Login from "../../screens/login/Login";
 import Inventory from "../../screens/management/inventory";
+import NotFound from "../../screens/notfound";
 import { home, inventory, login } from "../../utils/context-paths";
 import { getInventoryRoutes } from "./inventory/inventoryRoutes";
-import NotFound from "../../screens/notfound";
 
 export const getPathElement: (
   path: string,
@@ -21,7 +21,7 @@ const getRoutesConfig = () => ({
     <Inventory />,
     Object.values(getInventoryRoutes())
   ),
-  notfound: getPathElement("*", <NotFound />, [])
+  notfound: getPathElement("*", <NotFound />, []),
 });
 
 export default getRoutesConfig;

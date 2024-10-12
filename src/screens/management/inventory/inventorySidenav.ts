@@ -1,10 +1,12 @@
 import { FaBuilding, FaRegBuilding } from "react-icons/fa";
+import { HiOutlineUsers, HiUsers } from "react-icons/hi2";
 import { PiNetworkFill, PiNetworkLight } from "react-icons/pi";
 import { TbLayoutDashboard, TbLayoutDashboardFilled } from "react-icons/tb";
 import {
   inventory_dashboard,
   inventory_fixed,
   inventory_network,
+  inventory_vendors,
 } from "../../../utils/context-paths";
 import SidenavParent from "../sidenavConfig";
 
@@ -33,6 +35,14 @@ const inventorySidenav: SidenavParent = {
       icon: {
         default: FaRegBuilding,
         selected: FaBuilding,
+      },
+    },
+    {
+      label: "Vendors",
+      contextPath: inventory_vendors,
+      icon: {
+        default: HiOutlineUsers,
+        selected: HiUsers,
       },
     },
   ],

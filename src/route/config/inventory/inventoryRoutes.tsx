@@ -5,6 +5,7 @@ import Devices from "../../../screens/management/inventory/networkassets/devices
 import Manufacturers from "../../../screens/management/inventory/networkassets/manufacturers";
 import Models from "../../../screens/management/inventory/networkassets/models";
 import Type from "../../../screens/management/inventory/networkassets/types";
+import Vendor from "../../../screens/management/vendors";
 import {
   inventory,
   inventory_dashboard,
@@ -13,6 +14,7 @@ import {
   inventory_network_manufacturers,
   inventory_network_models,
   inventory_network_types,
+  inventory_vendors,
 } from "../../../utils/context-paths";
 import { getPathElement } from "../routesConfig";
 
@@ -35,4 +37,5 @@ export const getInventoryRoutes = () => ({
   ),
   dashboard: getPathElement(inventory_dashboard, <Dashboard />, []),
   fixedAsset: getPathElement(inventory, <FixedAssets />, []),
+  vendors: getPathElement(inventory_vendors, <Vendor />, [])
 });
