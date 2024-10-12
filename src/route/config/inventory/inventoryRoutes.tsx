@@ -1,4 +1,3 @@
-import Branch from "../../../screens/management/branches";
 import Dashboard from "../../../screens/management/inventory/dashboard";
 import FixedAssets from "../../../screens/management/inventory/fixedassets";
 import NetworkAssets from "../../../screens/management/inventory/networkassets";
@@ -6,7 +5,9 @@ import Devices from "../../../screens/management/inventory/networkassets/devices
 import Manufacturers from "../../../screens/management/inventory/networkassets/manufacturers";
 import Models from "../../../screens/management/inventory/networkassets/models";
 import Type from "../../../screens/management/inventory/networkassets/types";
-import Vendor from "../../../screens/management/vendors";
+import Vendor from "../../../screens/management/inventory/vendors";
+import Branch from "../../../screens/management/inventory/branches";
+
 import {
   inventory,
   inventory_branch,

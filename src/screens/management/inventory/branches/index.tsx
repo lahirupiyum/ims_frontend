@@ -3,10 +3,10 @@ import CustomTable, {
     ActionIcontype,
     Column,
     wrapActionButtons,
-} from "../../../components/table";
-import { useAppSelector } from "../../../redux/hooks";
-import { branchPageAction } from "../../../redux/slices/branch/page";
-import { BranchResponse } from "../../../types/Branch";
+} from "../../../../components/table";
+import { useAppSelector } from "../../../../redux/hooks";
+import { branchPageAction } from "../../../../redux/slices/branch/page";
+import { BranchResponse } from "../../../../types/Branch";
 
 const columns: Column[] = [
   { id: "actions", label: "Actions", minWidth: 50 },

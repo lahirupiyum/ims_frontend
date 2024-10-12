@@ -1,12 +1,14 @@
+import { Box } from "@mui/material";
 import CustomTable, {
   actionButton,
   ActionIcontype,
   Column,
   wrapActionButtons,
-} from "../../../components/table";
-import { useAppSelector } from "../../../redux/hooks";
-import { vendorPageAction } from "../../../redux/slices/vendor/page";
-import { VendorResponse } from "../../../types/Vendor";
+} from "../../../../components/table";
+import { useAppSelector } from "../../../../redux/hooks";
+import { vendorPageAction } from "../../../../redux/slices/vendor/page";
+import { VendorResponse } from "../../../../types/Vendor";
+import ContainedButton from "../../../../components/buttons/ContainedButton";
 
 const columns: Column[] = [
   { id: "actions", label: "Actions", minWidth: 50 },
@@ -32,12 +34,17 @@ const Vendor = () => {
     }));
 
   return (
-    <CustomTable
-      columns={columns}
-      rowsFormatter={rowsFormatter}
-      pageState={vendorPageState}
-      pageAction={vendorPageAction}
-    />
+    <>
+    <Box display="flex" justifyContent="end" alignItems="center">
+      <ContainedButton>New Vendor</ContainedButton>
+    </Box>
+      <CustomTable
+        columns={columns}
+        rowsFormatter={rowsFormatter}
+        pageState={vendorPageState}
+        pageAction={vendorPageAction}
+      />
+    </>
   );
 };
 
