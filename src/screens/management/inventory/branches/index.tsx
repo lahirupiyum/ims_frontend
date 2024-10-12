@@ -15,7 +15,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { branchPageAction } from "../../../../redux/slices/branch/page";
 import { BranchResponse } from "../../../../types/Branch";
-import CreateForm from "./CreateForm";
+import CreateUpdateForm from "./CreateUpdateForm";
 import { branchDeleteAction } from "../../../../redux/slices/branch/delete";
 
 const columns: Column[] = [
@@ -95,7 +95,7 @@ const Branch = () => {
         pageState={branchPageState}
         pageAction={branchPageAction}
       />
-      <CreateForm open={open} handleClose={handleClose} selectedBranch={selectedBranch} index={activeIndex} />
+      <CreateUpdateForm open={open} handleClose={handleClose} selectedBranch={selectedBranch} index={activeIndex} />
       <DeleteDialog open={openDeleteDialog} handleClose={handleCloseDeleteDialog} name="Branch" deleteFunction={handleDelete} />
     </>
   );

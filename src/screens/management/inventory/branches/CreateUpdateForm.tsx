@@ -23,7 +23,7 @@ type PropTypes = {
 const NAME = "name";
 const ADDRESS = "address";
 
-const CreateForm = ({
+const CreateUpdateForm = ({
   open,
   handleClose,
   selectedBranch,
@@ -119,7 +119,7 @@ const CreateForm = ({
       open={open}
       handleClose={handleClose}
       children={formChildren}
-      title={editMode ? "Update new branch" : "Create new branch"}
+      title={editMode ? "Update branch" : "Create new branch"}
       width={500}
       onClick={handleSubmit}
       loading={createLoading || updateLoading}
@@ -127,4 +127,4 @@ const CreateForm = ({
   );
 };
 
-export default CreateForm;
+export default CreateUpdateForm;
