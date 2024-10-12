@@ -5,6 +5,7 @@ import networkDeviceModel from "../slices/network/model/reducer";
 import networkDeviceType from "../slices/network/type/reducer";
 import sidenav from "../slices/sidenavSlice";
 import vendor from "../slices/vendor/reducer";
+import branch from "../slices/branch/reducer";
 
 const allReducers = combineReducers({
   sidenav,
@@ -13,6 +14,7 @@ const allReducers = combineReducers({
   networkDeviceType,
   networkDeviceModel,
   vendor,
+  branch,
 });
 
 export default allReducers;

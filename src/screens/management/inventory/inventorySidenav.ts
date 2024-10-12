@@ -1,8 +1,9 @@
-import { FaBuilding, FaRegBuilding } from "react-icons/fa";
 import { HiOutlineUsers, HiUsers } from "react-icons/hi2";
-import { PiNetworkFill, PiNetworkLight } from "react-icons/pi";
+import { PiBuildingsBold, PiBuildingsFill, PiLockers, PiLockersFill } from "react-icons/pi";
+import { RiRouterFill, RiRouterLine } from "react-icons/ri";
 import { TbLayoutDashboard, TbLayoutDashboardFilled } from "react-icons/tb";
 import {
+  inventory_branch,
   inventory_dashboard,
   inventory_fixed,
   inventory_network,
@@ -25,16 +26,16 @@ const inventorySidenav: SidenavParent = {
       label: "Network Assets",
       contextPath: inventory_network,
       icon: {
-        default: PiNetworkLight,
-        selected: PiNetworkFill,
+        default: RiRouterLine,
+        selected: RiRouterFill,
       },
     },
     {
       label: "Fixed Assets",
       contextPath: inventory_fixed,
       icon: {
-        default: FaRegBuilding,
-        selected: FaBuilding,
+        default: PiLockers,
+        selected: PiLockersFill,
       },
     },
     {
@@ -45,6 +46,14 @@ const inventorySidenav: SidenavParent = {
         selected: HiUsers,
       },
     },
+    {
+      label:"Branches",
+      contextPath: inventory_branch,
+      icon: {
+        default: PiBuildingsBold,
+        selected: PiBuildingsFill,
+      }
+    }
   ],
 };
 

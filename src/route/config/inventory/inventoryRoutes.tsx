@@ -1,3 +1,4 @@
+import Branch from "../../../screens/management/branches";
 import Dashboard from "../../../screens/management/inventory/dashboard";
 import FixedAssets from "../../../screens/management/inventory/fixedassets";
 import NetworkAssets from "../../../screens/management/inventory/networkassets";
@@ -8,6 +9,7 @@ import Type from "../../../screens/management/inventory/networkassets/types";
 import Vendor from "../../../screens/management/vendors";
 import {
   inventory,
+  inventory_branch,
   inventory_dashboard,
   inventory_network,
   inventory_network_devices,
@@ -37,5 +39,6 @@ export const getInventoryRoutes = () => ({
   ),
   dashboard: getPathElement(inventory_dashboard, <Dashboard />, []),
   fixedAsset: getPathElement(inventory, <FixedAssets />, []),
-  vendors: getPathElement(inventory_vendors, <Vendor />, [])
+  vendors: getPathElement(inventory_vendors, <Vendor />, []),
+  branches: getPathElement(inventory_branch, <Branch />, []),
 });
