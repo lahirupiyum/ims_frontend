@@ -25,17 +25,28 @@ const columns: Column[] = [
 
 const Branch = () => {
   const [open, setOpen] = useState<boolean>(false);
-
-  const handleClose = () => setOpen(false);
-
-  const handleOpen = () => setOpen(true);
+  const [selectedBranch, setSelectedBranch] = useState<BranchResponse | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number>(-1);
 
   const branchPageState = useAppSelector((state) => state.branch.page);
 
+  const handleClose = () => {
+    setOpen(false)
+    if(selectedBranch) setSelectedBranch(null);
+    if(activeIndex >= 0) setActiveIndex(-1);
+  };
+  const handleOpen = () => setOpen(true);
+  
+  const handleEdit = (index:number, branch: BranchResponse) => {
+    setSelectedBranch(branch);
+    setActiveIndex(index);
+    handleOpen();
+  }
+
   const rowsFormatter = (rows: BranchResponse[]) =>
-    rows.map(({ id, name, address }) => ({
+    rows.map(({ id, name, address }, index) => ({
       actions: wrapActionButtons([
-        actionButton(ActionIcontype.edit, () => {}, 1),
+        actionButton(ActionIcontype.edit, () => {handleEdit(index, {id, name, address})}, 1),
         actionButton(ActionIcontype.delete, () => {}, 2),
       ]),
       id,
@@ -64,7 +75,7 @@ const Branch = () => {
         pageState={branchPageState}
         pageAction={branchPageAction}
       />
-      <CreateForm open={open} handleClose={handleClose} />
+      <CreateForm open={open} handleClose={handleClose} selectedBranch={selectedBranch} index={activeIndex} />
     </>
   );
 };

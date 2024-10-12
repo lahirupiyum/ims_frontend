@@ -2,26 +2,46 @@ import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import PopupDialog from "../../../../components/popup-dialog";
 import OutlinedTextField from "../../../../components/textFields/OutlinedTextField";
-import { BranchRequest } from "../../../../types/Branch";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { branchCreateAction, branchCreateReset } from "../../../../redux/slices/branch/create";
+import {
+  branchCreateAction,
+  branchCreateReset,
+} from "../../../../redux/slices/branch/create";
+import {
+  branchUpdateAction,
+  branchUpdateReset,
+} from "../../../../redux/slices/branch/update";
+import { BranchRequest, BranchResponse } from "../../../../types/Branch";
 
 type PropTypes = {
   open: boolean;
   handleClose: () => void;
+  selectedBranch: BranchResponse | null;
+  index: number;
 };
 
 const NAME = "name";
 const ADDRESS = "address";
 
-const CreateForm = ({ open, handleClose }: PropTypes) => {
+const CreateForm = ({
+  open,
+  handleClose,
+  selectedBranch,
+  index,
+}: PropTypes) => {
   const [branchForm, setBranchForm] = useState<BranchRequest>({
     [NAME]: "",
     [ADDRESS]: "",
   });
+  const [editMode, setEditMode] = useState(false);
 
   const dispatch = useAppDispatch();
-  const { loading, data } = useAppSelector(state => state.branch.create);
+  const { loading: createLoading, data: createData } = useAppSelector(
+    (state) => state.branch.create
+  );
+  const { loading: updateLoading, data: updatedData } = useAppSelector(
+    (state) => state.branch.update
+  );
 
   const handleBranchForm = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -34,16 +54,37 @@ const CreateForm = ({ open, handleClose }: PropTypes) => {
   };
 
   useEffect(() => {
-    if (!loading && data) {
+    if (selectedBranch) {
+      setEditMode(true);
+      setBranchForm({
+        name: selectedBranch.name,
+        address: selectedBranch.address
+          .split(",")
+          .map((el) => el.trim())
+          .join(",\n"),
+      });
+    }
+  }, [selectedBranch]);
+
+  useEffect(() => {
+    if (!createLoading && createData) {
       dispatch(branchCreateReset());
       handleClose();
     }
-    console.log(data);
-  },[loading, data]);
+  }, [createLoading, createData]);
+
+  useEffect(() => {
+    if (!updateLoading && updatedData) {
+      dispatch(branchUpdateReset());
+      handleClose();
+    }
+  }, [updateLoading, updatedData]);
 
   const handleSubmit = () => {
-    dispatch(branchCreateAction(branchForm));
-  }
+    if (editMode && selectedBranch) {
+      dispatch(branchUpdateAction(selectedBranch.id, branchForm, index));
+    } else dispatch(branchCreateAction(branchForm));
+  };
 
   const formChildren = (
     <Box
@@ -57,6 +98,7 @@ const CreateForm = ({ open, handleClose }: PropTypes) => {
         name={NAME}
         fullWidth
         placeholder="Branch name"
+        value={branchForm.name}
         onChange={handleBranchForm}
       />
       <OutlinedTextField
@@ -66,6 +108,7 @@ const CreateForm = ({ open, handleClose }: PropTypes) => {
         placeholder="Branch Address"
         maxRows={4}
         minRows={2}
+        value={branchForm.address}
         onChange={handleBranchForm}
       />
     </Box>
@@ -76,10 +119,10 @@ const CreateForm = ({ open, handleClose }: PropTypes) => {
       open={open}
       handleClose={handleClose}
       children={formChildren}
-      title="Create new branch"
+      title={editMode ? "Update new branch" : "Create new branch"}
       width={500}
       onClick={handleSubmit}
-      loading={loading}
+      loading={createLoading || updateLoading}
     />
   );
 };

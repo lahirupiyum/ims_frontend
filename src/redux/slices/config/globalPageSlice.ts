@@ -10,6 +10,11 @@ export type PageState<T> = {
   error: string
 }
 
+export type UpdateStateType<T> = {
+  index: number;
+  data: T
+}
+
 const getPageSlice = <ResponseType> (name: string) => {
 
   const initialState: PageState<ResponseType> = {
@@ -53,6 +58,12 @@ const getPageSlice = <ResponseType> (name: string) => {
         state.totalCount++
         if(state.pageSize === state.data.length) return;
         state.data.push(action.payload as Draft<ResponseType>);
+      },
+      update: (state, action: PayloadAction<UpdateStateType<ResponseType>>) => {
+        const dummyData = [...state.data] as ResponseType[];
+        const { index, data } = action.payload;
+        dummyData[index] = data;
+        state.data = dummyData as Draft<ResponseType>[]
       }
     },
   });

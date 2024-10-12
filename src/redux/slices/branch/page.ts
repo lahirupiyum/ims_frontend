@@ -17,6 +17,9 @@ const pageActionTypes: PageSliceActionType<BranchResponse> = {
 export const branchPageAction = (page: number, pageSize: number) =>
   globalPageAction(page, pageSize, branchUrl, pageActionTypes);
 
-
-export const { reset: branchPageReset, create: branchAddOnetoList } = branchPageSlice.actions;
+export const {
+  reset: branchPageReset,
+  create: branchAddOnetoList,
+  update: branchUpdateOneInList,
+} = branchPageSlice.actions;
 export default branchPageSlice.reducer;
