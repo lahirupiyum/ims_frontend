@@ -1,9 +1,10 @@
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit"
 
-type SliceActionType <T> = {
+type CreateSliceActionType<T> = {
     request: ActionCreatorWithPayload<void, `${string}/request`>
     success: ActionCreatorWithPayload<T, `${string}/success`>
     reject: ActionCreatorWithPayload<string, `${string}/reject`>
+    addOnetoList: ActionCreatorWithPayload<T, `${string}/create`>  // this one should get from the page slice
 }
 
-export default SliceActionType;
+export default CreateSliceActionType;

@@ -9,6 +9,10 @@ import { useAppSelector } from "../../../../redux/hooks";
 import { vendorPageAction } from "../../../../redux/slices/vendor/page";
 import { VendorResponse } from "../../../../types/Vendor";
 import ContainedButton from "../../../../components/buttons/ContainedButton";
+import {
+  fontSizes,
+  fontWeights,
+} from "../../../../components/typography/CustomTypography";
 
 const columns: Column[] = [
   { id: "actions", label: "Actions", minWidth: 50 },
@@ -35,9 +39,18 @@ const Vendor = () => {
 
   return (
     <>
-    <Box display="flex" justifyContent="end" alignItems="center">
-      <ContainedButton>New Vendor</ContainedButton>
-    </Box>
+      <Box p={2} display="flex" justifyContent="end" alignItems="center">
+        <ContainedButton
+          sx={{
+            color: "black",
+            bgcolor: "white",
+            fontWeight: fontWeights.lg,
+            fontSize: fontSizes.xs,
+          }}
+        >
+          New Vendor
+        </ContainedButton>
+      </Box>
       <CustomTable
         columns={columns}
         rowsFormatter={rowsFormatter}

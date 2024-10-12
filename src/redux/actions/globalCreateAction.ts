@@ -1,11 +1,26 @@
-import { ActionCreatorWithPayload } from "@reduxjs/toolkit"
+import axios from "axios";
+import { useAppDispatch } from "../hooks";
+import CreateSliceActionType from "../types/CreateActionType";
 
-export type CreateActions <T> = {
-    request: ActionCreatorWithPayload<void, `${string}/request`>
-    success: ActionCreatorWithPayload<T, `${string}/success`>
-    reject: ActionCreatorWithPayload<string, `${string}/reject`>
-}
+const globalCreateAction =
+  <RequestType, ResponseType>(
+    data: RequestType,
+    url: string,
+    actions: CreateSliceActionType<ResponseType>
+  ) =>
+  async (dispatch: ReturnType<typeof useAppDispatch>) => {
+    const { request, success, reject, addOnetoList } = actions;
+    dispatch(request());
+    await axios
+      .post(url, data)
+      .then((res) => {
+        const { data: responseData } = res.data;
+        dispatch(success(responseData));
+        dispatch(addOnetoList(responseData));
+      })
+      .catch((err) => {
+        dispatch(reject(err.message));
+      });
+  };
 
-const createAction = <RequestType, ResponseType>(data:RequestType, url:string, createAction:CreateActions<ResponseType>) => {
-
-}
+export default globalCreateAction;

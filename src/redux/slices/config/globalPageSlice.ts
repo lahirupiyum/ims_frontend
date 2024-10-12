@@ -2,6 +2,8 @@ import { createSlice, Draft, PayloadAction } from "@reduxjs/toolkit";
 import { PageReponse } from "../../actions/globalPageAction";
 
 export type PageState<T> = {
+  page: number,
+  pageSize: number,
   data: T[],
   loading: boolean,
   totalCount: number,
@@ -11,6 +13,8 @@ export type PageState<T> = {
 const getPageSlice = <ResponseType> (name: string) => {
 
   const initialState: PageState<ResponseType> = {
+    page: 0,
+    pageSize: 0,
     data: [],
     loading: false,
     totalCount: 0,
@@ -21,7 +25,10 @@ const getPageSlice = <ResponseType> (name: string) => {
     name,
     initialState,
     reducers: {
-      request: (state) => {
+      request: (state, action: PayloadAction<{page: number, pageSize:number}>) => {
+        const {page, pageSize } = action.payload;
+        state.page = page;
+        state.pageSize = pageSize;
         state.loading = true;
       },
       success: (state, action: PayloadAction<PageReponse<ResponseType>>) => {
@@ -39,7 +46,14 @@ const getPageSlice = <ResponseType> (name: string) => {
         state.error = "",
         state.loading = false;
         state.totalCount = 0;
+        state.page = 0,
+        state.pageSize = 0;
       },
+      create: (state, action: PayloadAction<ResponseType>) => {
+        state.totalCount++
+        if(state.pageSize === state.data.length) return;
+        state.data.push(action.payload as Draft<ResponseType>);
+      }
     },
   });
 };

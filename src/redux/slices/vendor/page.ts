@@ -1,14 +1,14 @@
 import { VendorResponse } from "../../../types/Vendor";
 import { vendorUrl } from "../../../utils/url-properties/urls/vendor";
-import globalPageAction, { PageReponse } from "../../actions/globalPageAction";
-import SliceActionType from "../../actions/sliceActionType";
+import globalPageAction from "../../actions/globalPageAction";
+import PageSliceActionType from "../../types/PageActionType";
 import getPageSlice from "../config/globalPageSlice";
 
 const vendorPageSlice = getPageSlice<VendorResponse>("vendorPage");
 
 const { request, success, reject } = vendorPageSlice.actions;
 
-const pageActionTypes: SliceActionType<PageReponse<VendorResponse>> = {
+const pageActionTypes: PageSliceActionType<VendorResponse> = {
   request,
   success,
   reject,

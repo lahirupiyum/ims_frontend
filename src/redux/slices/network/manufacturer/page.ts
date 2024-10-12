@@ -1,9 +1,7 @@
 import { NetworkDeviceManufacturerResponse } from "../../../../types/NetworkDeviceManufacturer";
 import { networkDeviceManufacturerUrl } from "../../../../utils/url-properties/urls/network";
-import globalPageAction, {
-  PageReponse,
-} from "../../../actions/globalPageAction";
-import SliceActionType from "../../../actions/sliceActionType";
+import globalPageAction from "../../../actions/globalPageAction";
+import PageSliceActionType from "../../../types/PageActionType";
 import getPageSlice from "../../config/globalPageSlice";
 
 const manufacturerPageSlice =
@@ -11,9 +9,8 @@ const manufacturerPageSlice =
 
 const { request, success, reject } = manufacturerPageSlice.actions;
 
-const pageActions: SliceActionType<
-  PageReponse<NetworkDeviceManufacturerResponse>
-> = {
+const pageActions: PageSliceActionType<NetworkDeviceManufacturerResponse>
+ = {
   request,
   success,
   reject,

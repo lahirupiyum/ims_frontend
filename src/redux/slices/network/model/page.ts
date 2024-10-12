@@ -1,9 +1,7 @@
 import { NetworkDeviceModelResponse } from "../../../../types/NetworkDeviceModel";
 import { networkDeviceModelUrl } from "../../../../utils/url-properties/urls/network";
-import globalPageAction, {
-  PageReponse,
-} from "../../../actions/globalPageAction";
-import SliceActionType from "../../../actions/sliceActionType";
+import globalPageAction from "../../../actions/globalPageAction";
+import PageSliceActionType from "../../../types/PageActionType";
 import getPageSlice from "../../config/globalPageSlice";
 
 const modelPageSlice =
@@ -11,7 +9,7 @@ const modelPageSlice =
 
 const { request, success, reject } = modelPageSlice.actions;
 
-const pageActions: SliceActionType<PageReponse<NetworkDeviceModelResponse>> = {
+const pageActions: PageSliceActionType<NetworkDeviceModelResponse> = {
   request,
   success,
   reject,

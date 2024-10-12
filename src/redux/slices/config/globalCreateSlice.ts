@@ -1,36 +1,41 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, Draft } from '@reduxjs/toolkit';
 
-export interface CreateState {
+type CreateState<ResponseType> = {
   loading: boolean;
-  data: any;
+  data: ResponseType | null;
   error: string;
 }
 
-const initialState: CreateState = {
-  loading: false,
-  data: null,
-  error: "",
-};
+const getCreateSlice = <ResponseType>(name: string) =>{
 
-const getCreateSlice = <T>(name: string) =>
-  createSlice({
+  const initialState: CreateState<ResponseType> = {
+    loading: false,
+    data: null,
+    error: "",
+  };
+
+  return createSlice({
     name,
     initialState,
     reducers: {
       request: (state) => {
         state.loading = true;
       },
-      success: (state, action: PayloadAction<T>) => {
+      success: (state, action: PayloadAction<ResponseType>) => {
         state.loading = false;
-        state.data = action.payload;
+        console.log(action.payload);
+        state.data = action.payload as Draft<ResponseType>;
       },
       reject: (state, action: PayloadAction<string>) => {
         state.error = action.payload;
+        state.loading = false;
       },
       reset: (state) => {
-        state = initialState;
+        state.loading = false;
+        state.data = null;
+        state.error = ""
       },
     },
-  });
+  })};
 
 export default getCreateSlice;

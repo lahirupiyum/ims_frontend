@@ -3,3 +3,8 @@ export type BranchResponse = {
     name: string;
     address: string;
 }
+
+export type BranchRequest = {
+    name: string;
+    address: string;
+};
