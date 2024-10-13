@@ -17,5 +17,5 @@ const pageActionTypes: PageSliceActionType<VendorResponse> = {
 export const vendorPageAction = (page: number, pageSize: number) =>
   globalPageAction(page, pageSize, vendorUrl, pageActionTypes);
 
-export const { reset: vendorPageReset } = vendorPageSlice.actions;
+export const { reset: vendorPageReset, create: vendorAddOneToList, update: vendorUpdateOneInList } = vendorPageSlice.actions;
 export default vendorPageSlice.reducer;

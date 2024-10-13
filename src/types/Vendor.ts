@@ -4,3 +4,9 @@ export type VendorResponse = {
     email: string;
     contactNo: string;
 }
+
+export type VendorRequest = {
+    name: string;
+    email: string;
+    contactNo: string
+}
