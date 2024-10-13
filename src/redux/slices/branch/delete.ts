@@ -17,3 +17,6 @@ const deleteActionTypes: DeleteSliceActionType<BranchResponse> = {
 
 export const branchDeleteAction = (id: number) =>
   globalDeleteAction(branchWithIdUrl(id), deleteActionTypes, branchPageAction);
+
+export const { reset: branchDeleteReset } = branchDeleteSlice.actions;
+export default branchDeleteSlice.reducer;
