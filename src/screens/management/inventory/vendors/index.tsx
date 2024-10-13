@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { useState } from "react";
 import ContainedButton from "../../../../components/buttons/ContainedButton";
+import DeleteDialog from "../../../../components/delete-dialog";
 import CustomTable, {
   actionButton,
   ActionIcontype,
@@ -11,7 +12,8 @@ import {
   fontSizes,
   fontWeights,
 } from "../../../../components/typography/CustomTypography";
-import { useAppSelector } from "../../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { vendorDeleteAction } from "../../../../redux/slices/vendor/delete";
 import { vendorPageAction } from "../../../../redux/slices/vendor/page";
 import { VendorResponse } from "../../../../types/Vendor";
 import CreateUpdateForm from "./CreateUpdateForm";
@@ -26,12 +28,17 @@ const columns: Column[] = [
 
 const Vendor = () => {
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
+  const [selecteIdToDelete, setSelectedIdToDelete] = useState<number>(-1);
+
   const [selectedVendor, setSelectedVendor] = useState<VendorResponse | null>(
     null
   );
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
-  
+
   const vendorPageState = useAppSelector((state) => state.vendor.page);
+
+  const dispatch = useAppDispatch();
 
   const handleFormOpen = () => setIsFormOpen(true);
   const handleFormClose = () => {
@@ -40,17 +47,44 @@ const Vendor = () => {
     setIsFormOpen(false);
   };
 
-  const handleEdit = (vendor: VendorResponse, index:number) => {
+  const handleEdit = (vendor: VendorResponse, index: number) => {
     setSelectedVendor(vendor);
     setSelectedIndex(index);
     handleFormOpen();
-  }
+  };
+
+  const openDeleteDialog = (id: number) => {
+    setSelectedIdToDelete(id);
+    setIsDeleteOpen(true);
+  };
+
+  const closeDeleteDialog = () => {
+    setIsDeleteOpen(false);
+    setSelectedIdToDelete(-1);
+  };
+
+  const deleteFunction = () => {
+    dispatch(vendorDeleteAction(selecteIdToDelete));
+    closeDeleteDialog();
+  };
 
   const rowsFormatter = (rows: VendorResponse[]) =>
     rows.map(({ id, name, email, contactNo }, index) => ({
       actions: wrapActionButtons([
-        actionButton(ActionIcontype.edit, () => {handleEdit({ id, name, email, contactNo }, index)}, 1),
-        actionButton(ActionIcontype.delete, () => {}, 2),
+        actionButton(
+          ActionIcontype.edit,
+          () => {
+            handleEdit({ id, name, email, contactNo }, index);
+          },
+          1
+        ),
+        actionButton(
+          ActionIcontype.delete,
+          () => {
+            openDeleteDialog(id);
+          },
+          2
+        ),
       ]),
       id,
       name,
@@ -62,7 +96,7 @@ const Vendor = () => {
     <>
       <Box p={2} display="flex" justifyContent="end" alignItems="center">
         <ContainedButton
-        onClick={handleFormOpen}
+          onClick={handleFormOpen}
           sx={{
             color: "black",
             bgcolor: "white",
@@ -84,6 +118,12 @@ const Vendor = () => {
         handleClose={handleFormClose}
         index={selectedIndex}
         selectedVendor={selectedVendor}
+      />
+      <DeleteDialog
+        name="Vendor"
+        deleteFunction={deleteFunction}
+        handleClose={closeDeleteDialog}
+        open={isDeleteOpen}
       />
     </>
   );
