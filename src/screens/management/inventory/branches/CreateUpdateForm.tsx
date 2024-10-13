@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import PopupDialog from "../../../../components/popup-dialog";
-import OutlinedTextField from "../../../../components/textFields/OutlinedTextField";
+import FormField from "../../../../components/textFields/FormField";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import {
   branchCreateAction,
@@ -86,6 +86,12 @@ const CreateUpdateForm = ({
     } else dispatch(branchCreateAction(branchForm));
   };
 
+  const closeDialog = () => {
+    setBranchForm({ name: "", address: "" });
+    setEditMode(false);
+    handleClose();
+  };
+
   const formChildren = (
     <Box
       display="flex"
@@ -94,22 +100,20 @@ const CreateUpdateForm = ({
       justifyContent="center"
       gap={3}
     >
-      <OutlinedTextField
+      <FormField
+        label="Branch name"
         name={NAME}
-        fullWidth
-        placeholder="Branch name"
+        onChange={handleBranchForm}
         value={branchForm.name}
-        onChange={handleBranchForm}
       />
-      <OutlinedTextField
+      <FormField
+        label="Branch address"
         name={ADDRESS}
-        multiline
-        fullWidth
-        placeholder="Branch Address"
-        maxRows={4}
-        minRows={2}
-        value={branchForm.address}
         onChange={handleBranchForm}
+        value={branchForm.address}
+        minRows={2}
+        maxRows={4}
+        multiline
       />
     </Box>
   );
@@ -117,7 +121,7 @@ const CreateUpdateForm = ({
   return (
     <PopupDialog
       open={open}
-      handleClose={handleClose}
+      handleClose={closeDialog}
       children={formChildren}
       title={editMode ? "Update branch" : "Create new branch"}
       width={500}

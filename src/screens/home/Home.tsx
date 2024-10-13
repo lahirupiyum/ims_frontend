@@ -4,8 +4,13 @@ import TataCommunicationFlatImage from "../../assets/images/tata-communications-
 import CustomTypography, {
   fontWeights,
 } from "../../components/typography/CustomTypography";
+import { inventory_dashboard } from "../../utils/context-paths";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+
+  const navigate = useNavigate();
+
   return (
     <div
       style={{
@@ -28,8 +33,8 @@ const Home = () => {
           gap: "72px",
         }}
       >
-        <ElementBox name="Customer Management" onClick={() => {}} />
-        <ElementBox name="Inventory Management" onClick={() => {}} />
+        <ElementBox name="Customer Management" onClick={() => {navigate(inventory_dashboard)}} />
+        <ElementBox name="Inventory Management" onClick={() => {navigate(inventory_dashboard)}} />
       </Box>
     </div>
   );

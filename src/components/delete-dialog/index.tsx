@@ -42,7 +42,7 @@ const DeleteDialog = ({ open, deleteFunction, handleClose, name }: PropTypes) =>
         {`DELETE ${name.toUpperCase()}`}
       </DialogTitle>
       <DialogContent>
-        <DialogContentText>{`Are you sure you want to delete this ${name.toLowerCase()}? This will permanently erase all related data and cannot be undone.`}</DialogContentText>
+        <DialogContentText fontSize={fontSizes.sm}>{`Are you sure you want to delete this ${name.toLowerCase()}? This will permanently erase all related data and cannot be undone.`}</DialogContentText>
       </DialogContent>
       <DialogActions>
         <DialogBoxButton handleClick={deleteFunction} name="Delete" isPrimary />
