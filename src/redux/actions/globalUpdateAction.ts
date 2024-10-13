@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useAppDispatch } from "../hooks";
+import { addOneNotification } from "../slices/notificationSlice";
 import UpdateSliceActionType from "../types/UpdateActionType";
 
 const globalUpdateAction =
@@ -15,12 +16,15 @@ const globalUpdateAction =
     await axios
       .put(url, data)
       .then((res) => {
-        const { data: responseData } = res.data;
+        const { data: responseData, message } = res.data;
         dispatch(success(responseData));
-        dispatch(updateOneInList({index, data: responseData}));
+        dispatch(updateOneInList({ index, data: responseData }));
+        dispatch(addOneNotification({ type: "success", message }));
       })
       .catch((err) => {
+        const errorMessage = err.response.data.message;
         dispatch(reject(err.message));
+        dispatch(addOneNotification({ type: "error", message: errorMessage }));
       });
   };
 

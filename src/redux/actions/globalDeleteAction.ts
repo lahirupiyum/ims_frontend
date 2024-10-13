@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useAppDispatch } from "../hooks";
 import DeleteSliceActionType from "../types/DeleteActionType";
+import { addOneNotification } from "../slices/notificationSlice";
 
 const globalDeleteAction =
   <ResponseType>(
@@ -16,12 +17,14 @@ const globalDeleteAction =
     dispatch(request());
     await axios.delete(url)
     .then(res => {
-        const { data: responseData } = res.data;
+        const { data: responseData, message } = res.data;
         dispatch(success(responseData));
         dispatch(pageAction(0, 10));
+        dispatch(addOneNotification({type:"success", message}));
     })
     .catch(err => {
         dispatch(reject(err.message));
+        
     })
   };
 

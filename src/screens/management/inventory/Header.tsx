@@ -1,4 +1,4 @@
-import { Box, IconButton, InputAdornment } from "@mui/material";
+import { Badge, Box, IconButton, InputAdornment } from "@mui/material";
 import { ReactNode } from "react";
 import { BiUser } from "react-icons/bi";
 import { CiSearch } from "react-icons/ci";
@@ -11,6 +11,7 @@ import OutlinedTextField from "../../../components/textFields/OutlinedTextField"
 import { fontSizes } from "../../../components/typography/CustomTypography";
 
 const Header = () => {
+
   return (
     <Box
       sx={{
@@ -36,21 +37,29 @@ const Header = () => {
             },
           }}
         />
-        <Box sx={{display:"flex", alignItems:"center", gap:"5px"}}>
-          <HeaderIcon
-            icon={<IoChatbubbleEllipsesOutline fontSize={"24px"} />}
-            onClick={() => {}}
-            isBg={false}
-          />
-          <HeaderIcon
-            icon={<IoNotificationsOutline fontSize={"24px"} />}
-            onClick={() => {}}
-            isBg={false}
-          />
+        <Box sx={{ display: "flex", alignItems: "center", gap: "20px" }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
+            <HeaderIcon
+              icon={<IoChatbubbleEllipsesOutline fontSize={"24px"} />}
+              onClick={() => {}}
+              isBg={false}
+              isBadge={false}
+              badgeCount={0}
+            />
+            <HeaderIcon
+              icon={<IoNotificationsOutline fontSize={"24px"} />}
+              onClick={() => {}}
+              isBg={false}
+              isBadge
+              badgeCount={5}
+            />
+          </Box>
           <HeaderIcon
             icon={<BiUser fontSize={"24px"} />}
             onClick={() => {}}
             isBg={true}
+            isBadge={false}
+            badgeCount={0}
           />
         </Box>
       </Box>
@@ -62,13 +71,21 @@ const HeaderIcon: React.FC<{
   icon: ReactNode;
   onClick: () => any;
   isBg: boolean;
-}> = ({ icon, onClick, isBg }) => {
+  isBadge: boolean;
+  badgeCount: number;
+}> = ({ icon, onClick, isBg, badgeCount, isBadge }) => {
   return (
     <IconButton
       sx={{ bgcolor: isBg ? "#E6E6E6" : "transparent", color: "black" }}
       onClick={onClick}
     >
-      {icon}
+      {isBadge ? (
+        <Badge badgeContent={badgeCount} color="error">
+          {icon}
+        </Badge>
+      ) : (
+        icon
+      )}
     </IconButton>
   );
 };

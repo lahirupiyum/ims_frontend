@@ -49,7 +49,7 @@ const CreateUpdateForm = ({
     const { name, value } = event.target;
     setBranchForm((prev) => ({
       ...prev,
-      [name]: value.split("\n").join(" "),
+      [name]: value,
     }));
   };
 
@@ -87,9 +87,12 @@ const CreateUpdateForm = ({
   };
 
   const closeDialog = () => {
-    setBranchForm({ name: "", address: "" });
-    setEditMode(false);
     handleClose();
+    const timeout = setTimeout(() => {
+      setBranchForm({ name: "", address: "" });
+      setEditMode(false);
+      clearTimeout(timeout);
+    }, 200);
   };
 
   const formChildren = (

@@ -6,9 +6,11 @@ import networkDeviceType from "../slices/network/type/reducer";
 import sidenav from "../slices/sidenavSlice";
 import vendor from "../slices/vendor/reducer";
 import branch from "../slices/branch/reducer";
+import notification from "../slices/notificationSlice";
 
 const allReducers = combineReducers({
   sidenav,
+  notification,
   networkDevice,
   networkDeviceManufacturer,
   networkDeviceType,

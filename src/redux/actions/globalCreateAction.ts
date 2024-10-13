@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useAppDispatch } from "../hooks";
 import CreateSliceActionType from "../types/CreateActionType";
+import { addOneNotification } from "../slices/notificationSlice";
 
 const globalCreateAction =
   <RequestType, ResponseType>(
@@ -17,9 +18,12 @@ const globalCreateAction =
         const { data: responseData } = res.data;
         dispatch(success(responseData));
         dispatch(addOnetoList(responseData));
+        dispatch(addOneNotification({type:"success", message:"Badu have been added!"}));
       })
       .catch((err) => {
+        const message = err.response.data.message;
         dispatch(reject(err.message));
+        dispatch(addOneNotification({type:"error", message}));
       });
   };
 

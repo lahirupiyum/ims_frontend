@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useAppDispatch } from "../hooks";
 import PageSliceActionType from "../types/PageActionType";
+import { addOneNotification } from "../slices/notificationSlice";
 
 export type PageReponse<T> = {
     data: T[],
@@ -16,7 +17,9 @@ const globalPageAction = <ResponseType>(page:number, pageSize:number, url:string
         dispatch(success(pageResponse));
     })
     .catch(err => {
-        dispatch(reject(err.message as string));
+        const errorMessage = err.response.data.message;
+        dispatch(reject(errorMessage));
+        dispatch(addOneNotification({type: "error", message: errorMessage}))
     })
 }
 
