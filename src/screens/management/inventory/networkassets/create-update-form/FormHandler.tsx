@@ -1,3 +1,4 @@
+import NetowrkDeviceManufacturerForm from "./manufacturer";
 import NetowrkDeviceTypeForm from "./type";
 
 export enum FormTypes {
@@ -16,7 +17,7 @@ const FormHandler = ({formType, handleClose} : PropTypes) => {
         case FormTypes.type:
             return <NetowrkDeviceTypeForm handleClose={handleClose} index={-1} open={formType === FormTypes.type} selectedType={null} />
         case FormTypes.manufacturer:
-            return null;
+            return <NetowrkDeviceManufacturerForm handleClose={handleClose} index={-1} open={formType === FormTypes.manufacturer} selectedManufacturer={null} />;
         case FormTypes.device:
             return null;
         case FormTypes.model:

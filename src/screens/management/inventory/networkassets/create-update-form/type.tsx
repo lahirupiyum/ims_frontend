@@ -66,7 +66,6 @@ const NetowrkDeviceTypeForm = ({
 
   const closeDialog = () => {
     handleClose();
-    handleClose();
     const timeout = setTimeout(() => {
       setTypeForm({ name: "" });
       if (editMode) dispatch(networkDeviceTypeUpdateReset());
@@ -91,7 +90,7 @@ const NetowrkDeviceTypeForm = ({
       gap={3}
     >
       <FormField
-        label="Type name"
+        label="Device type name"
         name="name"
         onChange={(event) => {
           setTypeForm({ name: event.target.value });
@@ -108,7 +107,7 @@ const NetowrkDeviceTypeForm = ({
       open={open}
       width={500}
       title={
-        editMode ? "Update Network Device Type" : "Create Network Device Type"
+        editMode ? "Update device type" : "Create new device type"
       }
       onClick={handleSubmit}
       children={formChildren}

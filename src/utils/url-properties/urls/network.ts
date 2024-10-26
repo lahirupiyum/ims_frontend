@@ -5,6 +5,8 @@ const networkUrl = getUrl("asset/network/");
 export const networkDeviceUrl = networkUrl + "device";
 
 export const networkDeviceManufacturerUrl = mergeResources(networkDeviceUrl, "manufacturer");
+export const networkDeviceManufacturerWithIdUrl = (id: number) => mergeWithId(networkDeviceManufacturerUrl, id);
+
 export const networkDeviceTypeUrl = mergeResources(networkDeviceUrl, "type");
 export const networkDeviceTypeWithIdUrl = (id: number) => mergeWithId(networkDeviceTypeUrl, id);
 
