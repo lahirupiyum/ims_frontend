@@ -1,6 +1,6 @@
 import { createSlice, Draft, PayloadAction } from "@reduxjs/toolkit";
 
-type UpdateState<T> = {
+export type UpdateState<T> = {
     loading: boolean;
     data: T | null;
     error: string;

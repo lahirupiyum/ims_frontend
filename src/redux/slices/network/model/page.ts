@@ -18,5 +18,5 @@ const pageActions: PageSliceActionType<NetworkDeviceModelResponse> = {
 export const modelPageAction = (page: number, pageSize: number) =>
   globalPageAction(page, pageSize, networkDeviceModelUrl, pageActions);
 
-export const { reset: modelPageReset } = modelPageSlice.actions;
+export const { reset: modelPageReset, create: networkDeviceModelAddOneToList, update: networkDeviceModelUpdateOneInList } = modelPageSlice.actions;
 export default modelPageSlice.reducer;

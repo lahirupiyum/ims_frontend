@@ -11,4 +11,5 @@ export const networkDeviceTypeUrl = mergeResources(networkDeviceUrl, "type");
 export const networkDeviceTypeWithIdUrl = (id: number) => mergeWithId(networkDeviceTypeUrl, id);
 
 
-export const networkDeviceModelUrl = mergeResources(networkUrl, "model");
+export const networkDeviceModelUrl = mergeResources(networkDeviceUrl, "model");
+export const networkDeviceModelWithIdUrl = (id: number) => mergeWithId(networkDeviceModelUrl, id);

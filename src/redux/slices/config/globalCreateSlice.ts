@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, Draft } from '@reduxjs/toolkit';
 
-type CreateState<ResponseType> = {
+export type CreateState<ResponseType> = {
   loading: boolean;
   data: ResponseType | null;
   error: string;
