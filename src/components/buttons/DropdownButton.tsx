@@ -1,5 +1,5 @@
 import { Box, Fade, Menu, MenuItem } from "@mui/material";
-import { MouseEvent, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { fontSizes } from "../typography/CustomTypography";
 import ContainedButton from "./ContainedButton";
@@ -12,17 +12,29 @@ export interface MenuElement {
 interface DropDownButton {
   name: string;
   elements: MenuElement[];
+  isOpen: boolean;
+  setIsOpen: (open:boolean) => void
 }
 
-const DropdownButton: React.FC<DropDownButton> = ({ name, elements }) => {
+const DropdownButton: React.FC<DropDownButton> = ({
+  name,
+  elements,
+  isOpen,
+  setIsOpen
+}) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: MouseEvent<HTMLElement>) => {
+  const handleOpen = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
+    setIsOpen(true);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    if (!isOpen) handleClose();
+  }, [isOpen]);
 
   return (
     <Box>
@@ -31,7 +43,7 @@ const DropdownButton: React.FC<DropDownButton> = ({ name, elements }) => {
         aria-controls={open ? "fade-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
+        onClick={handleOpen}
         sx={{
           border: "1px solid white",
           textTransform: "capitalize",

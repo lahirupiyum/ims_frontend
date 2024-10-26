@@ -55,6 +55,8 @@ const CreateUpdateForm = ({
     handleClose();
     const timeout = setTimeout(() => {
       setVendorForm({ name: "", contactNo: "", email: "" });
+      if (editMode) dispatch(vendorUpdateReset());
+      else dispatch(vendorCreateReset());
       setEditMode(false);
       clearTimeout(timeout);
     }, 200);

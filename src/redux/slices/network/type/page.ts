@@ -19,5 +19,5 @@ const pageActions: PageSliceActionType<NetworkDeviceTypeResponse> = {
 export const typePageAction = (page: number, pageSize: number) =>
   globalPageAction(page, pageSize, networkDeviceTypeUrl, pageActions);
 
-export const { reset: typePageReset } = typePageSlice.actions;
+export const { reset: typePageReset, create: networkDeviceTypeAddOneToList, update: networkDeviceTypeUpdateOneInList } = typePageSlice.actions;
 export default typePageSlice.reducer;

@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import DropdownButton, {
   MenuElement,
@@ -11,10 +11,14 @@ import {
   inventory_network_models,
   inventory_network_types,
 } from "../../../../utils/context-paths";
+import FormHandler, { FormTypes } from "./create-update-form/FormHandler";
 
 const NetworkAssets = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
+  const [selectedFormType, setSelectedFormType] = useState<FormTypes | null>(null)
+  const [openDropDown, setOpenDropDown] = useState<boolean>(false);
 
   useEffect(() => {
     if (pathname === "/inventory/asset/network") navigate("devices");
@@ -38,12 +42,25 @@ const NetworkAssets = () => {
       contextPath: inventory_network_models,
     },
   ];
+  
+  const handleCloseDropDown = () => {
+    setOpenDropDown(false);
+  }
+
+  const handleOpenForm = (type: FormTypes) => {
+    setSelectedFormType(type);
+    handleCloseDropDown();
+  };
+
+  const handleCloseForm = () => {
+    setSelectedFormType(null)
+  }
 
   const menuElements: MenuElement[] = [
-    { label: "Device", onClick: () => {} },
-    { label: "Type", onClick: () => {} },
-    { label: "Manufacturer", onClick: () => {} },
-    { label: "Model", onClick: () => {} },
+    { label: "Device", onClick: () => {handleOpenForm(FormTypes.device)} },
+    { label: "Type", onClick: () => {handleOpenForm(FormTypes.type)} },
+    { label: "Manufacturer", onClick: () => {handleOpenForm(FormTypes.manufacturer)} },
+    { label: "Model", onClick: () => {handleOpenForm(FormTypes.model)} },
   ];
 
   return (
@@ -55,9 +72,10 @@ const NetworkAssets = () => {
         alignItems="center"
       >
         <TabContainer elements={tabs} />
-        <DropdownButton name="new" elements={menuElements} />
+        <DropdownButton name="new" elements={menuElements} isOpen={openDropDown} setIsOpen={setOpenDropDown} />
       </Box>
       <Outlet />
+      <FormHandler formType={selectedFormType} handleClose={handleCloseForm} />
     </div>
   );
 };
