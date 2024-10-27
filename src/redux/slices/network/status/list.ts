@@ -1,5 +1,5 @@
 import { NetworkDeviceStatusResponse } from "../../../../types/NetworkDeviceStatus";
-import { networkDeviceStatusUrl } from "../../../../utils/url-properties/urls/network";
+import { networkDeviceStatusListUrl } from "../../../../utils/url-properties/urls/network";
 import globalListAction from "../../../actions/globalListAction";
 import ListSliceActionType from "../../../types/ListActionType";
 import getListSlice from "../../config/globalListSlice";
@@ -18,9 +18,10 @@ const listActionTypes: ListSliceActionType<NetworkDeviceStatusResponse> = {
 
 export const networkDeviceStatusListAction = () =>
   globalListAction<NetworkDeviceStatusResponse>(
-    networkDeviceStatusUrl,
+    networkDeviceStatusListUrl,
     listActionTypes
   );
 
-export const { reset: networkDeviceStatusListReset } = networkDeviceStatusListSlice.actions;
+export const { reset: networkDeviceStatusListReset } =
+  networkDeviceStatusListSlice.actions;
 export default networkDeviceStatusListSlice.reducer;

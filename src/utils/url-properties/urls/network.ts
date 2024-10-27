@@ -19,3 +19,4 @@ export const networkDeviceModelWithIdUrl = (id: number) => mergeWithId(networkDe
 export const networkDeviceModelListUrl = getListUrl(networkDeviceModelUrl);
 
 export const networkDeviceStatusUrl = mergeResources(networkDeviceUrl, "status");
+export const networkDeviceStatusListUrl = getListUrl(networkDeviceStatusUrl);
