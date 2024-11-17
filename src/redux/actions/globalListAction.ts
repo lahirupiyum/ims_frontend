@@ -9,7 +9,7 @@ const globalListAction = <ResponseType>(url: string, sliceActions: ListSliceActi
 
     await axios.get(url)
     .then(res => {
-        const response: ResponseType[] = res.data;
+        const response: ResponseType[] = res.data.data;
         dispatch(success(response));
     })
     .catch(err => {

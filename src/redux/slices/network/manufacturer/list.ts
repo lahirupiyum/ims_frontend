@@ -24,6 +24,6 @@ export const networkDeviceManufacturerListAction = () =>
     listActionTypes
   );
 
-export const { reset: manufacturerListReset } =
+export const { reset: networkDeviceManufacturerListReset } =
   networkDeviceManufacturerListSlice.actions;
 export default networkDeviceManufacturerListSlice.reducer;

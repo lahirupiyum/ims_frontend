@@ -23,5 +23,5 @@ export const networkDeviceTypeListAction = () =>
   );
 
 
-export const { reset: networkDevicelistReset } = networkDeviceTypeListSlice.actions;
+export const { reset: networkDeviceTypeListReset } = networkDeviceTypeListSlice.actions;
 export default networkDeviceTypeListSlice.reducer;

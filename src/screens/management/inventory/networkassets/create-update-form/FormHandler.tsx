@@ -1,3 +1,4 @@
+import NetworkDeviceForm from "./device";
 import NetowrkDeviceManufacturerForm from "./manufacturer";
 import NetworkDeviceModelForm from "./model";
 import NetowrkDeviceTypeForm from "./type";
@@ -34,7 +35,14 @@ const FormHandler = ({ formType, handleClose }: PropTypes) => {
         />
       );
     case FormTypes.device:
-      return null;
+      return (
+        <NetworkDeviceForm
+          handleClose={handleClose}
+          index={-1}
+          open={formType === FormTypes.device}
+          selectedDevice={null}
+        />
+      );
     case FormTypes.model:
       return (
         <NetworkDeviceModelForm
