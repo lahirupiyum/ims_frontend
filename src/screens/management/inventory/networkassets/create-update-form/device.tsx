@@ -112,12 +112,38 @@ const NetworkDeviceForm = ({
 
   useEffect(() => {
     fetchRequiredLists();
-
     return () => {
       resetRequiredListStates();
-    }
-  },[]);
+    };
+  }, []);
 
+  useEffect(() => {
+    if (selectedDevice) {
+      const {
+        branch,
+        vendor,
+        manufacturer,
+        model,
+        quantity,
+        serialNumber,
+        status,
+        type,
+      } = selectedDevice;
+
+      setNetworkDeviceForm({
+        branchId: branch.id,
+        vendorId: vendor.id,
+        manufacturerId: manufacturer.id,
+        statusId: status.id,
+        typeId: type.id,
+        modelId: model.id,
+        quantity,
+        serialNumber,
+      });
+
+      setEditMode(true);
+    } else setEditMode(false);
+  }, [selectedDevice]);
 
   useEffect(() => {
     if ((createdData && !createLoading) || (updatedData && !updateLoading))
@@ -206,9 +232,8 @@ const NetworkDeviceForm = ({
           options={modelList}
           optionLabel={(option) => option.name}
           value={
-            modelList.find(
-              (model) => model.id === networkDeviceForm.modelId
-            ) || null
+            modelList.find((model) => model.id === networkDeviceForm.modelId) ||
+            null
           }
           onChange={(_, value) =>
             onAutoCompleteFieldChange("modelId", Number(value?.id))
@@ -228,7 +253,8 @@ const NetworkDeviceForm = ({
           optionLabel={(option) => option.name}
           value={
             manufacturersList.find(
-              (manufacturer) => manufacturer.id === networkDeviceForm.manufacturerId
+              (manufacturer) =>
+                manufacturer.id === networkDeviceForm.manufacturerId
             ) || null
           }
           onChange={(_, value) =>

@@ -10,6 +10,7 @@ import { networkDevicePageAction } from "../../../../redux/slices/network/device
 import DeleteDialog from "../../../../components/delete-dialog";
 import { useState } from "react";
 import { networkDeviceDeleteAction } from "../../../../redux/slices/network/device/delete";
+import NetworkDeviceForm from "./create-update-form/device";
 
 const column: Column[] = [
   { id: "action", label: "Action", minWidth: 50 },
@@ -25,6 +26,10 @@ const column: Column[] = [
 ];
 
 const Devices = () => {
+  const [selectedNetworkDevice, setSelectedNetworkDevice] = useState<NetworkDeviceResponse | null>(null);
+  const [isOpenUpdateForm, setIsOpenUpdateForm] = useState<boolean>(false);
+  const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+
   const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
   const [deviceIdToDelete, setDeviceIdToDelete] = useState<number>(-1);
 
@@ -33,6 +38,18 @@ const Devices = () => {
   );
 
   const dispatch = useAppDispatch();
+
+  const handleOpenUpdateForm = (networkDevice: NetworkDeviceResponse, index:number) => {
+    setSelectedNetworkDevice(networkDevice);
+    setSelectedIndex(index);
+    setIsOpenUpdateForm(true);
+  }
+
+  const handleCloseUpdateForm = () => {
+    setSelectedNetworkDevice(null);
+    setSelectedIndex(-1);
+    setIsOpenUpdateForm(false);
+  }
 
   const handleCloseDeleteDialog = () => {
     setOpenDeleteDialog(false);
@@ -49,9 +66,9 @@ const Devices = () => {
   };
 
   const rowsFormatter = (rows: NetworkDeviceResponse[]) =>
-    rows.map((row) => ({
+    rows.map((row, index) => ({
       action: wrapActionButtons([
-        actionButton(ActionIcontype.edit, () => {}, 1),
+        actionButton(ActionIcontype.edit, () => handleOpenUpdateForm(row, index), 1),
         actionButton(
           ActionIcontype.delete,
           () => handleOpenDeleteDialog(row.id),
@@ -75,6 +92,12 @@ const Devices = () => {
         rowsFormatter={rowsFormatter}
         pageAction={networkDevicePageAction}
         pageState={networkDevicePageState}
+      />
+      <NetworkDeviceForm 
+        open={isOpenUpdateForm}
+        handleClose={handleCloseUpdateForm}
+        index={selectedIndex}
+        selectedDevice={selectedNetworkDevice}
       />
       <DeleteDialog
         deleteFunction={deleteFunction}
