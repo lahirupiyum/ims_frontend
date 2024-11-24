@@ -16,6 +16,12 @@ type PropTypes = {
 };
 
 const DeleteDialog = ({ open, deleteFunction, handleClose, name }: PropTypes) => {
+
+  const deleteHandler = () => {
+    deleteFunction();
+    handleClose();
+  }
+
   return (
     <Dialog
       open={open}
@@ -45,7 +51,7 @@ const DeleteDialog = ({ open, deleteFunction, handleClose, name }: PropTypes) =>
         <DialogContentText fontSize={fontSizes.sm}>{`Are you sure you want to delete this ${name.toLowerCase()}? This will permanently erase all related data and cannot be undone.`}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <DialogBoxButton handleClick={deleteFunction} name="Delete" isPrimary />
+        <DialogBoxButton handleClick={deleteHandler} name="Delete" isPrimary />
         <DialogBoxButton handleClick={handleClose} name="Cancel" isPrimary={false} />
       </DialogActions>
     </Dialog>
