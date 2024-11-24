@@ -4,9 +4,12 @@ import CustomTable, {
   Column,
   wrapActionButtons,
 } from "../../../../components/table";
-import { useAppSelector } from "../../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { NetworkDeviceResponse } from "../../../../types/NetworkDevice";
 import { networkDevicePageAction } from "../../../../redux/slices/network/device/page";
+import DeleteDialog from "../../../../components/delete-dialog";
+import { useState } from "react";
+import { networkDeviceDeleteAction } from "../../../../redux/slices/network/device/delete";
 
 const column: Column[] = [
   { id: "action", label: "Action", minWidth: 50 },
@@ -22,15 +25,38 @@ const column: Column[] = [
 ];
 
 const Devices = () => {
+  const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
+  const [deviceIdToDelete, setDeviceIdToDelete] = useState<number>(-1);
+
   const networkDevicePageState = useAppSelector(
     (state) => state.networkDevice.page
   );
+
+  const dispatch = useAppDispatch();
+
+  const handleCloseDeleteDialog = () => {
+    setOpenDeleteDialog(false);
+    setDeviceIdToDelete(-1);
+  };
+
+  const handleOpenDeleteDialog = (id: number) => {
+    setOpenDeleteDialog(true);
+    setDeviceIdToDelete(id);
+  };
+
+  const deleteFunction = () => {
+    dispatch(networkDeviceDeleteAction(deviceIdToDelete));
+  };
 
   const rowsFormatter = (rows: NetworkDeviceResponse[]) =>
     rows.map((row) => ({
       action: wrapActionButtons([
         actionButton(ActionIcontype.edit, () => {}, 1),
-        actionButton(ActionIcontype.delete, () => {}, 2),
+        actionButton(
+          ActionIcontype.delete,
+          () => handleOpenDeleteDialog(row.id),
+          2
+        ),
       ]),
       id: row.id,
       serialNumber: row.serialNumber,
@@ -43,12 +69,20 @@ const Devices = () => {
       vendor: row.vendor.name,
     }));
   return (
-    <CustomTable
-      columns={column}
-      rowsFormatter={rowsFormatter}
-      pageAction={networkDevicePageAction}
-      pageState={networkDevicePageState}
-    />
+    <>
+      <CustomTable
+        columns={column}
+        rowsFormatter={rowsFormatter}
+        pageAction={networkDevicePageAction}
+        pageState={networkDevicePageState}
+      />
+      <DeleteDialog
+        deleteFunction={deleteFunction}
+        handleClose={handleCloseDeleteDialog}
+        open={openDeleteDialog}
+        name="Netowork Device"
+      />
+    </>
   );
 };
 
