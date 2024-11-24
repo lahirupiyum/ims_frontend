@@ -5,10 +5,12 @@ import CustomTable, {
   Column,
   wrapActionButtons,
 } from "../../../../components/table";
-import { useAppSelector } from "../../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { manufacturerPageAction } from "../../../../redux/slices/network/manufacturer/page";
 import { NetworkDeviceManufacturerResponse } from "../../../../types/NetworkDeviceManufacturer";
 import NetowrkDeviceManufacturerForm from "./create-update-form/manufacturer";
+import { networkDeviceManufacturerDeleteAction } from "../../../../redux/slices/network/manufacturer/delete";
+import DeleteDialog from "../../../../components/delete-dialog";
 
 type ManufacturerType = {
   id: number;
@@ -26,6 +28,11 @@ const Manufacturers = () => {
   const [selectedManufacturer, setSelectedManufacturer] =
     useState<NetworkDeviceManufacturerResponse | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
+  const [selectedIdToDelete, setSelectedIdToDelete] = useState<number>(-1);
+
+  const dispatch = useAppDispatch();
 
   const handleOpenUpdateForm = (
     manufacturer: NetworkDeviceManufacturerResponse,
@@ -46,8 +53,18 @@ const Manufacturers = () => {
     (state) => state.networkDeviceManufacturer.page
   );
 
-  const deleteManufacturer = (id: number) => {
-    console.log(`The Id: ${id} of manufacturer about to be deleted!`);
+  const handleOpenDeleteDialog = (id: number) => {
+    setIsDeleteDialogOpen(true);
+    setSelectedIdToDelete(id);
+  };
+
+  const hanldeCloseDeleteDialog = () => {
+    setIsDeleteDialogOpen(false);
+    setSelectedIdToDelete(-1);
+  };
+
+  const deleteFunction = () => {
+    dispatch(networkDeviceManufacturerDeleteAction(selectedIdToDelete));
   };
 
   const rowsFormatter = (manufacturers: ManufacturerType[]) =>
@@ -63,7 +80,7 @@ const Manufacturers = () => {
         actionButton(
           ActionIcontype.delete,
           () => {
-            deleteManufacturer(manufacturer.id);
+            handleOpenDeleteDialog(manufacturer.id);
           },
           2
         ),
@@ -85,6 +102,12 @@ const Manufacturers = () => {
         selectedManufacturer={selectedManufacturer}
         index={selectedIndex}
         open={isOpenUpdateForm}
+      />
+      <DeleteDialog
+        deleteFunction={deleteFunction}
+        handleClose={hanldeCloseDeleteDialog}
+        name="Network Device Manufacturer"
+        open={isDeleteDialogOpen}
       />
     </>
   );
