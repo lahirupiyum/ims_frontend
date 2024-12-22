@@ -13,15 +13,27 @@ export const getPathElement: (
   children: RouteObject[]
 ) => RouteObject = (path, element, children) => ({ path, element, children });
 
-const getRoutesConfig = () => ({
-  home: getPathElement(home, <Home />, []),
-  login: getPathElement(login, <Login />, []),
-  inventory: getPathElement(
-    inventory,
-    <Inventory />,
-    Object.values(getInventoryRoutes())
-  ),
-  notfound: getPathElement("*", <NotFound />, []),
-});
+const routesConfig: RouteObject[] = [
+  {
+    path:home, 
+    element: <Home />, 
+    children: []
+  },
+  {
+    path: login,
+    element: <Login />, 
+    children: []
+  },
+  {
+    path: inventory,
+    element: <Inventory />,
+    children: Object.values(getInventoryRoutes())
+  },
+  {
+    path: "*", 
+    element: <NotFound />, 
+    children: []
+  }
+];
 
-export default getRoutesConfig;
+export default routesConfig;
