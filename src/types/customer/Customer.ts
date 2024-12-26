@@ -11,7 +11,7 @@ interface Customer {
   name: string;
   customerPriority: Priority;
   address: string;
-  constactNo: string;
+  contactNo: string;
   email: string;
   accountManager: Employee;
   vsnl: string;
