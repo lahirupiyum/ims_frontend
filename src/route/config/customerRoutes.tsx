@@ -1,7 +1,7 @@
 import { RouteObject } from "react-router-dom";
 import Customer from "../../screens/management/customer/customer";
-import IllConnection from "../../screens/management/customer/illconnection";
-import MplsConnection from "../../screens/management/customer/mplsconnection";
+import IllConnection from "../../screens/management/customer/connection/ill";
+import MplsConnection from "../../screens/management/customer/connection/mpls";
 import {
   customer_customer,
   customer_ill_connection,
