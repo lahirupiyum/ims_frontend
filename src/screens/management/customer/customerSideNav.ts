@@ -4,7 +4,7 @@ import {
   MdOutlinePeopleAlt,
   MdPeopleAlt,
 } from "react-icons/md";
-import { PiCellTower, PiCellTowerBold } from "react-icons/pi";
+import { TbBuildingBroadcastTower, TbBuildingBroadcastTowerFilled } from "react-icons/tb";
 import {
   customer_customer,
   customer_ill_connection,
@@ -28,16 +28,16 @@ const customerSidenav: SidenavParent = {
       label: "ILL Connections",
       contextPath: customer_ill_connection,
       icon: {
-        default: PiCellTower,
-        selected: PiCellTowerBold,
+        default: TbBuildingBroadcastTower,
+        selected: TbBuildingBroadcastTowerFilled,
       },
     },
     {
       label: "MPLS Connections",
       contextPath: customer_mpls_connection,
       icon: {
-        default: PiCellTower,
-        selected: PiCellTowerBold,
+        default: TbBuildingBroadcastTower,
+        selected: TbBuildingBroadcastTowerFilled,
       },
     },
     {
