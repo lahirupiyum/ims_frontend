@@ -1,27 +1,32 @@
 import { RouteObject } from "react-router-dom";
 import Customer from "../../screens/management/customer/customer";
-import CusRouter from "../../screens/management/customer/cusrouter";
-import PERouter from "../../screens/management/customer/perouter";
-import Connections from "../../screens/management/customer/connections";
-import { customer_customer, customer_peRouters, customer_routers, customer_connection } from "../../utils/context-paths";
+import IllConnection from "../../screens/management/customer/illconnection";
+import MplsConnection from "../../screens/management/customer/mplsconnection";
+import {
+  customer_customer,
+  customer_ill_connection,
+  customer_mpls_connection,
+  customer_new_connection,
+} from "../../utils/context-paths";
+import NewConnection from "../../screens/management/customer/newconnection";
 
 const customerRoutes: RouteObject[] = [
-    {
-        path: customer_customer,
-        element: <Customer />
-    },
-    {
-        path: customer_peRouters,
-        element: <PERouter />
-    },
-    {
-        path: customer_routers,
-        element: <CusRouter />
-    },
-    {
-        path: customer_connection,
-        element: <Connections />
-    }
+  {
+    path: customer_customer,
+    element: <Customer />,
+  },
+  {
+    path: customer_ill_connection,
+    element: <IllConnection />,
+  },
+  {
+    path: customer_mpls_connection,
+    element: <MplsConnection />,
+  },
+  {
+    path: customer_new_connection,
+    element: <NewConnection />
+  }
 ];
 
 export default customerRoutes;

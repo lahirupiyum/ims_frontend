@@ -26,7 +26,10 @@ export const inventory_vendors = mergeUrl(inventory, "vendors");
 export const inventory_branch = mergeUrl(inventory, "branches");
 
 export const customer = "/customer";
-export const customer_connection = mergeUrl(customer, "connection");
-export const customer_peRouters = mergeUrl(customer, "pe-routers");
-export const customer_routers = mergeUrl(customer, "routers");
 export const customer_customer = mergeUrl(customer, "customer");
+
+export const customer_connection = mergeUrl(customer, "connection");
+export const customer_ill_connection = mergeUrl(customer_connection, "ill");
+export const customer_mpls_connection = mergeUrl(customer_connection, "mpls");
+
+export const customer_new_connection = mergeUrl(customer_connection, "new");

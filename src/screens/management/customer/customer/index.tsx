@@ -1,15 +1,12 @@
-import { Box } from "@mui/material";
 import CustomTable, {
   actionButton,
   ActionIcontype,
   Column,
   wrapActionButtons,
 } from "../../../../components/table";
-import { CustomerResponse } from "../../../../types/customer/Customer";
-import ContainedButton from "../../../../components/buttons/ContainedButton";
-import { fontSizes, fontWeights } from "../../../../components/typography/CustomTypography";
 import { useAppSelector } from "../../../../redux/hooks";
 import { customerPageAction } from "../../../../redux/slices/customer/customer/page";
+import { CustomerResponse } from "../../../../types/customer/Customer";
 
 const columns: Column[] = [
   { id: "actions", label: "Actions", minWidth: 50 },

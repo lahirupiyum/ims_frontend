@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../../redux/hooks";
 import { customer as customerSidenavAction } from "../../../redux/slices/sidenavSlice";
-import { customer, customer_connection } from "../../../utils/context-paths";
+import { customer, customer_customer } from "../../../utils/context-paths";
 import Sidenav from "../../sidenav/Sidenav";
 import Header from "../inventory/Header";
 
@@ -14,7 +14,7 @@ const CustomerManagement = () => {
 
   useEffect(() => {
     dispatch(customerSidenavAction());
-    if (location.pathname === customer) navigate(customer_connection);
+    if (location.pathname === customer) navigate(customer_customer);
   }, []);
 
   return (

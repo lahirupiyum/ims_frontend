@@ -11,6 +11,7 @@ import vendor from "../slices/vendor/reducer";
 import customer from "../slices/customer/customer/reducer";
 import cusRouter from "../slices/customer/cusrouter/reducer";
 import peRouter from "../slices/customer/perouter/reducer";
+import connection from "../slices/customer/connection/reducer";
 
 const allReducers = combineReducers({
   sidenav,
@@ -25,6 +26,7 @@ const allReducers = combineReducers({
   customer,
   cusRouter,
   peRouter,
+  connection
 });
 
 export default allReducers;
