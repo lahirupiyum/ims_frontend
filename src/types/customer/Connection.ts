@@ -28,6 +28,7 @@ interface Connection {
   networkServiceType: NetworkServiceType;
   manageStatus: ManageStatus | null;
   firewallCredentials: FirewallCredentials;
+  remarks: string;
 }
 
 export interface ConnectionRequest extends Connection {
