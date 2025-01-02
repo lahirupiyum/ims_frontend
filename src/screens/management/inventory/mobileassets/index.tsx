@@ -108,12 +108,12 @@ const MobileAssets = () => {
         pageState={mobileAssetPageState}
         pageAction={mobileAssetPageAction}
       />
-      {/* <DeleteDialog
+      <DeleteDialog
         name="Mobile Assets"
         deleteFunction={deleteFunction}
         handleClose={closeDeleteDialog}
         open={isDeleteOpen}
-      /> */}
+      />
     </>
   )
 }
