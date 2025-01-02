@@ -1,4 +1,3 @@
-
 const FixedAssets = () => {
   return (
     <div>FixedAssets</div>
