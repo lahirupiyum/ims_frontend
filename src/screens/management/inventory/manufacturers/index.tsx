@@ -1,30 +1,36 @@
-import React from 'react'
-import CustomTable, {
-  actionButton,
-  ActionIcontype,
-  Column,
-  wrapActionButtons,
-} from "../../../../components/table";
+import React from "react";
+import CustomTable, { Column } from "../../../../components/table";
+
+import { Manufacturer } from "../../../../types/Inventory/Manufacturer";
+import { useAppSelector } from "../../../../redux/hooks";
+import { manufacturerPageAction } from "../../../../redux/slices/network/manufacturer/page";
 
 const columns: Column[] = [
-  { id: "actions", label: "Actions", minWidth: 50 },
   { id: "id", label: "ID", minWidth: 20 },
   { id: "name", label: "Name", minWidth: 50 },
-  { id: "email", label: "Email", minWidth: 100 },
-  { id: "contactNo", label: "Contact Number", minWidth: 100 },
 ];
 
 const Manufacturers = () => {
+  const manufacturerPageState = useAppSelector(
+    (state) => state.networkDeviceManufacturer.page
+  );
+
+  const rowsFormatter = (rows: Manufacturer[]) =>
+    rows.map(({ id, name }) => ({
+      id,
+      name,
+    }));
+
   return (
     <>
-     {/* <CustomTable
+      <CustomTable
         columns={columns}
         rowsFormatter={rowsFormatter}
-        pageState={vendorPageState}
-        pageAction={vendorPageAction}
-      />  */}
+        pageState={manufacturerPageState}
+        pageAction={manufacturerPageAction}
+      />
     </>
-  )
-}
+  );
+};
 
-export default Manufacturers
+export default Manufacturers;
