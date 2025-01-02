@@ -9,6 +9,8 @@ import notification from "../slices/notificationSlice";
 import sidenav from "../slices/sidenavSlice";
 import vendor from "../slices/vendor/reducer";
 import networkAssets from "../slices/networkAssets/reducer";
+import mobileAssets from "../slices/mobileAssets/reducer";
+import fixedAssets from "../slices/fixedAssets/reducer";
 
 const allReducers = combineReducers({
   sidenav,
@@ -21,6 +23,8 @@ const allReducers = combineReducers({
   vendor,
   branch,
   networkAssets,
+  mobileAssets,
+  fixedAssets
 });
 
 export default allReducers;
