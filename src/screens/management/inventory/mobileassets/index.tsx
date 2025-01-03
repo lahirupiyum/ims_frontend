@@ -1,16 +1,15 @@
-import {React, useState} from 'react'
+import { useState } from 'react';
+import DeleteDialog from "../../../../components/delete-dialog";
 import CustomTable, {
   actionButton,
   ActionIcontype,
   Column,
   wrapActionButtons,
 } from "../../../../components/table";
-import { useAppDispatch } from "../../../../redux/hooks";
-import { MobileAssetResponse } from "../../../../types/Inventory/asset/ModileAssets";
-import { useAppSelector } from "../../../../redux/hooks";
-import { mobileAssetPageAction } from "../../../../redux/slices/mobileAssets/page";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { mobileAssetDeleteAction } from "../../../../redux/slices/mobileAssets/delete";
-import DeleteDialog from "../../../../components/delete-dialog";
+import { mobileAssetPageAction } from "../../../../redux/slices/mobileAssets/page";
+import { MobileAssetResponse } from "../../../../types/Inventory/asset/ModileAssets";
 
 const columns: Column[] = [
   { id: "actions", label: "Actions", minWidth: 50 },

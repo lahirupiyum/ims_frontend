@@ -1,12 +1,11 @@
 import { Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import ElementBoxImage from "../../assets/images/elementbox-image.jpeg";
 import TataCommunicationFlatImage from "../../assets/images/tata-communications-flat.png";
 import CustomTypography, {
   fontWeights,
 } from "../../components/typography/CustomTypography";
-import { inventory_mobileassets } from "../../utils/context-paths";
-import { customer, inventory_dashboard } from "../../utils/context-paths";
-import { useNavigate } from "react-router-dom";
+import { customer, inventory_mobileassets } from "../../utils/context-paths";
 
 const Home = () => {
 
@@ -34,10 +33,8 @@ const Home = () => {
           gap: "72px",
         }}
       >
-        <ElementBox name="Customer Management" onClick={() => {navigate(inventory_mobileassets)}} />
-        <ElementBox name="Inventory Management" onClick={() => {navigate(inventory_mobileassets)}} />
         <ElementBox name="Customer Management" onClick={() => {navigate(customer)}} />
-        <ElementBox name="Inventory Management" onClick={() => {navigate(inventory_dashboard)}} />
+        <ElementBox name="Inventory Management" onClick={() => {navigate(inventory_mobileassets)}} />
       </Box>
     </div>
   );

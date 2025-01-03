@@ -8,7 +8,7 @@ import {
   customer_mpls_connection,
   customer_new_connection,
 } from "../../utils/context-paths";
-import NewConnection from "../../screens/management/customer/newconnection";
+import NewConnection from "../../screens/management/customer/connection/newconnection";
 
 const customerRoutes: RouteObject[] = [
   {
