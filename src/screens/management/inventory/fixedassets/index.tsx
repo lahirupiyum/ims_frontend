@@ -7,9 +7,9 @@ import CustomTable, {
   wrapActionButtons,
 } from "../../../../components/table";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { fixedAssetDeleteAction } from "../../../../redux/slices/fixedAssets/delete";
-import { fixedAssetPageAction } from "../../../../redux/slices/fixedAssets/page";
 import { FixedAssetResponse } from "../../../../types/Inventory/asset/FixedAssets";
+import { fixedAssetDeleteAction } from '../../../../redux/slices/inventory/fixedAssets/delete';
+import { fixedAssetPageAction } from '../../../../redux/slices/inventory/fixedAssets/page';
 
 const columns: Column[] = [
   { id: "actions", label: "Actions", minWidth: 50 },

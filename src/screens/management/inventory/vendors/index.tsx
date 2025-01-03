@@ -13,10 +13,10 @@ import {
   fontWeights,
 } from "../../../../components/typography/CustomTypography";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { vendorDeleteAction } from "../../../../redux/slices/vendor/delete";
-import { vendorPageAction } from "../../../../redux/slices/vendor/page";
-import { VendorResponse } from "../../../../types/Vendor";
+import { vendorDeleteAction } from "../../../../redux/slices/inventory/vendor/delete";
+import { vendorPageAction } from "../../../../redux/slices/inventory/vendor/page";
 import CreateUpdateForm from "./CreateUpdateForm";
+import { VendorResponse } from "../../../../types/Inventory/Vendor";
 
 const columns: Column[] = [
   { id: "actions", label: "Actions", minWidth: 50 },
