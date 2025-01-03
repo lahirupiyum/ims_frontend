@@ -6,12 +6,12 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import {
   vendorCreateAction,
   vendorCreateReset,
-} from "../../../../redux/slices/vendor/create";
+} from "../../../../redux/slices/inventory/vendor/create";
 import {
   vendorUpdateAction,
   vendorUpdateReset,
-} from "../../../../redux/slices/vendor/update";
-import { VendorRequest, VendorResponse } from "../../../../types/Vendor";
+} from "../../../../redux/slices/inventory/vendor/update";
+import { VendorRequest, VendorResponse } from "../../../../types/Inventory/Vendor";
 
 type PropTypes = {
   open: boolean;

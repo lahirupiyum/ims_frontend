@@ -1,7 +1,7 @@
 import CustomTable, { Column } from "../../../../components/table";
 
 import { useAppSelector } from "../../../../redux/hooks";
-import { manufacturerPageAction } from "../../../../redux/slices/network/manufacturer/page";
+import { manufacturerpageAction } from "../../../../redux/slices/inventory/manufacturer/page";
 import { Manufacturer } from "../../../../types/Inventory/Manufacturer";
 
 const columns: Column[] = [
@@ -11,7 +11,7 @@ const columns: Column[] = [
 
 const Manufacturers = () => {
   const manufacturerPageState = useAppSelector(
-    (state) => state.networkDeviceManufacturer.page
+    (state) => state.manufacturer.page
   );
 
   const rowsFormatter = (rows: Manufacturer[]) =>
@@ -26,7 +26,7 @@ const Manufacturers = () => {
         columns={columns}
         rowsFormatter={rowsFormatter}
         pageState={manufacturerPageState}
-        pageAction={manufacturerPageAction}
+        pageAction={manufacturerpageAction}
       />
     </>
   );

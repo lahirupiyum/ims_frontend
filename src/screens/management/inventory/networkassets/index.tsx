@@ -1,22 +1,15 @@
-import { Box } from "@mui/material";
-import { useEffect, useState } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import DropdownButton, {
-  MenuElement,
-} from "../../../../components/buttons/DropdownButton";
+import { useState } from "react";
+import DeleteDialog from "../../../../components/delete-dialog";
 import CustomTable, {
   actionButton,
   ActionIcontype,
   Column,
   wrapActionButtons,
 } from "../../../../components/table";
-import FormHandler, { FormTypes } from "./create-update-form/FormHandler";
-import { useAppDispatch } from "../../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { networkAssetDeleteAction } from "../../../../redux/slices/inventory/networkAssets/delete";
+import { networkAssetPageAction } from "../../../../redux/slices/inventory/networkAssets/page";
 import { NetworkAssetResponse } from "../../../../types/Inventory/asset/NetworkAssets";
-import { useAppSelector } from "../../../../redux/hooks";
-import { networkAssetPageAction } from "../../../../redux/slices/networkAssets/page";
-import { networkAssetDeleteAction } from "../../../../redux/slices/networkAssets/delete";
-import DeleteDialog from "../../../../components/delete-dialog";
 
 const columns: Column[] = [
   { id: "actions", label: "Actions", minWidth: 50 },
@@ -31,34 +24,12 @@ const columns: Column[] = [
 ];
 
 const NetworkAssets = () => {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-
-  const [selectedFormType, setSelectedFormType] = useState<FormTypes | null>(null)
-  const [openDropDown, setOpenDropDown] = useState<boolean>(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
   const [selecteIdToDelete, setSelectedIdToDelete] = useState<number>(-1);
 
   const networkAssetPageState = useAppSelector((state) => state.networkAssets.page);
 
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (pathname === "/inventory/asset/network") navigate("devices");
-  });
-
-  const handleCloseDropDown = () => {
-    setOpenDropDown(false);
-  }
-
-  const handleOpenForm = (type: FormTypes) => {
-    setSelectedFormType(type);
-    handleCloseDropDown();
-  };
-
-  const handleCloseForm = () => {
-    setSelectedFormType(null)
-  }
 
   const openDeleteDialog = (id: number) => {
     setSelectedIdToDelete(id);
@@ -104,31 +75,15 @@ const NetworkAssets = () => {
       status
     }));
 
-  const menuElements: MenuElement[] = [
-    { label: "Device", onClick: () => {handleOpenForm(FormTypes.device)} },
-    { label: "Type", onClick: () => {handleOpenForm(FormTypes.type)} },
-    { label: "Manufacturer", onClick: () => {handleOpenForm(FormTypes.manufacturer)} },
-    { label: "Model", onClick: () => {handleOpenForm(FormTypes.model)} },
-  ];
 
   return (
     <div style={{ width: "100%" }}>
-      <Box
-        p={2}
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <DropdownButton name="new" elements={menuElements} isOpen={openDropDown} setIsOpen={setOpenDropDown} />
-      </Box>
       <CustomTable
         columns={columns}
         rowsFormatter={rowsFormatter}
         pageState={networkAssetPageState}
         pageAction={networkAssetPageAction}
       />
-      <Outlet />
-      <FormHandler formType={selectedFormType} handleClose={handleCloseForm} />
       <DeleteDialog
         name="Network Assets"
         deleteFunction={deleteFunction}
