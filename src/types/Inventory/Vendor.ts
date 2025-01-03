@@ -1,12 +1,12 @@
 export type VendorRequest = {
     name: string,
     email: string,
-    phoneNumber: string
+    contactNo: string
 }
 
 export type VendorResponse = {
     id: number,
     name:string,
     email: string,
-    phoneNumber: string
+    contactNo: string
 }
