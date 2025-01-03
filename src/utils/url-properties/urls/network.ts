@@ -1,8 +1,10 @@
 import { getListUrl, getUrl, mergeResources, mergeWithId } from "../urlGenerator";
 
-const networkUrl = getUrl("asset/network/");
+export const networkAssetUrl = getUrl("asset/network/");
+export const networkAssetListUrl = getListUrl(networkAssetUrl);
+export const networkAssetWithIdUrl = (id: number) => mergeWithId(networkAssetUrl, id);
 
-export const networkDeviceUrl = networkUrl + "device";
+export const networkDeviceUrl = networkAssetUrl + "device";
 export const networkDeviceWithIdUrl = (id:number) => mergeWithId(networkDeviceUrl, id);
 
 export const networkDeviceManufacturerUrl = mergeResources(networkDeviceUrl, "manufacturer");

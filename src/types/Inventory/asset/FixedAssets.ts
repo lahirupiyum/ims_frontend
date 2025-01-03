@@ -2,7 +2,7 @@ import { AssetRequest, AssetResponse } from "../../common/Asset"
 
  type FixedAsset = {
     invoiceNumber: string,
-    purchaceDate: number,
+    purchaseDate: number,
     deprecationInfo: string
 }
 

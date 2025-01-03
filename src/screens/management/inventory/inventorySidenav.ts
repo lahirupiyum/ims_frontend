@@ -1,10 +1,12 @@
 import { HiOutlineUsers, HiUsers } from "react-icons/hi2";
-import { PiBuildingsBold, PiBuildingsFill, PiLockers, PiLockersFill } from "react-icons/pi";
+import { PiLockers, PiLockersFill } from "react-icons/pi";
 import { RiRouterFill, RiRouterLine } from "react-icons/ri";
-import { TbLayoutDashboard, TbLayoutDashboardFilled } from "react-icons/tb";
+import { IoLaptop, IoLaptopOutline } from "react-icons/io5";
+import { MdHandyman, MdOutlineHandyman } from "react-icons/md";
+
 import {
-  inventory_branch,
-  inventory_dashboard,
+  inventory_manufacturers,
+  inventory_mobileassets,
   inventory_fixed,
   inventory_network,
   inventory_vendors,
@@ -15,11 +17,11 @@ const inventorySidenav: SidenavParent = {
   title: "Inventory Manager",
   elements: [
     {
-      label: "Dashboard",
-      contextPath: inventory_dashboard,
+      label: "Mobile Assets",
+      contextPath: inventory_mobileassets,
       icon: {
-        default: TbLayoutDashboard,
-        selected: TbLayoutDashboardFilled,
+        default: IoLaptopOutline,
+        selected: IoLaptop,
       },
     },
     {
@@ -47,11 +49,11 @@ const inventorySidenav: SidenavParent = {
       },
     },
     {
-      label:"Branches",
-      contextPath: inventory_branch,
+      label:"Manufacturers",
+      contextPath: inventory_manufacturers,
       icon: {
-        default: PiBuildingsBold,
-        selected: PiBuildingsFill,
+        default: MdOutlineHandyman,
+        selected: MdHandyman,
       }
     }
   ],
