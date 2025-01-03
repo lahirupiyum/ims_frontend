@@ -4,6 +4,7 @@ import TataCommunicationFlatImage from "../../assets/images/tata-communications-
 import CustomTypography, {
   fontWeights,
 } from "../../components/typography/CustomTypography";
+import { inventory_mobileassets } from "../../utils/context-paths";
 import { customer, inventory_dashboard } from "../../utils/context-paths";
 import { useNavigate } from "react-router-dom";
 
@@ -33,6 +34,8 @@ const Home = () => {
           gap: "72px",
         }}
       >
+        <ElementBox name="Customer Management" onClick={() => {navigate(inventory_mobileassets)}} />
+        <ElementBox name="Inventory Management" onClick={() => {navigate(inventory_mobileassets)}} />
         <ElementBox name="Customer Management" onClick={() => {navigate(customer)}} />
         <ElementBox name="Inventory Management" onClick={() => {navigate(inventory_dashboard)}} />
       </Box>

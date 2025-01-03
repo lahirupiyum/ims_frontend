@@ -6,10 +6,10 @@ import CustomTable, {
   wrapActionButtons,
 } from "../../../../components/table";
 import { useAppDispatch } from "../../../../redux/hooks";
-import { FixedAssetResponse } from "../../../../types/Inventory/asset/FixedAssets";
+import { MobileAssetResponse } from "../../../../types/Inventory/asset/ModileAssets";
 import { useAppSelector } from "../../../../redux/hooks";
-import { fixedAssetPageAction } from "../../../../redux/slices/fixedAssets/page";
-import { fixedAssetDeleteAction } from "../../../../redux/slices/fixedAssets/delete";
+import { mobileAssetPageAction } from "../../../../redux/slices/mobileAssets/page";
+import { mobileAssetDeleteAction } from "../../../../redux/slices/mobileAssets/delete";
 import DeleteDialog from "../../../../components/delete-dialog";
 
 const columns: Column[] = [
@@ -23,15 +23,17 @@ const columns: Column[] = [
   { id: "type", label: "Type", minWidth: 50 },
   { id: "status", label: "Status", minWidth: 50 },
   { id: "invoiceNumber", label: "Invoice Number", minWidth: 50 },
+  { id: "assignedEmployeeName)", label: "Assigned To (Employee Name)", minWidth: 50 },
+  { id: "warrantyExpireDate", label: "Warranty Expire Date", minWidth: 50 },
   { id: "purchaseDate", label: "Purchase Date", minWidth: 50 },
-  { id: "deprecationInfo", label: "Deprecation Info", minWidth: 50 },
 ];
 
-const FixedAssets = () => {
+
+const MobileAssets = () => {
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
   const [selecteIdToDelete, setSelectedIdToDelete] = useState<number>(-1);
 
-  const fixedAssetPageState = useAppSelector((state) => state.fixedAssets.page);
+  const mobileAssetPageState = useAppSelector((state) => state.mobileAssets.page);
 
   const dispatch = useAppDispatch();
 
@@ -46,11 +48,11 @@ const FixedAssets = () => {
   };
 
   const deleteFunction = () => {
-    dispatch(fixedAssetDeleteAction(selecteIdToDelete));
+    dispatch(mobileAssetDeleteAction(selecteIdToDelete));
     closeDeleteDialog();
   };
 
-  const rowsFormatter = (rows: FixedAssetResponse[]) =>
+  const rowsFormatter = (rows: MobileAssetResponse[]) =>
     rows.map(({ 
       id, 
       assetNumber, 
@@ -62,8 +64,9 @@ const FixedAssets = () => {
       type,
       status,
       invoiceNumber,
+      assignedTo,
+      warrantyExpireDate,
       purchaseDate,
-      deprecationInfo,
      }, index) => ({
       actions: wrapActionButtons([
         actionButton(
@@ -91,8 +94,9 @@ const FixedAssets = () => {
       type,
       status,
       invoiceNumber,
+      assignedTo,
+      warrantyExpireDate,
       purchaseDate,
-      deprecationInfo
     }));
 
   return (
@@ -100,11 +104,11 @@ const FixedAssets = () => {
       <CustomTable
         columns={columns}
         rowsFormatter={rowsFormatter}
-        pageState={fixedAssetPageState}
-        pageAction={fixedAssetPageAction}
+        pageState={mobileAssetPageState}
+        pageAction={mobileAssetPageAction}
       />
       <DeleteDialog
-        name="Fixed Assets"
+        name="Mobile Assets"
         deleteFunction={deleteFunction}
         handleClose={closeDeleteDialog}
         open={isDeleteOpen}
@@ -113,4 +117,4 @@ const FixedAssets = () => {
   )
 }
 
-export default FixedAssets
+export default MobileAssets

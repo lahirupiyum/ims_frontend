@@ -8,6 +8,9 @@ import networkDeviceType from "../slices/network/type/reducer";
 import notification from "../slices/notificationSlice";
 import sidenav from "../slices/sidenavSlice";
 import vendor from "../slices/vendor/reducer";
+import networkAssets from "../slices/networkAssets/reducer";
+import mobileAssets from "../slices/mobileAssets/reducer";
+import fixedAssets from "../slices/fixedAssets/reducer";
 import customer from "../slices/customer/customer/reducer";
 import cusRouter from "../slices/customer/cusrouter/reducer";
 import peRouter from "../slices/customer/perouter/reducer";
@@ -23,6 +26,9 @@ const allReducers = combineReducers({
   networkDeviceStatus,
   vendor,
   branch,
+  networkAssets,
+  mobileAssets,
+  fixedAssets
   customer,
   cusRouter,
   peRouter,

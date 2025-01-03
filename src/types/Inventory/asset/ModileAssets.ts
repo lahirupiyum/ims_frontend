@@ -3,8 +3,8 @@ import { Employee } from "../Employee"
 
 type MobileAsset = {
     assignedTo: Employee,
-    warrentyExpireDate: number,
-    purchaceDate: number,
+    warrantyExpireDate: number,
+    purchaseDate: number,
     invoiceNumber: string
 }
 

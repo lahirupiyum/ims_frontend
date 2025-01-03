@@ -6,23 +6,16 @@ export const login = "/auth/login";
 export const home = "/";
 
 export const inventory = "/inventory";
-export const inventory_dashboard = mergeUrl(inventory, "dashboard");
-const inventory_assets = mergeUrl(inventory, "asset");
+export const inventory_mobileassets = mergeUrl(inventory, "mobileassests");
 
 // network context paths
-export const inventory_network = mergeUrl(inventory_assets, "network");
-export const inventory_network_devices = mergeUrl(inventory_network, "devices");
-export const inventory_network_manufacturers = mergeUrl(
-  inventory_network,
-  "manufacturers"
-);
-export const inventory_network_models = mergeUrl(inventory_network, "models");
-export const inventory_network_types = mergeUrl(inventory_network, "types");
+export const inventory_network = mergeUrl(inventory, "network");
 
 // fixed assets context paths
-export const inventory_fixed = mergeUrl(inventory_assets, "fixed");
+export const inventory_fixed = mergeUrl(inventory, "fixed");
 
 export const inventory_vendors = mergeUrl(inventory, "vendors");
+export const inventory_manufacturers = mergeUrl(inventory, "manufacturers");
 export const inventory_branch = mergeUrl(inventory, "branches");
 
 export const customer = "/customer";
