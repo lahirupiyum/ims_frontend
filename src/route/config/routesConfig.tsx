@@ -1,28 +1,22 @@
-import { ReactNode } from "react";
 import { RouteObject } from "react-router-dom";
 import Home from "../../screens/home/Home";
 import Login from "../../screens/login/Login";
+import CustomerManagement from "../../screens/management/customer";
 import Inventory from "../../screens/management/inventory";
 import NotFound from "../../screens/notfound";
-import { home, inventory, login } from "../../utils/context-paths";
+import { customer, home, inventory, login } from "../../utils/context-paths";
+import customerRoutes from "./customerRoutes";
 import { inventoryRoutes } from "./inventoryRoutes";
 
-interface RouteObject{
-  path: string,
-  element: ReactNode,
-  children: RouteObject[]
-};
 
 const routesConfig: RouteObject[] = [
   {
     path:home, 
-    element: <Home /> as React.ReactNode, 
-    children: []
+    element: <Home />
   },
   {
     path: login,
-    element: <Login /> as React.ReactNode, 
-    children: []
+    element: <Login />
   },
   {
     path: inventory,
@@ -30,9 +24,13 @@ const routesConfig: RouteObject[] = [
     children: inventoryRoutes
   },
   {
+    path: customer,
+    element: <CustomerManagement />,
+    children: customerRoutes
+  },
+  {
     path: "*", 
-    element: <NotFound /> as React.ReactNode, 
-    children: []
+    element: <NotFound />
   }
 ];
 

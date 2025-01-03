@@ -8,7 +8,7 @@ export enum fontWeights {
   md = "400",
   lg = "500",
   xl = "600",
-  xxl = "700",
+  xxl = "800",
 }
 
 export enum fontSizes {
