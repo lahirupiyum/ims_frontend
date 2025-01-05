@@ -4,6 +4,8 @@ import page from "./page";
 // import update from "./update";
 import deleteState from "./delete";
 import list from "./list";
+import router from "./router";
+import switchState from "./switch"
 
 const networkAssets = combineReducers({
     page,
@@ -11,6 +13,8 @@ const networkAssets = combineReducers({
     // update,
     delete: deleteState,
     list,
+    router,
+    switch: switchState
 })
 
 export default networkAssets;

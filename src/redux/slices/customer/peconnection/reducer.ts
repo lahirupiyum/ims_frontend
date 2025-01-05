@@ -1,10 +1,8 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import page from "./page";
 import create from "./create";
 
-const cusRouter = combineReducers({
-    page,
+const peConnection = combineReducers({
     create
 })
 
-export default cusRouter;
+export default peConnection;

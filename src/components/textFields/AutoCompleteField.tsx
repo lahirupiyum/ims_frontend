@@ -2,6 +2,7 @@ import {
   Autocomplete,
   AutocompleteChangeDetails,
   AutocompleteChangeReason,
+  AutocompleteInputChangeReason,
   Box,
 } from "@mui/material";
 import { SyntheticEvent } from "react";
@@ -11,7 +12,7 @@ import CustomTypography, {
 } from "../typography/CustomTypography";
 import OutlinedTextField from "./OutlinedTextField";
 
-type PropTypes<T> = {
+export type PropTypes<T> = {
   label: string;
   options: T[];
   optionLabel: (option: T) => string;
@@ -22,6 +23,12 @@ type PropTypes<T> = {
     reason: AutocompleteChangeReason,
     details?: AutocompleteChangeDetails<T> | undefined
   ) => void;
+  onInputChange?:
+    | ((
+        event: React.SyntheticEvent,
+        value: string,
+        reason: AutocompleteInputChangeReason
+      ) => void)
 };
 
 const AutoCompleteFormField = <T,>({
@@ -30,6 +37,7 @@ const AutoCompleteFormField = <T,>({
   value,
   optionLabel,
   onChange,
+  onInputChange,
 }: PropTypes<T>) => {
   return (
     <Box sx={{ width: "100%" }}>
@@ -50,6 +58,7 @@ const AutoCompleteFormField = <T,>({
         renderInput={(params) => (
           <OutlinedTextField placeholder={label} {...params} />
         )}
+        onInputChange={onInputChange}
       />
     </Box>
   );

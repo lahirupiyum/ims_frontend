@@ -1,5 +1,5 @@
-import { basicInfo } from "../common/BasicInfo";
+import { BasicInfo } from "../common/BasicInfo";
 
-export interface Manufacturer extends basicInfo{
+export interface Manufacturer extends BasicInfo{
     
 }

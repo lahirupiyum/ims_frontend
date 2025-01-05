@@ -7,9 +7,11 @@ import mobileAssets from "../slices/inventory/mobileAssets/reducer";
 import fixedAssets from "../slices/inventory/fixedAssets/reducer";
 import customer from "../slices/customer/customer/reducer";
 import cusRouter from "../slices/customer/cusrouter/reducer";
-import peRouter from "../slices/customer/perouter/reducer";
 import connection from "../slices/customer/connection/reducer";
 import manufacturer from "../slices/inventory/manufacturer/reducer";
+import peConnection from "../slices/customer/peconnection/reducer";
+import lastMileProvider from "../slices/customer/lastmile/provider/reducer";
+import lastMileMedia from "../slices/customer/lastmile/media/reducer";
 
 const allReducers = combineReducers({
   sidenav,
@@ -22,8 +24,11 @@ const allReducers = combineReducers({
 
   customer,
   cusRouter,
-  peRouter,
-  connection
+  connection,
+  peConnection,
+
+  lastMileProvider,
+  lastMileMedia,
 });
 
 export default allReducers;

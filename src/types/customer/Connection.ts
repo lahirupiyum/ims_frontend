@@ -4,16 +4,16 @@ import {
   LastMileConnectionRequest,
   LastMileConnectionResponse,
 } from "./LastMileConnection";
-import { PERouterResponse } from "./PERouter";
+import { PEConnectionResponse } from "./PERouter";
 
 export enum NetworkServiceType {
-  ILL,
-  MPLS,
+  ILL = "ILL",
+  MPLS = "MPLS",
 }
 
 export enum ManageStatus {
-  MANAGEABLE,
-  UNMANAGEABLE,
+  MANAGEABLE="Manageable",
+  UNMANAGEABLE="Unmanageable",
 }
 
 export type FirewallCredentials = {
@@ -22,12 +22,12 @@ export type FirewallCredentials = {
 };
 
 interface Connection {
-  dsp: Date;
-  serviceChange: Date;
-  terminationDate: Date;
+  dsp: string | null;
+  serviceChange: string | null;
+  terminationDate: string | null;
   networkServiceType: NetworkServiceType;
-  manageStatus: ManageStatus | null;
-  firewallCredentials: FirewallCredentials;
+  manageStatus: ManageStatus;
+  firewallCredentials: FirewallCredentials ;
   remarks: string;
 }
 
@@ -41,7 +41,7 @@ export interface ConnectionRequest extends Connection {
 export interface ConnectionResponse extends Connection {
   lastMileConnection: LastMileConnectionResponse;
   customer: CustomerResponse;
-  peRouter: PERouterResponse;
+  peRouter: PEConnectionResponse;
   cusRouter: CusRouterRespone;
   activeStatus: boolean;
 }

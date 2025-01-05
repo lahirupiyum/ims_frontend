@@ -15,14 +15,14 @@ const globalCreateAction =
     await axios
       .post(url, data)
       .then((res) => {
-        const { data: responseData } = res.data;
+        const { data: responseData, message } = res.data;
         dispatch(success(responseData));
-        dispatch(addOnetoList(responseData));
-        dispatch(addOneNotification({type:"success", message:"Badu have been added!"}));
+        if (addOnetoList) dispatch(addOnetoList(responseData));
+        dispatch(addOneNotification({type:"success", message}));
       })
       .catch((err) => {
-        const message = err.response.data.message;
-        dispatch(reject(err.message));
+        const message = err.response ? err.response.data.message : err.message;
+        dispatch(reject(message));
         dispatch(addOneNotification({type:"error", message}));
       });
   };
