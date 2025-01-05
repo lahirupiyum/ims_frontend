@@ -1,4 +1,7 @@
-import { VendorRequest, VendorResponse } from "../../../types/Vendor";
+import {
+  VendorRequest,
+  VendorResponse,
+} from "../../../../types/Inventory/Vendor";
 import { vendorWithIdUrl } from "../../../../utils/url-properties/urls/inventory/vendor";
 import globalUpdateAction from "../../../actions/globalUpdateAction";
 import UpdateSliceActionType from "../../../types/UpdateActionType";
@@ -27,5 +30,5 @@ export const vendorUpdateAction = (
     updateActionTypes
   );
 
-  export const { reset: vendorUpdateReset } = vendorUpdateSlice.actions;
-  export default vendorUpdateSlice.reducer;
+export const { reset: vendorUpdateReset } = vendorUpdateSlice.actions;
+export default vendorUpdateSlice.reducer;

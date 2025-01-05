@@ -36,6 +36,9 @@ const PopupDialog = ({
   return (
     <Dialog
       sx={{
+        "& .MuiDialog-paper":{
+          maxWidth:"100%",
+        },
         "& .MuiDialogContent-root": {
           width,
           padding: 2,
