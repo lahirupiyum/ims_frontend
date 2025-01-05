@@ -1,4 +1,5 @@
-import { Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
+import { IoArrowBack } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
 import lightTheme from "../../assets/theme/light";
 import CustomTypography, {
@@ -47,9 +48,16 @@ const Sidenav = () => {
           flexDirection="column"
           gap="20px"
         >
+          <Box position="relative">
+            <Box position="absolute" top={1} left={1} >
+              <IconButton sx={{boxShadow: "0 2px 4px 1px lightgray"}} onClick={() => navigate("/")}>
+              <IoArrowBack color="gray" />
+              </IconButton>
+            </Box>
           <CustomTypography fontSize={fontSizes.md}>
             {finalTitle}
           </CustomTypography>
+          </Box>
           <Box display="flex" flexDirection="column">
             {elements.map((element, index) => (
               <Box
