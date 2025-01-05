@@ -20,6 +20,7 @@ import ConnectionForm from "./ConnectionForm";
 import CustomerRouterForm from "./CustomerRouterForm";
 import LastMileConnectionForm from "./LastMileConnectionForm";
 import PEConnectionForm from "./PEConnectionForm";
+import { cusRouterCreateAction } from "../../../../../redux/slices/customer/cusrouter/create";
 
 type ConnectionCreateState = {
   name: string;
@@ -127,22 +128,35 @@ const NewConnection = () => {
   ];
 
   const dispatch = useAppDispatch();
-  const { data: createdPEConnection, loading: peConnectionCreateLoading } = useAppSelector(state => state.peConnection.create);
-  const { data: createdCusRouter, loading: cusRouterCreateLoading } = useAppSelector(state => state.cusRouter.create);
+  const { data: createdPEConnection, loading: peConnectionCreateLoading } =
+    useAppSelector((state) => state.peConnection.create);
+  const { data: createdCusRouter, loading: cusRouterCreateLoading } =
+    useAppSelector((state) => state.cusRouter.create);
 
   useEffect(() => {
     if (createdPEConnection && createdCusRouter) {
       const finalConnectionForm: ConnectionRequest = { ...connectionForm };
       finalConnectionForm.cusRouterId = createdCusRouter.id;
       finalConnectionForm.peRouterId = createdPEConnection.id;
+      setConnectionForm((prev) => ({
+        ...prev,
+        cusRouterId: createdCusRouter.id,
+        peRouterId: createdPEConnection.id,
+      }));
 
-      dispatch(connectionCreateAction(finalConnectionForm))
+      dispatch(connectionCreateAction(finalConnectionForm));
     }
-  },[peConnectionCreateLoading, cusRouterCreateLoading])
+  }, [peConnectionCreateLoading, cusRouterCreateLoading]);
 
   const handleSubmit = () => {
-    dispatch(peConnectionCreateAction(peConnectionForm));
-    // dispatch(cusRouterCreateAction(cusRouterForm));
+    const { cusRouterId, peRouterId } = connectionForm;
+    if (cusRouterId !== 0 && peRouterId !== 0)
+      dispatch(connectionCreateAction(connectionForm));
+    else {
+      if (!createdPEConnection)
+        dispatch(peConnectionCreateAction(peConnectionForm));
+      if (!createdCusRouter) dispatch(cusRouterCreateAction(cusRouterForm));
+    }
   };
 
   const currentFormState = states[currentFormIndex];

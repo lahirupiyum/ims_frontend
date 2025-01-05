@@ -16,6 +16,7 @@ import location from "../slices/inventory/locations/reducer"
 import type from "../slices/inventory/type/reducer";
 import model from "../slices/inventory/model/reducer";
 import status from "../slices/inventory/status/reducer";
+import employee from "../slices/inventory/employee/reducer";
 
 const allReducers = combineReducers({
   sidenav,
@@ -29,6 +30,7 @@ const allReducers = combineReducers({
   type,
   model,
   status,
+  employee,
 
   customer,
   cusRouter,

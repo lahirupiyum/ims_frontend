@@ -4,6 +4,8 @@ import FormField from "../../../../../components/textFields/FormField";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
 import { networkSwitchSearchAction } from "../../../../../redux/slices/inventory/networkAssets/switch";
 import { PEConnectionRequset } from "../../../../../types/customer/PERouter";
+import { useEffect } from "react";
+import { peRouterListAction } from "../../../../../redux/slices/inventory/networkAssets/list";
 
 type PropTypes = {
   peConnectionForm: PEConnectionRequset,
@@ -20,6 +22,10 @@ const PEConnectionForm = ({peConnectionForm, setPEConnectionForm}: PropTypes) =>
   const { data: networkSwitchList } = useAppSelector(
     (state) => state.networkAssets.switch
   );
+
+  useEffect(() => {
+    dispatch(peRouterListAction());
+  },[]);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -91,7 +97,7 @@ const PEConnectionForm = ({peConnectionForm, setPEConnectionForm}: PropTypes) =>
       />
       <FormField
         label="Switch Port"
-        name="swtichPort"
+        name="switchPort"
         value={peConnectionForm?.switchPort || ""}
         onChange={handleChange}
       />
