@@ -1,7 +1,7 @@
-import { basicInfo } from "../common/BasicInfo";
+import { BasicInfo } from "../common/BasicInfo";
 
-interface LastMileProvider extends basicInfo {}
-interface LastMileMedia extends basicInfo {};
+export interface LastMileProvider extends BasicInfo {}
+export interface LastMileMedia extends BasicInfo {};
 
 interface LastMileConnection {
     switchPort: string;

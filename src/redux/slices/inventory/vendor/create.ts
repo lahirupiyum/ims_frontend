@@ -1,4 +1,5 @@
-import { VendorRequest, VendorResponse } from "../../../types/Vendor";
+
+import { VendorRequest, VendorResponse } from "../../../../types/Inventory/Vendor";
 import { vendorUrl } from "../../../../utils/url-properties/urls/inventory/vendor";
 import globalCreateAction from "../../../actions/globalCreateAction";
 import CreateSliceActionType from "../../../types/CreateActionType";

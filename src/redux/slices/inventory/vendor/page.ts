@@ -1,4 +1,5 @@
-import { VendorResponse } from "../../../types/Vendor";
+
+import { VendorResponse } from "../../../../types/Inventory/Vendor";
 import { vendorUrl } from "../../../../utils/url-properties/urls/inventory/vendor";
 import globalPageAction from "../../../actions/globalPageAction";
 import PageSliceActionType from "../../../types/PageActionType";

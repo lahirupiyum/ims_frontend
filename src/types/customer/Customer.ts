@@ -1,20 +1,20 @@
 import { Employee } from "../Inventory/Employee";
 
-enum Priority {
-  PLATINUM,
-  GOLD,
-  SILVER,
-  BRONZE,
+export enum CustomerPriority {
+  PLATINUM = "PLATINUM",
+  GOLD = "GOLD",
+  SILVER = "SILVER",
+  BRONZE = "BRONZE",
 }
 
 interface Customer {
   name: string;
-  customerPriority: Priority;
+  priority: CustomerPriority;
   address: string;
   contactNo: string;
   email: string;
   accountManager: Employee;
-  vsnl: string;
+  vsnlId: string;
   asNumber: string;
 }
 

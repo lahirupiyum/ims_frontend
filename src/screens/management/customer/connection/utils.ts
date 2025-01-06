@@ -24,7 +24,7 @@ export const commonConnectionColumns: Column[] = [
 export const formatCommonRow = (row: ConnectionResponse) => {
   const {
     lastMileConnection,
-    activeStatus: status,
+    activeStatus,
     customer,
     dsp,
     serviceChange,
@@ -40,16 +40,16 @@ export const formatCommonRow = (row: ConnectionResponse) => {
     actions: wrapActionButtons([
       actionButton(ActionIcontype.edit, () => {}, 1),
     ]),
-    status,
+    status: activeStatus ? "Active" : "Terminated",
     circuitId,
     customerName,
     customerEmail,
-    dsp,
-    serviceChange,
-    terminationDate,
+    dsp: dsp?.substring(0,10),
+    serviceChange: serviceChange?.substring(0,10),
+    terminationDate: terminationDate?.substring(0,10),
     cusRouter: cusRouter.asset.serialNumber,
-    peRouter: peRouter.asset.assetNumber,
-    location: peRouter.asset.location.name,
+    peRouter: peRouter.peRouter.serialNumber,
+    location: peRouter.peRouter.location.name,
     remarks,
   };
 };

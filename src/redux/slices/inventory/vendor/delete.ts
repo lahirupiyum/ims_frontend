@@ -1,4 +1,4 @@
-import { VendorResponse } from "../../../types/Vendor";
+import { VendorResponse } from "../../../../types/Inventory/Vendor";
 import { vendorWithIdUrl } from "../../../../utils/url-properties/urls/inventory/vendor";
 import globalDeleteAction from "../../../actions/globalDeleteAction";
 import DeleteSliceActionType from "../../../types/DeleteActionType";

@@ -1,4 +1,4 @@
-export type basicInfo = {
-    id: number,
+export type BasicInfo = {
+    id: number | null,
     name: string
 }

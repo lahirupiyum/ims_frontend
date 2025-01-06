@@ -1,20 +1,19 @@
 import { NetworkAssetResponse } from "../Inventory/asset/NetworkAssets";
 
-interface PERouter {
-  name: string;
+interface PEConnection {
   port: string;
   ip: string;
   wanIpPool: string;
   switchPort: string;
 }
 
-export interface PERouterRequset extends PERouter {
-  assetId: number;
+export interface PEConnectionRequset extends PEConnection {
+  peRouterId: number;
   networkSwitchId: number;
 }
 
-export interface PERouterResponse extends PERouter {
+export interface PEConnectionResponse extends PEConnection {
   id: number;
-  asset: NetworkAssetResponse;
+  peRouter: NetworkAssetResponse;
   networkSwitch: NetworkAssetResponse;
 }
