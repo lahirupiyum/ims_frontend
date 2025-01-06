@@ -2,17 +2,11 @@ import { Badge, Box, IconButton, InputAdornment } from "@mui/material";
 import { ReactNode } from "react";
 import { BiUser } from "react-icons/bi";
 import { CiSearch } from "react-icons/ci";
-import {
-  IoChatbubbleEllipsesOutline,
-  IoNotificationsOutline,
-} from "react-icons/io5";
 import TataCommunicationFlatImage from "../../../assets/images/tata-communications-flat.png";
 import OutlinedTextField from "../../../components/textFields/OutlinedTextField";
 import { fontSizes } from "../../../components/typography/CustomTypography";
 
 const Header = () => {
-
-
   return (
     <Box
       sx={{
@@ -39,22 +33,6 @@ const Header = () => {
           }}
         />
         <Box sx={{ display: "flex", alignItems: "center", gap: "20px" }}>
-          <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
-            <HeaderIcon
-              icon={<IoChatbubbleEllipsesOutline fontSize={"24px"} />}
-              onClick={() => {}}
-              isBg={false}
-              isBadge={false}
-              badgeCount={0}
-            />
-            <HeaderIcon
-              icon={<IoNotificationsOutline fontSize={"24px"} />}
-              onClick={() => {}}
-              isBg={false}
-              isBadge
-              badgeCount={5}
-            />
-          </Box>
           <HeaderIcon
             icon={<BiUser fontSize={"24px"} />}
             onClick={() => {}}
