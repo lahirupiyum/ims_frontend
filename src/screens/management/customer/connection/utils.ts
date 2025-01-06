@@ -40,7 +40,7 @@ export const formatCommonRow = (row: ConnectionResponse) => {
     actions: wrapActionButtons([
       actionButton(ActionIcontype.edit, () => {}, 1),
     ]),
-    status: activeStatus ? "Active" : "Inactive",
+    status: activeStatus ? "Active" : "Terminated",
     circuitId,
     customerName,
     customerEmail,

@@ -1,6 +1,6 @@
 import { getListUrl, getUrl, mergeResources, mergeWithId } from "../../urlGenerator";
 
-export const mobileAssetUrl = getUrl("asset/mobileassets/");
+export const mobileAssetUrl = getUrl("asset/mobile");
 export const mobileAssetListUrl = getListUrl(mobileAssetUrl);
 
 export const mobileAssetWithIdUrl = (id: number) => mergeWithId(mobileAssetUrl, id);

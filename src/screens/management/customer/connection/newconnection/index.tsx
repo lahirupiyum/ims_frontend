@@ -1,13 +1,30 @@
 import { Box } from "@mui/material";
 import { ReactNode, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ContainedButton from "../../../../../components/buttons/ContainedButton";
 import CustomTypography, {
   fontSizes,
   fontWeights,
 } from "../../../../../components/typography/CustomTypography";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
-import { connectionCreateAction } from "../../../../../redux/slices/customer/connection/create";
-import { peConnectionCreateAction } from "../../../../../redux/slices/customer/peconnection/create";
+import {
+  connectionCreateAction,
+  connectionCreateReset,
+} from "../../../../../redux/slices/customer/connection/create";
+import {
+  cusRouterCreateAction,
+  cusRouterCreateReset,
+} from "../../../../../redux/slices/customer/cusrouter/create";
+import { customerListReset } from "../../../../../redux/slices/customer/customer/list";
+import { lastMileMediaListReset } from "../../../../../redux/slices/customer/lastmile/media/list";
+import { lastMileProviderListReset } from "../../../../../redux/slices/customer/lastmile/provider/list";
+import {
+  peConnectionCreateAction,
+  peConnectionCreateReset,
+} from "../../../../../redux/slices/customer/peconnection/create";
+import { networkAssetListReset } from "../../../../../redux/slices/inventory/networkAssets/list";
+import { networkRouterListReset } from "../../../../../redux/slices/inventory/networkAssets/router";
+import { networkSwitchListReset } from "../../../../../redux/slices/inventory/networkAssets/switch";
 import {
   ConnectionRequest,
   ManageStatus,
@@ -16,11 +33,15 @@ import {
 import { CusRouterRequest } from "../../../../../types/customer/CusRouter";
 import { LastMileConnectionRequest } from "../../../../../types/customer/LastMileConnection";
 import { PEConnectionRequset } from "../../../../../types/customer/PERouter";
+import {
+  customer_customer,
+  customer_ill_connection,
+  customer_mpls_connection,
+} from "../../../../../utils/context-paths";
 import ConnectionForm from "./ConnectionForm";
 import CustomerRouterForm from "./CustomerRouterForm";
 import LastMileConnectionForm from "./LastMileConnectionForm";
 import PEConnectionForm from "./PEConnectionForm";
-import { cusRouterCreateAction } from "../../../../../redux/slices/customer/cusrouter/create";
 
 type ConnectionCreateState = {
   name: string;
@@ -87,10 +108,13 @@ const NewConnection = () => {
     useState<ConnectionRequest>(connectionInitial);
 
   const [currentFormIndex, setCurrentFormIndex] = useState<number>(0);
+  const navigate = useNavigate();
 
+  const PE_ROUTER = "PROVIDER EDGE ROUTER CONFIG";
+  const CUS_ROUTER = "CUSTOMER ROUTER CONFIG";
   const states: ConnectionCreateState[] = [
     {
-      name: "PROVIDER EDGE ROUTER CONFIG",
+      name: PE_ROUTER,
       element: (
         <PEConnectionForm
           peConnectionForm={peConnectionForm}
@@ -99,7 +123,7 @@ const NewConnection = () => {
       ),
     },
     {
-      name: "CUSTOMER ROUTER CONFIG",
+      name: CUS_ROUTER,
       element: (
         <CustomerRouterForm
           customerRouterForm={cusRouterForm}
@@ -133,6 +157,20 @@ const NewConnection = () => {
   const { data: createdCusRouter, loading: cusRouterCreateLoading } =
     useAppSelector((state) => state.cusRouter.create);
 
+  const { data: createdConnection, loading: connectionLoading } =
+    useAppSelector((state) => state.connection.create);
+
+  useEffect(() => {
+    const unloadCallback = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+      return "";
+    };
+
+    window.addEventListener("beforeunload", unloadCallback);
+    return () => window.removeEventListener("beforeunload", unloadCallback);
+  }, []);
+
   useEffect(() => {
     if (createdPEConnection && createdCusRouter) {
       const finalConnectionForm: ConnectionRequest = { ...connectionForm };
@@ -147,6 +185,33 @@ const NewConnection = () => {
       dispatch(connectionCreateAction(finalConnectionForm));
     }
   }, [peConnectionCreateLoading, cusRouterCreateLoading]);
+
+  useEffect(() => {
+    if (!createdConnection) return;
+    const createdNetworkServiceType = createdConnection.networkServiceType;
+
+    dispatch(peConnectionCreateReset());
+    dispatch(cusRouterCreateReset());
+    dispatch(connectionCreateReset());
+    dispatch(customerListReset());
+    dispatch(networkAssetListReset());
+    dispatch(networkSwitchListReset());
+    dispatch(networkRouterListReset());
+    dispatch(lastMileProviderListReset());
+    dispatch(lastMileMediaListReset());
+
+    switch (createdNetworkServiceType.toUpperCase()) {
+      case NetworkServiceType.ILL:
+        navigate(customer_ill_connection);
+        return;
+      case NetworkServiceType.MPLS:
+        navigate(customer_mpls_connection);
+        return;
+      default:
+        navigate(customer_customer);
+        return;
+    }
+  }, [connectionLoading]);
 
   const handleSubmit = () => {
     const { cusRouterId, peRouterId } = connectionForm;

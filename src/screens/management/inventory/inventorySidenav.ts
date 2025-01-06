@@ -1,15 +1,13 @@
 import { HiOutlineUsers, HiUsers } from "react-icons/hi2";
+import { IoLaptop, IoLaptopOutline } from "react-icons/io5";
 import { PiLockers, PiLockersFill } from "react-icons/pi";
 import { RiRouterFill, RiRouterLine } from "react-icons/ri";
-import { IoLaptop, IoLaptopOutline } from "react-icons/io5";
-import { MdHandyman, MdOutlineHandyman } from "react-icons/md";
 
 import {
-  inventory_manufacturers,
-  inventory_mobileassets,
   inventory_fixed,
+  inventory_mobileassets,
   inventory_network,
-  inventory_vendors,
+  inventory_vendors
 } from "../../../utils/context-paths";
 import SidenavParent from "../sidenavConfig";
 
@@ -48,14 +46,6 @@ const inventorySidenav: SidenavParent = {
         selected: HiUsers,
       },
     },
-    {
-      label:"Manufacturers",
-      contextPath: inventory_manufacturers,
-      icon: {
-        default: MdOutlineHandyman,
-        selected: MdHandyman,
-      }
-    }
   ],
 };
 
