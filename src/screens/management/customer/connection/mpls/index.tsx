@@ -15,7 +15,7 @@ const MplsConnection = () => {
   );
 
   const rowsFormatter = (rows: ConnectionResponse[]) =>
-    rows.map((row, index) => formatCommonRow(row));
+    rows.map((row, index) => ({...formatCommonRow(row), manageStatus: row.manageStatus}));
 
   return (
     <>
