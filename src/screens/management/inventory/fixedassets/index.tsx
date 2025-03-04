@@ -10,6 +10,10 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { FixedAssetResponse } from "../../../../types/Inventory/asset/FixedAssets";
 import { fixedAssetDeleteAction } from '../../../../redux/slices/inventory/fixedAssets/delete';
 import { fixedAssetPageAction } from '../../../../redux/slices/inventory/fixedAssets/page';
+import CreateUpdateForm from './CreateUpdateForm';
+import ContainedButton from '../../../../components/buttons/ContainedButton';
+import { Box } from '@mui/material';
+import { fontSizes, fontWeights } from '../../../../components/typography/CustomTypography';
 
 const columns: Column[] = [
   { id: "actions", label: "Actions", minWidth: 50 },
@@ -29,8 +33,28 @@ const columns: Column[] = [
 const FixedAssets = () => {
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
   const [selecteIdToDelete, setSelectedIdToDelete] = useState<number>(-1);
+  const [selectedFixedAsset, setSelectedFixedAsset] = useState<FixedAssetResponse | null>(null);
+  const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
+  const [selectedIndexToEdit, setSelectedIndexToEdit] = useState<number>(-1);
+
 
   const fixedAssetPageState = useAppSelector((state) => state.fixedAssets.page);
+
+  const handleFormOpen = () => {
+    setIsFormOpen(true);
+  }
+
+  const handleEdit = (asset: FixedAssetResponse, index: number) => {
+    setSelectedFixedAsset(asset);
+    setSelectedIndexToEdit(index)
+    handleFormOpen();
+  }
+
+  const handleFormClose = () => {
+    setSelectedFixedAsset(null);
+    setSelectedIndexToEdit(-1);
+    setIsFormOpen(false);
+  }
 
   const dispatch = useAppDispatch();
 
@@ -50,52 +74,53 @@ const FixedAssets = () => {
   };
 
   const rowsFormatter = (rows: FixedAssetResponse[]) =>
-    rows.map(({ 
-      id, 
-      assetNumber, 
-      serialNumber,
-      manufacturer, 
-      vendor,
-      location,
-      model,
-      type,
-      status,
-      invoiceNumber,
-      purchaseDate,
-      deprecationInfo,
-     }, index) => ({
-      actions: wrapActionButtons([
-        actionButton(
-          ActionIcontype.edit,
-          () => {
-            // handleEdit({ id, name, email, contactNo }, index);
-          },
-          1
-        ),
-        actionButton(
-          ActionIcontype.delete,
-          () => {
-            openDeleteDialog(id);
-          },
-          2
-        ),
-      ]),
-      id,
-      assetNumber,
-      serialNumber,
-      manufacturer, 
-      vendor,
-      location,
-      model,
-      type,
-      status,
-      invoiceNumber,
-      purchaseDate,
-      deprecationInfo
-    }));
+    rows.map((row, index) => {
+
+      const { vendor, location, manufacturer, model, type, status, purchaseDate } = row;
+
+      return {
+        actions: wrapActionButtons([
+          actionButton(
+            ActionIcontype.edit,
+            () => {
+              handleEdit(row, index);
+            },
+            1
+          ),
+          actionButton(
+            ActionIcontype.delete,
+            () => {
+              openDeleteDialog(row.id);
+            },
+            2
+          ),
+        ]),
+        ...row,
+        manufacturer: manufacturer.name,
+        vendor: vendor.name,
+        location: location.name,
+        model: model.name,
+        status: status.name,
+        type: type.name,
+        purchaseDate: new Date(purchaseDate).toISOString().substring(0,10)
+      }
+    });
 
   return (
     <>
+     <Box p={2} display="flex" justifyContent="end" alignItems="center">
+        <ContainedButton
+          onClick={handleFormOpen}
+          sx={{
+            color: "black",
+            bgcolor: "white",
+            fontWeight: fontWeights.lg,
+            fontSize: fontSizes.xs,
+          }}
+        >
+          New Fixed Asset
+        </ContainedButton>
+      </Box>
       <CustomTable
         columns={columns}
         rowsFormatter={rowsFormatter}
@@ -103,10 +128,16 @@ const FixedAssets = () => {
         pageAction={fixedAssetPageAction}
       />
       <DeleteDialog
-        name="Fixed Assets"
+        name="Fixed Asset"
         deleteFunction={deleteFunction}
         handleClose={closeDeleteDialog}
         open={isDeleteOpen}
+      />
+        <CreateUpdateForm
+        open={isFormOpen}
+        handleClose={handleFormClose}
+        index={selectedIndexToEdit}
+        selectedFixedAsset={selectedFixedAsset}
       />
     </>
   )

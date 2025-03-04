@@ -73,9 +73,7 @@ const MobileAssets = () => {
           assignedTo,
           warrantyExpireDate,
           purchaseDate,
-        },
-        index
-      ) => ({
+        }      ) => ({
         actions: wrapActionButtons([
           actionButton(
             ActionIcontype.edit,

@@ -14,7 +14,7 @@ const IllConnection = () => {
   );
 
   const rowsFormatter = (rows: ConnectionResponse[]) =>
-    rows.map((row, index) => formatCommonRow(row));
+    rows.map((row) => formatCommonRow(row));
 
   return (
     <>
