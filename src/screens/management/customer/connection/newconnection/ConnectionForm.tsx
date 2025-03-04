@@ -1,5 +1,5 @@
 import { Box, MenuItem } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import AutoCompleteFormField from "../../../../../components/textFields/AutoCompleteField";
 import FormField from "../../../../../components/textFields/FormField";
 import CustomTypography, {
@@ -42,6 +42,11 @@ const ConnectionForm = ({ connectionForm, setConnectionForm }: PropTypes) => {
   const searchCustomers = (name: string) => {
     dispatch(customerSearchAction(name));
   };
+
+  useEffect(() => {
+      if (connectionForm.networkServiceType === NetworkServiceType.ILL)
+        setConnectionForm(prev => ({...prev, manageStatus: ManageStatus.MANAGEABLE}));
+  },[connectionForm.networkServiceType])
 
   return (
     <Box display="flex" flexDirection="column" gap="20px">

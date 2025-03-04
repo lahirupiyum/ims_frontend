@@ -162,7 +162,7 @@ const CreateUpdateForm = ({
         />
         <FormField
           label="VSNL ID"
-          name="vsnl"
+          name="vsnlId"
           onChange={handleChange}
           value={customerForm.vsnlId}
         />
