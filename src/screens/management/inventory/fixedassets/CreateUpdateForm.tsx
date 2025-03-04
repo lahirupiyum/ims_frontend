@@ -10,18 +10,17 @@ import { fixedAssetUpdateAction } from "../../../../redux/slices/inventory/fixed
 import { locationListAction } from "../../../../redux/slices/inventory/locations/list";
 import { manufacturerListAction } from "../../../../redux/slices/inventory/manufacturer/list";
 import { modelListAction } from "../../../../redux/slices/inventory/model/list";
-import {
-    networkAssetCreateReset
-} from "../../../../redux/slices/inventory/networkAssets/create";
-import {
-    networkAssetUpdateReset
-} from "../../../../redux/slices/inventory/networkAssets/update";
+import { networkAssetCreateReset } from "../../../../redux/slices/inventory/networkAssets/create";
+import { networkAssetUpdateReset } from "../../../../redux/slices/inventory/networkAssets/update";
 import { statusListAction } from "../../../../redux/slices/inventory/status/list";
 import { typeListAction } from "../../../../redux/slices/inventory/type/list";
-import { vendorSearchAction } from "../../../../redux/slices/inventory/vendor/list";
+import { vendorListAction } from "../../../../redux/slices/inventory/vendor/list";
 import { BasicInfo } from "../../../../types/common/BasicInfo";
 import AssetType from "../../../../types/enums/AssetTypes";
-import { FixedAssetRequest, FixedAssetResponse } from "../../../../types/Inventory/asset/FixedAssets";
+import {
+  FixedAssetRequest,
+  FixedAssetResponse,
+} from "../../../../types/Inventory/asset/FixedAssets";
 
 const initalForm: FixedAssetRequest = {
   serialNumber: "",
@@ -41,8 +40,8 @@ const initalForm: FixedAssetRequest = {
     id: null,
     name: "",
   },
-  deprecationInfo:"",
-  invoiceNumber:"",
+  deprecationInfo: "",
+  invoiceNumber: "",
   purchaseDate: new Date().getTime(),
 };
 
@@ -86,6 +85,7 @@ const CreateUpdateForm = ({
     dispatch(typeListAction(AssetType.FIXED));
     dispatch(modelListAction(AssetType.FIXED));
     dispatch(statusListAction(AssetType.FIXED));
+    dispatch(vendorListAction());
   };
 
   useEffect(() => {
@@ -107,7 +107,7 @@ const CreateUpdateForm = ({
       vendor,
       deprecationInfo,
       invoiceNumber,
-      purchaseDate
+      purchaseDate,
     } = selectedFixedAsset;
 
     setFixedAssetForm({
@@ -121,7 +121,7 @@ const CreateUpdateForm = ({
       statusId: status.id || 0,
       deprecationInfo,
       invoiceNumber,
-      purchaseDate
+      purchaseDate,
     });
   }, [selectedFixedAsset]);
 
@@ -136,8 +136,11 @@ const CreateUpdateForm = ({
   ) => {
     const { name, value } = event.target;
     if (name === "purchaseDate")
-        setFixedAssetForm(prev => ({...prev, purchaseDate: new Date(value).getTime()}))
-    
+      setFixedAssetForm((prev) => ({
+        ...prev,
+        purchaseDate: new Date(value).getTime(),
+      }));
+
     setFixedAssetForm((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -155,11 +158,6 @@ const CreateUpdateForm = ({
     });
   };
 
-  const searchVendors = (name: string) => {
-    dispatch(vendorSearchAction(name));
-  };
-
-
   const closeDialog = () => {
     handleClose();
     const timeout = setTimeout(() => {
@@ -174,11 +172,7 @@ const CreateUpdateForm = ({
   const handleSubmit = () => {
     if (editMode && selectedFixedAsset)
       dispatch(
-        fixedAssetUpdateAction(
-          selectedFixedAsset.id,
-          fixedAssetForm,
-          index
-        )
+        fixedAssetUpdateAction(selectedFixedAsset.id, fixedAssetForm, index)
       );
     else dispatch(fixedAssetCreateAction(fixedAssetForm));
   };
@@ -248,7 +242,6 @@ const CreateUpdateForm = ({
           onChange={(_, value) => {
             handleAutoCompleteChange("vendorId", value?.id || null);
           }}
-          onInputChange={(_, value) => searchVendors(value)}
         />
       </Box>
       <Box
@@ -306,16 +299,20 @@ const CreateUpdateForm = ({
           }}
         />
       </Box>
-      <Box  width="100%"
+      <Box
+        width="100%"
         display="flex"
         alignItems="center"
         justifyContent="center"
-        gap={3}>
-            <FormField
+        gap={3}
+      >
+        <FormField
           label="Purchase Date"
           name="purchaseDate"
           onChange={handleChange}
-          value={new Date(fixedAssetForm.purchaseDate).toISOString().substring(0,10)}
+          value={new Date(fixedAssetForm.purchaseDate)
+            .toISOString()
+            .substring(0, 10)}
           type="date"
         />
         <FormField
@@ -326,13 +323,13 @@ const CreateUpdateForm = ({
         />
       </Box>
       <FormField
-          label="Deprecation Info"
-          name="deprecationInfo"
-          onChange={handleChange}
-          value={fixedAssetForm.deprecationInfo}
-          multiline
-          rows={4}
-        />
+        label="Deprecation Info"
+        name="deprecationInfo"
+        onChange={handleChange}
+        value={fixedAssetForm.deprecationInfo}
+        multiline
+        rows={4}
+      />
     </Box>
   );
 
