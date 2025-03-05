@@ -1,6 +1,7 @@
 import { Box, IconButton, lighten, useTheme } from "@mui/material";
 import { ReactNode, useEffect, useState } from "react";
 import { CiEdit } from "react-icons/ci";
+import { useLocation, useNavigate } from "react-router-dom";
 import CustomTypography, {
   fontColors,
   fontSizes,
@@ -9,6 +10,12 @@ import CustomTypography, {
 import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
 import { resetConnection } from "../../../../../redux/slices/customer/connection/view";
 import { NetworkServiceType } from "../../../../../types/customer/Connection";
+import {
+  customer_ill_connection,
+  customer_ill_view_connection,
+  customer_mpls_connection,
+  customer_mpls_view_connection,
+} from "../../../../../utils/context-paths";
 import ConnectionUpdateForm from "./ConnectionUpdateForm";
 import CustomerRouterUpdateForm from "./CustomerRouterUpdateForm";
 import FirewallCredentialsUpdateForm from "./FirewallCredentialsUpdateFrom";
@@ -29,18 +36,28 @@ const ConnectionViewForm = () => {
     (state) => state.connection.view
   );
 
-  
+  const { pathname } = useLocation();
   const dispatch = useAppDispatch();
-  
+  const navigate = useNavigate();
+
   useEffect(() => {
+    if (selectedConnection) return;
+    switch (pathname) {
+      case customer_ill_view_connection:
+        navigate(customer_ill_connection);
+        return;
+      case customer_mpls_view_connection:
+        navigate(customer_mpls_connection);
+        return;
+    }
     return () => {
       dispatch(resetConnection());
     };
   }, []);
-  
+
   const getDate = (date: number | null) =>
     date ? new Date(date).toISOString().substring(0, 10) : "N/A";
-  
+
   if (!selectedConnection) return null;
 
   const connectionDetails: Detail[] = [
@@ -223,7 +240,9 @@ const ConnectionViewForm = () => {
             }
           >
             {selectedConnection.remarks.split("\n").map((remark) => (
-              <CustomTypography>{remark.length === 0 ? <br /> : remark}</CustomTypography>
+              <CustomTypography>
+                {remark.length === 0 ? <br /> : remark}
+              </CustomTypography>
             ))}
           </DetailSection>
         </Box>
