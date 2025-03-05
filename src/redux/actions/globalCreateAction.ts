@@ -2,6 +2,7 @@ import axios from "axios";
 import { useAppDispatch } from "../hooks";
 import CreateSliceActionType from "../types/CreateActionType";
 import { addOneNotification } from "../slices/notificationSlice";
+import { handleLogoutIfUnauthorized } from "./utils";
 
 const globalCreateAction =
   <RequestType, ResponseType>(
@@ -12,8 +13,11 @@ const globalCreateAction =
   async (dispatch: ReturnType<typeof useAppDispatch>) => {
     const { request, success, reject, addOnetoList } = actions;
     dispatch(request());
+
+    const token = localStorage.getItem("token");
+
     await axios
-      .post(url, data)
+      .post(url, data, {headers: {Authorization: "Bearer " + token}})
       .then((res) => {
         const { data: responseData, message } = res.data;
         dispatch(success(responseData));
@@ -21,6 +25,7 @@ const globalCreateAction =
         dispatch(addOneNotification({type:"success", message}));
       })
       .catch((err) => {
+        handleLogoutIfUnauthorized(err)
         const message = err.response ? err.response.data.message : err.message;
         dispatch(reject(message));
         dispatch(addOneNotification({type:"error", message}));
