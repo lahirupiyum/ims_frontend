@@ -1,5 +1,6 @@
 import { NetworkAssetResponse } from "../../../../types/Inventory/asset/NetworkAssets";
-import { switchSearchUrl } from "../../../../utils/url-properties/urls/inventory/networkAssets";
+import { switchListUrl, switchSearchUrl } from "../../../../utils/url-properties/urls/inventory/networkAssets";
+import globalListAction from "../../../actions/globalListAction";
 import globalSearchAction from "../../../actions/globalSearchAction";
 import ListSliceActionType from "../../../types/ListActionType";
 import getListSlice from "../../config/globalListSlice";
@@ -17,6 +18,9 @@ const listActionTypes: ListSliceActionType<NetworkAssetResponse> = {
 
 export const networkSwitchSearchAction = (serialNumber: string) =>
   globalSearchAction(serialNumber, switchSearchUrl, listActionTypes);
+
+export const networkSwtichListAction = () =>
+  globalListAction(switchListUrl, listActionTypes);
 
 export const { reset: networkSwitchListReset } = networkSwitchListSlice.actions;
 

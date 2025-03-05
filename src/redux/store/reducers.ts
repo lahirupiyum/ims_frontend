@@ -17,6 +17,8 @@ import type from "../slices/inventory/type/reducer";
 import model from "../slices/inventory/model/reducer";
 import status from "../slices/inventory/status/reducer";
 import employee from "../slices/inventory/employee/reducer";
+import lastMileConnection from "../slices/customer/lastmile/connection/reducer";
+import firewallCredentials from "../slices/customer/router-firewall-credentials/reducer";
 
 const allReducers = combineReducers({
   sidenav,
@@ -39,6 +41,9 @@ const allReducers = combineReducers({
 
   lastMileProvider,
   lastMileMedia,
+  lastMileConnection,
+
+  firewallCredentials
 });
 
 export default allReducers;

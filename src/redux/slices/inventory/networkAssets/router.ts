@@ -1,5 +1,6 @@
 import { NetworkAssetResponse } from "../../../../types/Inventory/asset/NetworkAssets";
-import { routerSearchUrl } from "../../../../utils/url-properties/urls/inventory/networkAssets";
+import { routerListUrl, routerSearchUrl } from "../../../../utils/url-properties/urls/inventory/networkAssets";
+import globalListAction from "../../../actions/globalListAction";
 import globalSearchAction from "../../../actions/globalSearchAction";
 import ListSliceActionType from "../../../types/ListActionType";
 import getListSlice from "../../config/globalListSlice";
@@ -16,6 +17,8 @@ const listActionTypes: ListSliceActionType<NetworkAssetResponse> = {
 
 export const networkRouterSearchAction = (serialNumber: string) =>
   globalSearchAction(serialNumber, routerSearchUrl, listActionTypes);
+
+export const networkRouterListAction = () => globalListAction(routerListUrl, listActionTypes);
 
 export const { reset: networkRouterListReset } = networkRouterListSlice.actions;
 

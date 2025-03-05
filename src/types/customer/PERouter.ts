@@ -7,7 +7,7 @@ interface PEConnection {
   switchPort: string;
 }
 
-export interface PEConnectionRequset extends PEConnection {
+export interface PEConnectionRequest extends PEConnection {
   peRouterId: number;
   networkSwitchId: number;
 }

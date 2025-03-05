@@ -16,6 +16,8 @@ import { CiEdit, CiTrash } from "react-icons/ci";
 import { useAppDispatch } from "../../redux/hooks";
 import { PageState } from "../../redux/slices/config/globalPageSlice";
 import { fontSizes, fontWeights } from "../typography/CustomTypography";
+import { IoEyeOutline } from "react-icons/io5";
+import { IoIosRemoveCircleOutline } from "react-icons/io";
 
 type TableType<T> = {
   columns: Column[];
@@ -147,6 +149,8 @@ export interface Column {
 export enum ActionIcontype {
   edit,
   delete,
+  view,
+  terminate
 }
 
 const getActionTypeIcon = (icon: ActionIcontype) => {
@@ -155,6 +159,10 @@ const getActionTypeIcon = (icon: ActionIcontype) => {
       return <CiEdit />;
     case ActionIcontype.delete:
       return <CiTrash />;
+    case ActionIcontype.view:
+      return <IoEyeOutline />;
+    case ActionIcontype.terminate:
+      return <IoIosRemoveCircleOutline />
     default:
       return null;
   }
@@ -181,7 +189,7 @@ export const wrapActionButtons = (
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        gap: "10px",
+        gap: "0px",
       }}
     >
       {actionButtonList.map((actionButton) => actionButton)}

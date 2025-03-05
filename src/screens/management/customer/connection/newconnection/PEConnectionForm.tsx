@@ -3,13 +3,13 @@ import AutoCompleteFormField from "../../../../../components/textFields/AutoComp
 import FormField from "../../../../../components/textFields/FormField";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
 import { networkSwitchSearchAction } from "../../../../../redux/slices/inventory/networkAssets/switch";
-import { PEConnectionRequset } from "../../../../../types/customer/PERouter";
+import { PEConnectionRequest } from "../../../../../types/customer/PERouter";
 import { useEffect } from "react";
 import { peRouterListAction } from "../../../../../redux/slices/inventory/networkAssets/list";
 
 type PropTypes = {
-  peConnectionForm: PEConnectionRequset,
-  setPEConnectionForm: React.Dispatch<React.SetStateAction<PEConnectionRequset>>
+  peConnectionForm: PEConnectionRequest,
+  setPEConnectionForm: React.Dispatch<React.SetStateAction<PEConnectionRequest>>
 }
 
 const PEConnectionForm = ({peConnectionForm, setPEConnectionForm}: PropTypes) => {

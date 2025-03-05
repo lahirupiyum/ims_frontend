@@ -12,6 +12,7 @@ import {
   ManageStatus,
   NetworkServiceType,
 } from "../../../../../types/customer/Connection";
+import { getDate } from "../utils";
 
 type PropTypes = {
   connectionForm: ConnectionRequest;
@@ -84,7 +85,7 @@ const ConnectionForm = ({ connectionForm, setConnectionForm }: PropTypes) => {
       </Box>
       <FormField
         label="Date of Provisioning"
-        value={connectionForm.dsp || ""}
+        value={getDate(connectionForm.dsp)}
         name="dsp"
         onChange={handleChange}
         type="date"

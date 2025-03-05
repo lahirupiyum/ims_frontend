@@ -1,4 +1,4 @@
-import { CusRouterRespone } from "./CusRouter";
+import { CusRouterResponse } from "./CusRouter";
 import { CustomerResponse } from "./Customer";
 import {
   LastMileConnectionRequest,
@@ -16,18 +16,22 @@ export enum ManageStatus {
   UNMANAGEABLE="Unmanageable",
 }
 
-export type FirewallCredentials = {
+export type FirewallCredentialsRequest = {
   username: string;
   password: string;
 };
 
+export type FirewallCredentialsResponse = {
+  id: number;
+  username: string;
+  password: string;
+};
 interface Connection {
-  dsp: string | null;
-  serviceChange: string | null;
-  terminationDate: string | null;
+  dsp: number | null;
+  serviceChange: number | null;
+  terminationDate: number | null;
   networkServiceType: NetworkServiceType;
   manageStatus: ManageStatus;
-  firewallCredentials: FirewallCredentials ;
   remarks: string;
 }
 
@@ -36,12 +40,15 @@ export interface ConnectionRequest extends Connection {
   customerId: number;
   peRouterId: number;
   cusRouterId: number;
+  firewallCredentials: FirewallCredentialsRequest ;
 }
 
 export interface ConnectionResponse extends Connection {
+  id: number;
   lastMileConnection: LastMileConnectionResponse;
   customer: CustomerResponse;
   peRouter: PEConnectionResponse;
-  cusRouter: CusRouterRespone;
+  cusRouter: CusRouterResponse;
   activeStatus: boolean;
+  firewallCredentials: FirewallCredentialsResponse ;
 }

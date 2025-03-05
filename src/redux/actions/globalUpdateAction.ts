@@ -18,7 +18,7 @@ const globalUpdateAction =
       .then((res) => {
         const { data: responseData, message } = res.data;
         dispatch(success(responseData));
-        dispatch(updateOneInList({ index, data: responseData }));
+        if (updateOneInList)  dispatch(updateOneInList({ index, data: responseData }));
         dispatch(addOneNotification({ type: "success", message }));
       })
       .catch((err) => {

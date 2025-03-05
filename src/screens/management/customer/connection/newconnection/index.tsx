@@ -32,7 +32,7 @@ import {
 } from "../../../../../types/customer/Connection";
 import { CusRouterRequest } from "../../../../../types/customer/CusRouter";
 import { LastMileConnectionRequest } from "../../../../../types/customer/LastMileConnection";
-import { PEConnectionRequset } from "../../../../../types/customer/PERouter";
+import { PEConnectionRequest } from "../../../../../types/customer/PERouter";
 import {
   customer_customer,
   customer_ill_connection,
@@ -48,7 +48,7 @@ type ConnectionCreateState = {
   element: ReactNode;
 };
 
-const peConnectionInitial: PEConnectionRequset = {
+const peConnectionInitial: PEConnectionRequest = {
   ip: "",
   networkSwitchId: 0,
   peRouterId: 0,
@@ -99,7 +99,7 @@ const connectionInitial: ConnectionRequest = {
 
 const NewConnection = () => {
   const [peConnectionForm, setPEConnectionForm] =
-    useState<PEConnectionRequset>(peConnectionInitial);
+    useState<PEConnectionRequest>(peConnectionInitial);
   const [cusRouterForm, setCusRouterForm] = useState<CusRouterRequest>(
     customerRouterInitial
   );

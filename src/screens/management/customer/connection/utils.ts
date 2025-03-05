@@ -1,8 +1,5 @@
 import {
-  actionButton,
-  ActionIcontype,
-  Column,
-  wrapActionButtons,
+  Column
 } from "../../../../components/table";
 import { ConnectionResponse } from "../../../../types/customer/Connection";
 
@@ -37,19 +34,18 @@ export const formatCommonRow = (row: ConnectionResponse) => {
   const { name: customerName, email: customerEmail } = customer;
 
   return {
-    actions: wrapActionButtons([
-      actionButton(ActionIcontype.edit, () => {}, 1),
-    ]),
     status: activeStatus ? "Active" : "Terminated",
     circuitId,
     customerName,
     customerEmail,
-    dsp: dsp?.substring(0,10),
-    serviceChange: serviceChange?.substring(0,10),
-    terminationDate: terminationDate?.substring(0,10),
+    dsp: getDate(dsp),
+    serviceChange: getDate(serviceChange),
+    terminationDate: getDate(terminationDate),
     cusRouter: cusRouter.asset.serialNumber,
     peRouter: peRouter.peRouter.serialNumber,
     location: peRouter.peRouter.location.name,
-    remarks,
+    remarks: remarks.substring(0,5)+"...",
   };
 };
+
+export const getDate = (date: number | string | null) => date ? new Date(date).toISOString().substring(0,10) : "-"

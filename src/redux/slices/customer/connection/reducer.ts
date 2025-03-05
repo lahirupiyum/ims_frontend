@@ -3,12 +3,16 @@ import page from "./page";
 import ill from "./ill/reducer";
 import mpls from "./mpls/reducer";
 import create from "./create";
+import view from "./view";
+import update from "./update";
 
 const connection = combineReducers({
     page,
     create,
+    view,
     ill,
-    mpls
+    mpls,
+    update
 })
 
 export default connection;
