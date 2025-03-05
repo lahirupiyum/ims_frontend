@@ -19,10 +19,13 @@ import status from "../slices/inventory/status/reducer";
 import employee from "../slices/inventory/employee/reducer";
 import lastMileConnection from "../slices/customer/lastmile/connection/reducer";
 import firewallCredentials from "../slices/customer/router-firewall-credentials/reducer";
+import searchParams from "../slices/searchActionSlice";
 
 const allReducers = combineReducers({
   sidenav,
   notification, 
+  searchParams,
+
   networkAssets,
   mobileAssets,
   fixedAssets,

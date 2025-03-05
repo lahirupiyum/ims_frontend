@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { Box } from "@mui/material";
+import { useEffect, useState } from "react";
+import ContainedButton from "../../../../components/buttons/ContainedButton";
 import DeleteDialog from "../../../../components/delete-dialog";
 import CustomTable, {
   actionButton,
@@ -6,14 +8,19 @@ import CustomTable, {
   Column,
   wrapActionButtons,
 } from "../../../../components/table";
+import {
+  fontSizes,
+  fontWeights,
+} from "../../../../components/typography/CustomTypography";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
+import { fixedAssetDeleteAction } from "../../../../redux/slices/inventory/fixedAssets/delete";
+import {
+  fixedAssetPageAction,
+  fixedAssetSearchAction,
+} from "../../../../redux/slices/inventory/fixedAssets/page";
+import { resetSearchActionParams, updateSearchActionParams } from "../../../../redux/slices/searchActionSlice";
 import { FixedAssetResponse } from "../../../../types/Inventory/asset/FixedAssets";
-import { fixedAssetDeleteAction } from '../../../../redux/slices/inventory/fixedAssets/delete';
-import { fixedAssetPageAction } from '../../../../redux/slices/inventory/fixedAssets/page';
-import CreateUpdateForm from './CreateUpdateForm';
-import ContainedButton from '../../../../components/buttons/ContainedButton';
-import { Box } from '@mui/material';
-import { fontSizes, fontWeights } from '../../../../components/typography/CustomTypography';
+import CreateUpdateForm from "./CreateUpdateForm";
 
 const columns: Column[] = [
   { id: "actions", label: "Actions", minWidth: 50 },
@@ -33,28 +40,28 @@ const columns: Column[] = [
 const FixedAssets = () => {
   const [isDeleteOpen, setIsDeleteOpen] = useState<boolean>(false);
   const [selecteIdToDelete, setSelectedIdToDelete] = useState<number>(-1);
-  const [selectedFixedAsset, setSelectedFixedAsset] = useState<FixedAssetResponse | null>(null);
+  const [selectedFixedAsset, setSelectedFixedAsset] =
+    useState<FixedAssetResponse | null>(null);
   const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
   const [selectedIndexToEdit, setSelectedIndexToEdit] = useState<number>(-1);
-
 
   const fixedAssetPageState = useAppSelector((state) => state.fixedAssets.page);
 
   const handleFormOpen = () => {
     setIsFormOpen(true);
-  }
+  };
 
   const handleEdit = (asset: FixedAssetResponse, index: number) => {
     setSelectedFixedAsset(asset);
-    setSelectedIndexToEdit(index)
+    setSelectedIndexToEdit(index);
     handleFormOpen();
-  }
+  };
 
   const handleFormClose = () => {
     setSelectedFixedAsset(null);
     setSelectedIndexToEdit(-1);
     setIsFormOpen(false);
-  }
+  };
 
   const dispatch = useAppDispatch();
 
@@ -73,10 +80,30 @@ const FixedAssets = () => {
     closeDeleteDialog();
   };
 
+  useEffect(() => {
+    dispatch(
+      updateSearchActionParams({
+        searchAction: fixedAssetSearchAction,
+        pageAction: fixedAssetPageAction,
+      })
+    );
+
+    return () => {
+      dispatch(resetSearchActionParams());
+    }
+  }, [dispatch]);
+
   const rowsFormatter = (rows: FixedAssetResponse[]) =>
     rows.map((row, index) => {
-
-      const { vendor, location, manufacturer, model, type, status, purchaseDate } = row;
+      const {
+        vendor,
+        location,
+        manufacturer,
+        model,
+        type,
+        status,
+        purchaseDate,
+      } = row;
 
       return {
         actions: wrapActionButtons([
@@ -102,13 +129,13 @@ const FixedAssets = () => {
         model: model.name,
         status: status.name,
         type: type.name,
-        purchaseDate: new Date(purchaseDate).toISOString().substring(0,10)
-      }
+        purchaseDate: new Date(purchaseDate).toISOString().substring(0, 10),
+      };
     });
 
   return (
     <>
-     <Box p={2} display="flex" justifyContent="end" alignItems="center">
+      <Box p={2} display="flex" justifyContent="end" alignItems="center">
         <ContainedButton
           onClick={handleFormOpen}
           sx={{
@@ -133,14 +160,14 @@ const FixedAssets = () => {
         handleClose={closeDeleteDialog}
         open={isDeleteOpen}
       />
-        <CreateUpdateForm
+      <CreateUpdateForm
         open={isFormOpen}
         handleClose={handleFormClose}
         index={selectedIndexToEdit}
         selectedFixedAsset={selectedFixedAsset}
       />
     </>
-  )
-}
+  );
+};
 
-export default FixedAssets
+export default FixedAssets;

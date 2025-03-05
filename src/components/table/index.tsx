@@ -38,7 +38,7 @@ const CustomTable = <ResponseType,>({
   const [page, setPage] = useState(0);
 
   const dispatch = useAppDispatch();
-  const { data, totalCount, loading } = pageState;
+  const { data, totalCount, loading, actionType } = pageState;
 
   const handleChangePage = (_event: any, newPage: number) => {
     setPage(newPage);
@@ -111,7 +111,7 @@ const CustomTable = <ResponseType,>({
             </TableBody>
           </Table>
         </TableContainer>
-        <Paper
+        {actionType === "page" && <Paper
           sx={{
             boxShadow: "none",
             position: "absolute",
@@ -131,7 +131,7 @@ const CustomTable = <ResponseType,>({
               setRowsPerPage(event.target.value as unknown as number)
             }
           />
-        </Paper>
+        </Paper>}
         {rows.length === 0 && !loading ? (
           <Box sx={{ position: "absolute", top:"55%", left:"55%", zIndex:10 }}>No data found!</Box>
         ) : loading? <Box sx={{ position: "absolute", top:"55%", left:"55%", zIndex:10 }}><CircularProgress /></Box>: null}

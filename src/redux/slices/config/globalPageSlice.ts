@@ -8,6 +8,7 @@ export type PageState<T> = {
   loading: boolean,
   totalCount: number,
   error: string
+  actionType: "page" | "search"
 }
 
 export type UpdateStateType<T> = {
@@ -24,6 +25,7 @@ const getPageSlice = <ResponseType> (name: string) => {
     loading: false,
     totalCount: 0,
     error: "",
+    actionType: "page"
   }
 
   return createSlice({
@@ -35,6 +37,7 @@ const getPageSlice = <ResponseType> (name: string) => {
         state.page = page;
         state.pageSize = pageSize;
         state.loading = true;
+        state.actionType = "page"
       },
       success: (state, action: PayloadAction<PageReponse<ResponseType>>) => {
         const { data, totalCount } = action.payload;
@@ -53,6 +56,7 @@ const getPageSlice = <ResponseType> (name: string) => {
         state.totalCount = 0;
         state.page = 0,
         state.pageSize = 0;
+        state.actionType = "page"
       },
       create: (state, action: PayloadAction<ResponseType>) => {
         state.totalCount++
@@ -64,6 +68,16 @@ const getPageSlice = <ResponseType> (name: string) => {
         const { index, data } = action.payload;
         dummyData[index] = data;
         state.data = dummyData as Draft<ResponseType>[]
+      },
+      searchRequest: (state) => {
+        state.page = 0;
+        state.pageSize = 0;
+        state.loading = true;
+        state.actionType = "search"
+      },
+      searchSuccess: (state, action: PayloadAction<ResponseType[]>) => {
+        state.loading = false;
+        state.data = action.payload as Draft<ResponseType[]>
       }
     },
   });

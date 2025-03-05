@@ -16,7 +16,8 @@ const routesConfig: RouteObject[] = [
   },
   {
     path: login,
-    element: <Login />
+    element: <Login />,
+    index: true
   },
   {
     path: inventory,

@@ -1,4 +1,4 @@
-import { getListUrl, getUrl, mergeResources, mergeWithId } from "../../urlGenerator";
+import { getListUrl, getSearchUrl, getUrl, mergeResources, mergeWithId } from "../../urlGenerator";
 
 export const fixedAssetUrl = getUrl("asset/fixed");
 export const fixedAssetListUrl = getListUrl(fixedAssetUrl);
@@ -8,3 +8,4 @@ export const fixedAssetManufacturerListUrl = getListUrl(mergeResources(fixedAsse
 export const fixedAssetTypeListUrl = getListUrl(mergeResources(fixedAssetUrl, "type"));
 export const fixedAssetModelListUrl = getListUrl(mergeResources(fixedAssetUrl, "model"));
 export const fixedAssetStatusListUrl = getListUrl(mergeResources(fixedAssetUrl, "status"));
+export const fixedAssetSearchUrl = getSearchUrl(fixedAssetUrl);
