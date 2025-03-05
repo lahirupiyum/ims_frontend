@@ -26,8 +26,8 @@ export enum fontColors {
 
 type MUITypographyProps = {
   fontWeight?: fontWeights;
-  fontSize?: fontSizes;
-  fontColor?: fontColors;
+  fontSize?: fontSizes | string;
+  fontColor?: fontColors | string;
   children?: React.ReactNode;
 } & TypographyProps
 

@@ -13,11 +13,10 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { CiEdit, CiTrash } from "react-icons/ci";
+import { IoEyeOutline, IoPowerSharp } from "react-icons/io5";
 import { useAppDispatch } from "../../redux/hooks";
 import { PageState } from "../../redux/slices/config/globalPageSlice";
 import { fontSizes, fontWeights } from "../typography/CustomTypography";
-import { IoEyeOutline } from "react-icons/io5";
-import { IoIosRemoveCircleOutline } from "react-icons/io";
 
 type TableType<T> = {
   columns: Column[];
@@ -150,7 +149,8 @@ export enum ActionIcontype {
   edit,
   delete,
   view,
-  terminate
+  power,
+  activate
 }
 
 const getActionTypeIcon = (icon: ActionIcontype) => {
@@ -161,8 +161,9 @@ const getActionTypeIcon = (icon: ActionIcontype) => {
       return <CiTrash />;
     case ActionIcontype.view:
       return <IoEyeOutline />;
-    case ActionIcontype.terminate:
-      return <IoIosRemoveCircleOutline />
+    case ActionIcontype.power:
+      return <IoPowerSharp  />
+    case ActionIcontype.activate:
     default:
       return null;
   }
@@ -171,8 +172,10 @@ const getActionTypeIcon = (icon: ActionIcontype) => {
 export const actionButton = (
   icon: ActionIcontype,
   onClick: () => void,
-  key: number
+  key: number,
+  hidden?:boolean
 ) => {
+  if (hidden) return null;
   return (
     <IconButton key={key} sx={{ fontSize: fontSizes.md }} onClick={onClick}>
       {getActionTypeIcon(icon)}

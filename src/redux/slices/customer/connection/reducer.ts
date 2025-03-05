@@ -5,6 +5,7 @@ import mpls from "./mpls/reducer";
 import create from "./create";
 import view from "./view";
 import update from "./update";
+import terminateAndActivate from "./terminate";
 
 const connection = combineReducers({
     page,
@@ -12,7 +13,8 @@ const connection = combineReducers({
     view,
     ill,
     mpls,
-    update
+    update,
+    terminateAndActivate,
 })
 
 export default connection;
