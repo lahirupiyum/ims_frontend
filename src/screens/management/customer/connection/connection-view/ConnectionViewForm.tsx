@@ -223,7 +223,7 @@ const ConnectionViewForm = () => {
             }
           >
             {selectedConnection.remarks.split("\n").map((remark) => (
-              <CustomTypography>{remark}</CustomTypography>
+              <CustomTypography>{remark.length === 0 ? <br /> : remark}</CustomTypography>
             ))}
           </DetailSection>
         </Box>
