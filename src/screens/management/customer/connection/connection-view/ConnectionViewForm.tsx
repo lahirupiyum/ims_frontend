@@ -29,18 +29,19 @@ const ConnectionViewForm = () => {
     (state) => state.connection.view
   );
 
-  if (!selectedConnection) return null;
-
+  
   const dispatch = useAppDispatch();
-
+  
   useEffect(() => {
     return () => {
       dispatch(resetConnection());
     };
   }, []);
-
+  
   const getDate = (date: number | null) =>
     date ? new Date(date).toISOString().substring(0, 10) : "N/A";
+  
+  if (!selectedConnection) return null;
 
   const connectionDetails: Detail[] = [
     {
@@ -281,7 +282,7 @@ const DetailSection = ({
   const [isHover, setIsHover] = useState(false);
 
   return (
-    <Box bgcolor="white" width="100%" p="20px">
+    <Box bgcolor="white" width="100%" p="20px" borderRadius="20px">
       <Box display="flex" alignItems="start" justifyContent="space-between">
         <CustomTypography
           mb="20px"
@@ -300,6 +301,7 @@ const DetailSection = ({
             bgcolor={lighten(useTheme().palette.secondary.main, 0.9)}
             color="white"
             p="10px"
+            borderRadius="10px"
           >
             <CustomTypography
               fontColor={fontColors.secondary}
