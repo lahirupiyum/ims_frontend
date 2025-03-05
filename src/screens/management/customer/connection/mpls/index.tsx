@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
 import {
   mplsConnectionPageAction,
   mplsConnectionUpdateOneInList,
+  mplsSearchAction,
 } from "../../../../../redux/slices/customer/connection/mpls/page";
 import {
   activateConnectionAction,
@@ -18,6 +19,10 @@ import {
   terminateConnectionAction,
 } from "../../../../../redux/slices/customer/connection/terminate";
 import { viewConnection } from "../../../../../redux/slices/customer/connection/view";
+import {
+  resetSearchActionParams,
+  updateSearchActionParams,
+} from "../../../../../redux/slices/searchActionSlice";
 import { ConnectionResponse } from "../../../../../types/customer/Connection";
 import { customer_mpls_view_connection } from "../../../../../utils/context-paths";
 import { commonConnectionColumns, formatCommonRow } from "../utils";
@@ -87,6 +92,19 @@ const MplsConnection = () => {
     dispatch(viewConnection(connection));
     navigate(customer_mpls_view_connection);
   };
+
+  useEffect(() => {
+    dispatch(
+      updateSearchActionParams({
+        pageAction: mplsConnectionPageAction,
+        searchAction: mplsSearchAction,
+      })
+    );
+
+    return () => {
+      dispatch(resetSearchActionParams());
+    };
+  }, [dispatch]);
 
   const rowsFormatter = (rows: ConnectionResponse[]) =>
     rows.map((row, index) => ({

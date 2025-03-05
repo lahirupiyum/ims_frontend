@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { Box } from "@mui/material";
+import { useEffect, useState } from "react";
+import ContainedButton from "../../../../components/buttons/ContainedButton";
 import DeleteDialog from "../../../../components/delete-dialog";
 import CustomTable, {
   actionButton,
@@ -6,14 +8,22 @@ import CustomTable, {
   Column,
   wrapActionButtons,
 } from "../../../../components/table";
+import {
+  fontSizes,
+  fontWeights,
+} from "../../../../components/typography/CustomTypography";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { mobileAssetDeleteAction } from "../../../../redux/slices/inventory/mobileAssets/delete";
-import { mobileAssetPageAction } from "../../../../redux/slices/inventory/mobileAssets/page";
+import {
+  mobileAssetPageAction,
+  mobileAssetSearchAction,
+} from "../../../../redux/slices/inventory/mobileAssets/page";
+import {
+  resetSearchActionParams,
+  updateSearchActionParams,
+} from "../../../../redux/slices/searchActionSlice";
 import { MobileAssetResponse } from "../../../../types/Inventory/asset/ModileAssets";
 import CreateUpdateForm from "./CreateUpdateForm";
-import ContainedButton from "../../../../components/buttons/ContainedButton";
-import { Box } from "@mui/material";
-import { fontSizes, fontWeights } from "../../../../components/typography/CustomTypography";
 
 const columns: Column[] = [
   { id: "actions", label: "Actions", minWidth: 50 },
@@ -60,95 +70,121 @@ const MobileAssets = () => {
     closeDeleteDialog();
   };
 
-    const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
-    const [selectedMobileAsset, setSelectedMobileAsset] = useState<MobileAssetResponse | null>(null);
-    const [selectedIndexToEdit, setSelectedIndexToEdit] = useState<number>(-1);
+  const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
+  const [selectedMobileAsset, setSelectedMobileAsset] =
+    useState<MobileAssetResponse | null>(null);
+  const [selectedIndexToEdit, setSelectedIndexToEdit] = useState<number>(-1);
 
-    const handleFormOpen = () => {
-      setIsFormOpen(true);
-    };
+  const handleFormOpen = () => {
+    setIsFormOpen(true);
+  };
 
-    const handleEdit = (asset: MobileAssetResponse, index: number) => {
-      setSelectedMobileAsset(asset);
-      setSelectedIndexToEdit(index);
-      handleFormOpen();
-    };
+  const handleEdit = (asset: MobileAssetResponse, index: number) => {
+    setSelectedMobileAsset(asset);
+    setSelectedIndexToEdit(index);
+    handleFormOpen();
+  };
 
-    const handleFormClose = () => {
-      setSelectedMobileAsset(null);
-      setSelectedIndexToEdit(-1);
-      setIsFormOpen(false);
-    };
+  const handleFormClose = () => {
+    setSelectedMobileAsset(null);
+    setSelectedIndexToEdit(-1);
+    setIsFormOpen(false);
+  };
 
-    const rowsFormatter = (rows: MobileAssetResponse[]) =>
-      rows.map((row, index) => {
-        const { vendor, location, manufacturer, model, type, status, purchaseDate, employee, warrantyExpireDate } = row;
-
-        return {
-          actions: wrapActionButtons([
-            actionButton(
-              ActionIcontype.edit,
-              () => {
-                handleEdit(row, index);
-              },
-              1
-            ),
-            actionButton(
-              ActionIcontype.delete,
-              () => {
-                openDeleteDialog(row.id);
-              },
-              2
-            ),
-          ]),
-          ...row,
-          manufacturer: manufacturer.name,
-          vendor: vendor.name,
-          location: location.name,
-          model: model.name,
-          status: status.name,
-          type: type.name,
-          assignedTo: employee.name,
-          purchaseDate: new Date(purchaseDate).toISOString().substring(0, 10),
-          warrantyExpireDate: new Date(warrantyExpireDate).toISOString().substring(0, 10),
-        };
-      });
-
-    return (
-      <>
-        <Box p={2} display="flex" justifyContent="end" alignItems="center">
-          <ContainedButton
-            onClick={handleFormOpen}
-            sx={{
-              color: "black",
-              bgcolor: "white",
-              fontWeight: fontWeights.lg,
-              fontSize: fontSizes.xs,
-            }}
-          >
-            New Mobile Asset
-          </ContainedButton>
-        </Box>
-        <CustomTable
-          columns={columns}
-          rowsFormatter={rowsFormatter}
-          pageState={mobileAssetPageState}
-          pageAction={mobileAssetPageAction}
-        />
-        <DeleteDialog
-          name="Mobile Assets"
-          deleteFunction={deleteFunction}
-          handleClose={closeDeleteDialog}
-          open={isDeleteOpen}
-        />
-        <CreateUpdateForm
-          open={isFormOpen}
-          handleClose={handleFormClose}
-          index={selectedIndexToEdit}
-          selectedMobileAsset={selectedMobileAsset}
-        />
-      </>
+  useEffect(() => {
+    dispatch(
+      updateSearchActionParams({
+        pageAction: mobileAssetPageAction,
+        searchAction: mobileAssetSearchAction,
+      })
     );
+
+    return () => {
+      dispatch(resetSearchActionParams());
+    };
+  }, [dispatch]);
+
+  const rowsFormatter = (rows: MobileAssetResponse[]) =>
+    rows.map((row, index) => {
+      const {
+        vendor,
+        location,
+        manufacturer,
+        model,
+        type,
+        status,
+        purchaseDate,
+        employee,
+        warrantyExpireDate,
+      } = row;
+
+      return {
+        actions: wrapActionButtons([
+          actionButton(
+            ActionIcontype.edit,
+            () => {
+              handleEdit(row, index);
+            },
+            1
+          ),
+          actionButton(
+            ActionIcontype.delete,
+            () => {
+              openDeleteDialog(row.id);
+            },
+            2
+          ),
+        ]),
+        ...row,
+        manufacturer: manufacturer.name,
+        vendor: vendor.name,
+        location: location.name,
+        model: model.name,
+        status: status.name,
+        type: type.name,
+        assignedTo: employee.name,
+        purchaseDate: new Date(purchaseDate).toISOString().substring(0, 10),
+        warrantyExpireDate: new Date(warrantyExpireDate)
+          .toISOString()
+          .substring(0, 10),
+      };
+    });
+
+  return (
+    <>
+      <Box p={2} display="flex" justifyContent="end" alignItems="center">
+        <ContainedButton
+          onClick={handleFormOpen}
+          sx={{
+            color: "black",
+            bgcolor: "white",
+            fontWeight: fontWeights.lg,
+            fontSize: fontSizes.xs,
+          }}
+        >
+          New Mobile Asset
+        </ContainedButton>
+      </Box>
+      <CustomTable
+        columns={columns}
+        rowsFormatter={rowsFormatter}
+        pageState={mobileAssetPageState}
+        pageAction={mobileAssetPageAction}
+      />
+      <DeleteDialog
+        name="Mobile Assets"
+        deleteFunction={deleteFunction}
+        handleClose={closeDeleteDialog}
+        open={isDeleteOpen}
+      />
+      <CreateUpdateForm
+        open={isFormOpen}
+        handleClose={handleFormClose}
+        index={selectedIndexToEdit}
+        selectedMobileAsset={selectedMobileAsset}
+      />
+    </>
+  );
 };
 
 export default MobileAssets;

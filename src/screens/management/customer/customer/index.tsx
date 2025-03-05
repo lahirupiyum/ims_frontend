@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ContainedButton from "../../../../components/buttons/ContainedButton";
 import DeleteDialog from "../../../../components/delete-dialog";
 import CustomTable, {
@@ -14,7 +14,14 @@ import {
 } from "../../../../components/typography/CustomTypography";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { customerDeleteAction } from "../../../../redux/slices/customer/customer/delete";
-import { customerPageAction } from "../../../../redux/slices/customer/customer/page";
+import {
+  customerPageAction,
+  customerSearchPageAction,
+} from "../../../../redux/slices/customer/customer/page";
+import {
+  resetSearchActionParams,
+  updateSearchActionParams,
+} from "../../../../redux/slices/searchActionSlice";
 import { CustomerResponse } from "../../../../types/customer/Customer";
 import CreateUpdateForm from "./CreateUpdateForm";
 
@@ -68,6 +75,19 @@ const Customer = () => {
   const deleteFunction = () => {
     dispatch(customerDeleteAction(selectedIdToDelete));
   };
+
+  useEffect(() => {
+    dispatch(
+      updateSearchActionParams({
+        pageAction: customerPageAction,
+        searchAction: customerSearchPageAction,
+      })
+    );
+
+    return () => {
+      dispatch(resetSearchActionParams());
+    };
+  }, [dispatch]);
 
   const rowsFormatter = (rows: CustomerResponse[]) =>
     rows.map((row, index) => {

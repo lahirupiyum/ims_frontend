@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ContainedButton from "../../../../components/buttons/ContainedButton";
 import DeleteDialog from "../../../../components/delete-dialog";
 import CustomTable, {
@@ -14,9 +14,10 @@ import {
 } from "../../../../components/typography/CustomTypography";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { vendorDeleteAction } from "../../../../redux/slices/inventory/vendor/delete";
-import { vendorPageAction } from "../../../../redux/slices/inventory/vendor/page";
+import { vendorPageAction, vendorSearchPageAction } from "../../../../redux/slices/inventory/vendor/page";
 import CreateUpdateForm from "./CreateUpdateForm";
 import { VendorResponse } from "../../../../types/Inventory/Vendor";
+import { resetSearchActionParams, updateSearchActionParams } from "../../../../redux/slices/searchActionSlice";
 
 const columns: Column[] = [
   { id: "actions", label: "Actions", minWidth: 50 },
@@ -67,6 +68,19 @@ const Vendor = () => {
     dispatch(vendorDeleteAction(selecteIdToDelete));
     closeDeleteDialog();
   };
+
+  useEffect(() => {
+      dispatch(
+        updateSearchActionParams({
+          pageAction: vendorPageAction,
+          searchAction: vendorSearchPageAction,
+        })
+      );
+  
+      return () => {
+        dispatch(resetSearchActionParams());
+      };
+    }, [dispatch]);
 
   const rowsFormatter = (rows: VendorResponse[]) =>
     rows.map(({ id, name, email, contactNo }, index) => ({

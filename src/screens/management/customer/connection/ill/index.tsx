@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
 import {
   illConnectionPageAction,
   illConnectionUpdaetOneInList,
+  illSearchAction,
 } from "../../../../../redux/slices/customer/connection/ill/page";
 import {
   activateConnectionAction,
@@ -18,6 +19,7 @@ import {
   terminateConnectionAction,
 } from "../../../../../redux/slices/customer/connection/terminate";
 import { viewConnection } from "../../../../../redux/slices/customer/connection/view";
+import { resetSearchActionParams, updateSearchActionParams } from "../../../../../redux/slices/searchActionSlice";
 import { ConnectionResponse } from "../../../../../types/customer/Connection";
 import { customer_ill_view_connection } from "../../../../../utils/context-paths";
 import { commonConnectionColumns, formatCommonRow } from "../utils";
@@ -84,6 +86,19 @@ const IllConnection = () => {
       dispatch(terminateConnectionAction(selectedConnectionId));
     closeDialog();
   };
+
+    useEffect(() => {
+      dispatch(
+        updateSearchActionParams({
+          pageAction: illConnectionPageAction,
+          searchAction: illSearchAction,
+        })
+      );
+  
+      return () => {
+        dispatch(resetSearchActionParams());
+      };
+    }, [dispatch]);
 
   const rowsFormatter = (rows: ConnectionResponse[]) =>
     rows.map((row, index) => ({
