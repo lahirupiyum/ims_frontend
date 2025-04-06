@@ -15,6 +15,7 @@ export const networkAssetSearchUrl = getSearchUrl(networkAssetUrl);
 export const peRouterListUrl =  getListUrl(mergeResources(networkAssetUrl, "pe-router"));
 export const routerSearchUrl = getSearchUrl(mergeResources(networkAssetUrl, "router"));
 export const routerListUrl = getListUrl(mergeResources(networkAssetUrl, "router"));
+export const routerAvailableListUrl = mergeResources(networkAssetUrl, "router/available");
 export const switchSearchUrl = getSearchUrl(mergeResources(networkAssetUrl, "switch"));
 export const switchListUrl = getListUrl(mergeResources(networkAssetUrl, "switch"));
 

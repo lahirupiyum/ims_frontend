@@ -100,7 +100,6 @@ const Customer = () => {
         email,
         accountManager,
         vsnlId: vsnl,
-        asNumber,
       } = row;
 
       return {
@@ -127,7 +126,6 @@ const Customer = () => {
         email,
         accountManager: accountManager.name,
         vsnl,
-        asNumber,
       };
     });
 

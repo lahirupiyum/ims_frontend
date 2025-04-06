@@ -11,6 +11,7 @@ import {
   ConnectionRequest,
   ManageStatus,
   NetworkServiceType,
+  ProvisioningStatus,
 } from "../../../../../types/customer/Connection";
 import { getDate } from "../utils";
 
@@ -83,13 +84,31 @@ const ConnectionForm = ({ connectionForm, setConnectionForm }: PropTypes) => {
           }}
         />
       </Box>
-      <FormField
-        label="Date of Provisioning"
-        value={getDate(connectionForm.dsp)}
-        name="dsp"
-        onChange={handleChange}
-        type="date"
-      />
+      <Box display="flex" gap="20px">
+        <FormField
+          sx={{"& input": {
+            py:"15px"
+          }}}
+          label="Date of Provisioning"
+          value={getDate(connectionForm.dsp)}
+          name="dsp"
+          onChange={handleChange}
+          type="date"
+        />
+        <FormField
+            label="Provisioning Status"
+            name="provisioningStatus"
+            onChange={handleChange}
+            value={connectionForm.provisioningStatus}
+            select
+          >
+            {Object.values(ProvisioningStatus).map((value) => (
+              <MenuItem key={value} value={value}>
+                {value}
+              </MenuItem>
+            ))}
+          </FormField>
+      </Box>
       {connectionForm.networkServiceType === NetworkServiceType.ILL ? (
         <Box
           border="1px solid lightgray"
@@ -103,17 +122,16 @@ const ConnectionForm = ({ connectionForm, setConnectionForm }: PropTypes) => {
           </CustomTypography>
           <Box display="flex" gap="20px">
             <FormField
-              label="Username"
-              value={connectionForm.firewallCredentials.username}
-              name="username"
+              label="IP"
+              value={connectionForm.firewallCredentials.ip}
+              name="ip"
               onChange={handleFirewallCredentials}
             />
             <FormField
-              label="Password"
-              value={connectionForm.firewallCredentials.password}
-              name="password"
+              label="Port"
+              value={connectionForm.firewallCredentials.port}
+              name="port"
               onChange={handleFirewallCredentials}
-              type="password"
             />
           </Box>
         </Box>

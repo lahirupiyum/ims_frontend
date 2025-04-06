@@ -79,13 +79,17 @@ const ConnectionViewForm = () => {
       label: "Location",
       value: selectedConnection.peRouter.peRouter.location.name,
     },
+    {
+      label: "Provisioning Status",
+      value: selectedConnection.provisioningStatus
+    }
   ];
 
   const { peRouter } = selectedConnection;
 
   const peRouterDetails: Detail[] = [
     { label: "PE Router Serial No", value: peRouter.peRouter.serialNumber },
-    { label: "Port", value: peRouter.port },
+    { label: "PE Interface", value: peRouter.peInterface },
     { label: "IP", value: peRouter.ip },
     { label: "WAN IP Pool", value: peRouter.wanIpPool },
     { label: "Switch Port", value: peRouter.switchPort },
@@ -108,18 +112,19 @@ const ConnectionViewForm = () => {
   const { firewallCredentials } = selectedConnection;
 
   const firewallCredentialDetail: Detail[] = [
-    { label: "Username", value: firewallCredentials.username },
-    { label: "Password", value: firewallCredentials.password, hidden: true },
+    { label: "IP", value: firewallCredentials.ip },
+    { label: "Port", value: firewallCredentials.port },
   ];
 
   const { cusRouter } = selectedConnection;
 
   const cusRouterDetail: Detail[] = [
     { label: "Serial Number", value: cusRouter.asset.serialNumber },
-    { label: "WAN Port", value: cusRouter.wanPort },
-    { label: "WAN IP Pool", value: cusRouter.wanIpPool },
-    { label: "LAN Port", value: cusRouter.lanPort },
+    { label: "WAN IP Adress", value: cusRouter.wanIpAddress },
     { label: "LAN IP Pool", value: cusRouter.lanIpPool },
+    { label: "Bandwidth", value: cusRouter.bandwidth },
+    { label: "AS Number", value: cusRouter.asNumber },
+    { label: "Ownership", value: cusRouter.ownership },
   ];
 
   const { customer } = selectedConnection;
@@ -132,7 +137,6 @@ const ConnectionViewForm = () => {
     { label: "Address", value: customer.address },
     { label: "Account Manager", value: customer.accountManager.name },
     { label: "VSNL ID", value: customer.vsnlId },
-    { label: "AS Number", value: customer.asNumber },
   ];
 
   return (
@@ -198,7 +202,7 @@ const ConnectionViewForm = () => {
         </Box>
         <Box width="100%" display="flex" flexDirection="column" gap="30px">
           <DetailSection
-            label="Provider Edge Configuration"
+            label="PE Router/Switch Details"
             details={peRouterDetails}
             labelSideCompo={
               <IconButton onClick={() => setIsPEFormOpen(true)}>

@@ -6,16 +6,13 @@ import { ConnectionResponse } from "../../../../types/customer/Connection";
 export const commonConnectionColumns: Column[] = [
   { id: "actions", label: "Actions", minWidth: 50 },
   { id: "status", label: "Active Status", minWidth: 50 },
-  { id: "circuitId", label: "Circuit ID", minWidth: 50 },
-  { id: "customerName", label: "Customer Name", minWidth: 50 },
-  { id: "customerEmail", label: "Customer Email", minWidth: 50 },
-  { id: "dsp", label: "DSP", minWidth: 50 },
-  { id: "serviceChange", label: "Service Change Date", minWidth: 50 },
-  { id: "terminationDate", label: "Termination Date", minWidth: 50 },
-  { id: "cusRouter", label: "Customer Router", minWidth: 50 },
+  { id: "vsnlId", label: "VSNL ID", minWidth: 50 },
+  { id: "bandwidth", label: "Bandwidth", minWidth: 50 },
   { id: "peRouter", label: "PE Router", minWidth: 50 },
-  { id: "location", label: "Location", minWidth: 50 },
-  { id: "remarks", label: "Remarks", minWidth: 50 },
+  { id: "peInterface", label: "PE Router Interface", minWidth: 50 },
+  { id: "peRouterIp", label: "PE Router IP", minWidth: 50 },
+  { id: "wanIpAddress", label: "Customer Router IP", minWidth: 50 },
+  { id: "circuitId", label: "Circuit ID", minWidth: 50 },
 ];
 
 export const formatCommonRow = (row: ConnectionResponse) => {
@@ -23,28 +20,23 @@ export const formatCommonRow = (row: ConnectionResponse) => {
     lastMileConnection,
     activeStatus,
     customer,
-    dsp,
-    serviceChange,
-    terminationDate,
     cusRouter,
     peRouter,
-    remarks,
   } = row;
   const { circuitId } = lastMileConnection;
-  const { name: customerName, email: customerEmail } = customer;
+  const { vsnlId } = customer;
+  const { ip: peRouterIp, peRouter: peRouterAsset, peInterface, } = peRouter;
+  const { wanIpAddress, bandwidth } = cusRouter;
 
   return {
     status: activeStatus ? "Active" : "Terminated",
-    circuitId,
-    customerName,
-    customerEmail,
-    dsp: getDate(dsp),
-    serviceChange: getDate(serviceChange),
-    terminationDate: getDate(terminationDate),
-    cusRouter: cusRouter.asset.serialNumber,
-    peRouter: peRouter.peRouter.serialNumber,
-    location: peRouter.peRouter.location.name,
-    remarks: remarks.substring(0,5)+"...",
+    vsnlId,
+    bandwidth,
+    peRouter: peRouterAsset.serialNumber,
+    peInterface,
+    peRouterIp,
+    wanIpAddress,
+    circuitId
   };
 };
 

@@ -26,8 +26,8 @@ const FirewallCredentialsUpdateForm = ({
 }: PropTypes) => {
   const [firewallCredentialsForm, setFirewallCredentialsForm] =
     useState<FirewallCredentialsRequest>({
-      username: firewallCredentials.username,
-      password: firewallCredentials.password,
+      ip: firewallCredentials.ip,
+      port: firewallCredentials.port,
     });
 
   const dispatch = useAppDispatch();
@@ -65,16 +65,15 @@ const FirewallCredentialsUpdateForm = ({
     >
       <Box display="flex" flexDirection="column" gap="20px">
         <FormField
-          label="Username"
-          name="username"
-          value={firewallCredentialsForm.username}
+          label="IP"
+          name="ip"
+          value={firewallCredentialsForm.ip}
           onChange={handleChange}
         />
         <FormField
-          label="Password"
-          name="password"
-          type="password"
-          value={firewallCredentialsForm.password}
+          label="Port"
+          name="port"
+          value={firewallCredentialsForm.port}
           onChange={handleChange}
         />
       </Box>

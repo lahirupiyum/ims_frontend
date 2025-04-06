@@ -1,9 +1,10 @@
-import { Box } from "@mui/material";
+import { Box, MenuItem } from "@mui/material";
 import AutoCompleteFormField from "../../../../../components/textFields/AutoCompleteField";
 import FormField from "../../../../../components/textFields/FormField";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
-import { networkRouterSearchAction } from "../../../../../redux/slices/inventory/networkAssets/router";
-import { CusRouterRequest } from "../../../../../types/customer/CusRouter";
+import { networkRouterAvailableListAction, networkRouterSearchAction } from "../../../../../redux/slices/inventory/networkAssets/router";
+import { CusRouterRequest, RouterOwnership } from "../../../../../types/customer/CusRouter";
+import { useEffect } from "react";
 
 type Proptypes = {
   customerRouterForm: CusRouterRequest,
@@ -15,6 +16,11 @@ const CustomerRouterForm = ({customerRouterForm, setCustomerRouterForm}: Proptyp
   const { data: networkRouterList } = useAppSelector(
     (state) => state.networkAssets.router
   );
+
+
+  useEffect(() => {
+    dispatch(networkRouterAvailableListAction());
+  },[])
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -29,55 +35,64 @@ const CustomerRouterForm = ({customerRouterForm, setCustomerRouterForm}: Proptyp
 
   return (
     <Box display="flex" flexDirection="column" gap="20px">
-      <AutoCompleteFormField
-        label="Network Router"
-        options={networkRouterList}
-        optionLabel={(option) => option.serialNumber}
-        onInputChange={(_, value) => searchNetworkRouters(value)}
-        onChange={(_, value) =>
-          setCustomerRouterForm((prev) => ({
-            ...prev,
-            assetId: value?.id || 0,
-          }))
-        }
-        value={
-          networkRouterList.find(
-            (networkRouter) => networkRouter.id === customerRouterForm.assetId
-          ) || null
-        }
-      />
+      <Box display="flex" gap="20px">
+        <AutoCompleteFormField
+          label="Network Router"
+          options={networkRouterList}
+          optionLabel={(option) => option.serialNumber}
+          onInputChange={(_, value) => searchNetworkRouters(value)}
+          onChange={(_, value) =>
+            setCustomerRouterForm((prev) => ({
+              ...prev,
+              assetId: value?.id || 0,
+            }))
+          }
+          value={
+            networkRouterList.find(
+              (networkRouter) => networkRouter.id === customerRouterForm.assetId
+            ) || null
+          }
+        />
+        <FormField 
+          label="Ownership"
+          name="ownership"
+          onChange={handleChange}
+          value={customerRouterForm?.ownership}
+          select
+        >
+          {Object.values(RouterOwnership).map(value => (
+            <MenuItem key={value} value={value} sx={{textTransform:"capitalize"}}>
+              {value}
+            </MenuItem>
+          ))}
+        </FormField>
+      </Box>
 
-      <FormField
-        label="Bandwidth (in Mbps)"
-        name="bandwidth"
-        value={customerRouterForm?.bandwidth || ""}
-        onChange={handleChange}
-      />
-      <Box sx={{ display: "flex", gap: "20px" }}>
+      <Box display="flex" gap="20px">
         <FormField
-          label="LAN Port"
-          name="lanPort"
-          value={customerRouterForm?.lanPort || ""}
+          label="Bandwidth (in Mbps)"
+          name="bandwidth"
+          value={customerRouterForm?.bandwidth || ""}
+          onChange={handleChange}
+        />
+        <FormField 
+          label="As Number"
+          name="asNumber"
+          value={customerRouterForm?.asNumber || ""}
+          onChange={handleChange}
+        />
+      </Box>
+      <Box sx={{ display: "flex", gap: "20px" }}>
+      <FormField
+          label="WAN IP Address"
+          name="wanIpAddress"
+          value={customerRouterForm?.wanIpAddress || ""}
           onChange={handleChange}
         />
         <FormField
           label="LAN IP Pool"
           name="lanIpPool"
           value={customerRouterForm?.lanIpPool || ""}
-          onChange={handleChange}
-        />
-      </Box>
-      <Box sx={{ display: "flex", gap: "20px" }}>
-        <FormField
-          label="WAN Port"
-          name="wanPort"
-          value={customerRouterForm?.wanPort || ""}
-          onChange={handleChange}
-        />
-        <FormField
-          label="WAN IP Pool"
-          name="wanIpPool"
-          value={customerRouterForm?.wanIpPool || ""}
           onChange={handleChange}
         />
       </Box>

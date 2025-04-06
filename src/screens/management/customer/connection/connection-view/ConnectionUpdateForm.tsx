@@ -19,6 +19,7 @@ import {
   ConnectionResponse,
   ManageStatus,
   NetworkServiceType,
+  ProvisioningStatus,
 } from "../../../../../types/customer/Connection";
 import { getDate } from "../utils";
 
@@ -47,6 +48,7 @@ const ConnectionUpdateForm = ({
     remarks: connection.remarks,
     serviceChange: connection.serviceChange,
     terminationDate: connection.terminationDate,
+    provisioningStatus: connection.provisioningStatus,
   });
 
   const dispatch = useAppDispatch();
@@ -150,6 +152,19 @@ const ConnectionUpdateForm = ({
             value={getDate(connectionForm.serviceChange)}
             onChange={handleChange}
           />
+          <FormField
+            label="Provisioning Status"
+            name="provisioningStatus"
+            onChange={handleChange}
+            value={connectionForm.provisioningStatus}
+            select
+          >
+            {Object.values(ProvisioningStatus).map((value) => (
+              <MenuItem key={value} value={value}>
+                {value}
+              </MenuItem>
+            ))}
+        </FormField>
           {connectionForm.networkServiceType === NetworkServiceType.MPLS && (
             <FormField
               label="Manage Status"

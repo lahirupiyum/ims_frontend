@@ -32,7 +32,6 @@ const initialCustomerForm: CustomerRequest = {
     name: "",
   },
   address: "",
-  asNumber: "",
   contactNo: "",
   priority: CustomerPriority.BRONZE,
   email: "",
@@ -154,12 +153,6 @@ const CreateUpdateForm = ({
         justifyContent="center"
         gap={3}
       >
-        <FormField
-          label="ASNumber"
-          name="asNumber"
-          onChange={handleChange}
-          value={customerForm.asNumber}
-        />
         <FormField
           label="VSNL ID"
           name="vsnlId"

@@ -16,21 +16,27 @@ export enum ManageStatus {
   UNMANAGEABLE="Unmanageable",
 }
 
+export enum ProvisioningStatus {
+  PROVISIONED = "Provisioned",
+  UNDER_PROVISION = "Under Provision"
+}
+
 export type FirewallCredentialsRequest = {
-  username: string;
-  password: string;
+  ip: string;
+  port: string;
 };
 
 export type FirewallCredentialsResponse = {
   id: number;
-  username: string;
-  password: string;
+  ip: string;
+  port: string;
 };
 interface Connection {
   dsp: number | null;
   serviceChange: number | null;
   terminationDate: number | null;
   networkServiceType: NetworkServiceType;
+  provisioningStatus: ProvisioningStatus;
   manageStatus: ManageStatus;
   remarks: string;
 }

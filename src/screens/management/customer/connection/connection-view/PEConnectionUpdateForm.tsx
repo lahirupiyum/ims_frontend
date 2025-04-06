@@ -32,7 +32,7 @@ const PEConnectionUpdateForm = ({
       ip: peConnection.ip,
       networkSwitchId: peConnection.networkSwitch.id,
       peRouterId: peConnection.peRouter.id,
-      port: peConnection.port,
+      peInterface: peConnection.peInterface,
       switchPort: peConnection.switchPort,
       wanIpPool: peConnection.wanIpPool,
     }
@@ -95,9 +95,9 @@ const PEConnectionUpdateForm = ({
               onChange={handleChange}
             />
             <FormField
-              label="Port"
-              name="port"
-              value={peConnectionForm.port}
+              label="PE Interface"
+              name="peInterface"
+              value={peConnectionForm.peInterface}
               onChange={handleChange}
             />
         </Box>
