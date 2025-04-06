@@ -28,8 +28,9 @@ const globalDeleteAction =
     })
     .catch(err => {
         handleLogoutIfUnauthorized(err)
-        dispatch(reject(err.message));
-        
+        const errorMessage = err.response.data.message;
+        dispatch(reject(errorMessage));
+        dispatch(addOneNotification({ type: "error", message: errorMessage }));
     })
   };
 
