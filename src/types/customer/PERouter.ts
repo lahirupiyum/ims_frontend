@@ -1,13 +1,13 @@
 import { NetworkAssetResponse } from "../Inventory/asset/NetworkAssets";
 
 interface PEConnection {
-  port: string;
+  peInterface: string;
   ip: string;
   wanIpPool: string;
   switchPort: string;
 }
 
-export interface PEConnectionRequset extends PEConnection {
+export interface PEConnectionRequest extends PEConnection {
   peRouterId: number;
   networkSwitchId: number;
 }

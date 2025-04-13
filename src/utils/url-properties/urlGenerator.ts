@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:8081/api/v1/";
+const baseUrl = import.meta.env.VITE_API_BASEURL;
 
 export const getUrl = (resource: string) => baseUrl + resource;
 export const mergeResources = (url: string, resource: string) => `${url}/${resource}`;

@@ -1,13 +1,13 @@
-import { CusRouterRespone } from "../../../../types/customer/CusRouter";
+import { CusRouterResponse } from "../../../../types/customer/CusRouter";
 import { cusRouterUrl } from "../../../../utils/url-properties/urls/customer/router";
 import globalPageAction from "../../../actions/globalPageAction";
 import PageSliceActionType from "../../../types/PageActionType";
 import getPageSlice from "../../config/globalPageSlice";
 
-const cusRouterPageSlice = getPageSlice<CusRouterRespone>("cusRouterPage");
+const cusRouterPageSlice = getPageSlice<CusRouterResponse>("cusRouterPage");
 const { request, success, reject } = cusRouterPageSlice.actions;
 
-const pageActionTypes: PageSliceActionType<CusRouterRespone> = {
+const pageActionTypes: PageSliceActionType<CusRouterResponse> = {
   request,
   success,
   reject,

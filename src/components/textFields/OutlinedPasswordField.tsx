@@ -1,12 +1,11 @@
-import { IconButton, InputAdornment } from "@mui/material";
+import { IconButton, InputAdornment, TextFieldProps } from "@mui/material";
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import OutlinedTextField from "./OutlinedTextField";
 
-interface PasswordFieldProps {
+type PasswordFieldProps = {
   placeholder: string;
-  [key: string]: any;
-}
+} & TextFieldProps
 
 const OutlinedPasswordField: React.FC<PasswordFieldProps> = ({
   placeholder,

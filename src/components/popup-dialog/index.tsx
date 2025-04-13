@@ -18,7 +18,7 @@ type PopupDialogProps = {
   open: boolean;
   handleClose: () => void;
   title: string;
-  children: ReactNode | null;
+  children?: ReactNode | null;
   width: number;
   loading: boolean;
   onClick: () => void;

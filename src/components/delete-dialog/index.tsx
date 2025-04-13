@@ -13,9 +13,12 @@ type PropTypes = {
   deleteFunction: () => void;
   handleClose: () => void;
   name: string;
+  customActionName?:string
+  customDescription?:string
+  actionButtonColor?:string
 };
 
-const DeleteDialog = ({ open, deleteFunction, handleClose, name }: PropTypes) => {
+const DeleteDialog = ({ open, deleteFunction, handleClose, name, customActionName, customDescription, actionButtonColor }: PropTypes) => {
 
   const deleteHandler = () => {
     deleteFunction();
@@ -45,13 +48,13 @@ const DeleteDialog = ({ open, deleteFunction, handleClose, name }: PropTypes) =>
         id="responsive-dialog-title"
         sx={{ fontWeight: 800 }}
       >
-        {`DELETE ${name.toUpperCase()}`}
+        {`${customActionName?.toUpperCase() || "DELETE"} ${name.toUpperCase()}`}
       </DialogTitle>
       <DialogContent>
-        <DialogContentText fontSize={fontSizes.sm}>{`Are you sure you want to delete this ${name.toLowerCase()}? This will permanently erase all related data and cannot be undone.`}</DialogContentText>
+        <DialogContentText fontSize={fontSizes.sm}>{`Are you sure you want to ${customActionName?.toLocaleLowerCase() || "delete"} this ${name.toLowerCase()}? ${!customActionName ? "This will permanently erase all related data and cannot be undone." : customDescription || ""}`}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <DialogBoxButton handleClick={deleteHandler} name="Delete" isPrimary />
+        <DialogBoxButton actionButtonColor={actionButtonColor} handleClick={deleteHandler} name={customActionName || "Delete"} isPrimary />
         <DialogBoxButton handleClick={handleClose} name="Cancel" isPrimary={false} />
       </DialogActions>
     </Dialog>
@@ -62,17 +65,19 @@ type DialogBoxButtonProps = {
   handleClick: () => void;
   name: string;
   isPrimary: boolean;
+  actionButtonColor?:string
 };
 
 const DialogBoxButton = ({
   handleClick,
   name,
   isPrimary,
+  actionButtonColor
 }: DialogBoxButtonProps) => {
   return (
     <ContainedButton
       sx={{
-        bgcolor: isPrimary? "darkred": "white",
+        bgcolor: isPrimary? actionButtonColor || "darkred": "white",
         color: isPrimary? "white" : "rgb(100,100,100)",
         textTransform: "uppercase",
         fontSize: fontSizes.xs,

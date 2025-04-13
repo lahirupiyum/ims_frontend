@@ -15,7 +15,6 @@ interface Customer {
   email: string;
   accountManager: Employee;
   vsnlId: string;
-  asNumber: string;
 }
 
 export interface CustomerRequest extends Customer {}

@@ -18,7 +18,7 @@ import {
 } from "../../../../redux/slices/inventory/networkAssets/update";
 import { statusListAction } from "../../../../redux/slices/inventory/status/list";
 import { typeListAction } from "../../../../redux/slices/inventory/type/list";
-import { vendorSearchAction } from "../../../../redux/slices/inventory/vendor/list";
+import { vendorListAction } from "../../../../redux/slices/inventory/vendor/list";
 import { BasicInfo } from "../../../../types/common/BasicInfo";
 import AssetType from "../../../../types/enums/AssetTypes";
 import {
@@ -86,6 +86,7 @@ const CreateUpdateForm = ({
     dispatch(typeListAction(AssetType.NETWORK));
     dispatch(modelListAction(AssetType.NETWORK));
     dispatch(statusListAction(AssetType.NETWORK));
+    dispatch(vendorListAction());
   };
 
   useEffect(() => {
@@ -144,10 +145,6 @@ const CreateUpdateForm = ({
       id: value.length > 0 ? 0 : null,
       name: value,
     });
-  };
-
-  const searchVendors = (name: string) => {
-    dispatch(vendorSearchAction(name));
   };
 
   const closeDialog = () => {
@@ -238,7 +235,6 @@ const CreateUpdateForm = ({
           onChange={(_, value) => {
             handleAutoCompleteChange("vendorId", value?.id || null);
           }}
-          onInputChange={(_, value) => searchVendors(value)}
         />
       </Box>
       <Box

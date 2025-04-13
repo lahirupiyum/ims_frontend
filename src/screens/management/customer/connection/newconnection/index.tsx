@@ -29,10 +29,11 @@ import {
   ConnectionRequest,
   ManageStatus,
   NetworkServiceType,
+  ProvisioningStatus,
 } from "../../../../../types/customer/Connection";
-import { CusRouterRequest } from "../../../../../types/customer/CusRouter";
+import { CusRouterRequest, RouterOwnership } from "../../../../../types/customer/CusRouter";
 import { LastMileConnectionRequest } from "../../../../../types/customer/LastMileConnection";
-import { PEConnectionRequset } from "../../../../../types/customer/PERouter";
+import { PEConnectionRequest } from "../../../../../types/customer/PERouter";
 import {
   customer_customer,
   customer_ill_connection,
@@ -48,11 +49,11 @@ type ConnectionCreateState = {
   element: ReactNode;
 };
 
-const peConnectionInitial: PEConnectionRequset = {
+const peConnectionInitial: PEConnectionRequest = {
   ip: "",
   networkSwitchId: 0,
   peRouterId: 0,
-  port: "",
+  peInterface: "",
   switchPort: "",
   wanIpPool: "",
 };
@@ -60,10 +61,10 @@ const peConnectionInitial: PEConnectionRequset = {
 const customerRouterInitial: CusRouterRequest = {
   assetId: 0,
   bandwidth: "",
-  lanPort: "",
   lanIpPool: "",
-  wanPort: "",
-  wanIpPool: "",
+  wanIpAddress: "",
+  asNumber:"",
+  ownership: RouterOwnership.TATA
 };
 
 const lastMileConnectionInitial: LastMileConnectionRequest = {
@@ -85,9 +86,10 @@ const connectionInitial: ConnectionRequest = {
   customerId: 0,
   dsp: null,
   firewallCredentials: {
-    username: "",
-    password: "",
+    ip: "",
+    port: "",
   },
+  provisioningStatus: ProvisioningStatus.PROVISIONED,
   lastMileConnection: lastMileConnectionInitial,
   manageStatus: ManageStatus.MANAGEABLE,
   networkServiceType: NetworkServiceType.ILL,
@@ -99,7 +101,7 @@ const connectionInitial: ConnectionRequest = {
 
 const NewConnection = () => {
   const [peConnectionForm, setPEConnectionForm] =
-    useState<PEConnectionRequset>(peConnectionInitial);
+    useState<PEConnectionRequest>(peConnectionInitial);
   const [cusRouterForm, setCusRouterForm] = useState<CusRouterRequest>(
     customerRouterInitial
   );
@@ -110,7 +112,7 @@ const NewConnection = () => {
   const [currentFormIndex, setCurrentFormIndex] = useState<number>(0);
   const navigate = useNavigate();
 
-  const PE_ROUTER = "PROVIDER EDGE ROUTER CONFIG";
+  const PE_ROUTER = "PE ROUTER & Switch Details";
   const CUS_ROUTER = "CUSTOMER ROUTER CONFIG";
   const states: ConnectionCreateState[] = [
     {

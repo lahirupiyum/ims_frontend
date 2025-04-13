@@ -1,15 +1,28 @@
 import { Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import ElementBoxImage from "../../assets/images/elementbox-image.jpeg";
 import TataCommunicationFlatImage from "../../assets/images/tata-communications-flat.png";
 import CustomTypography, {
   fontWeights,
 } from "../../components/typography/CustomTypography";
-import { customer, inventory_mobileassets } from "../../utils/context-paths";
+import { customer, inventory_mobileassets, login } from "../../utils/context-paths";
+import { addOneNotification } from "../../redux/slices/notificationSlice";
+import { useAppDispatch } from "../../redux/hooks";
 
 const Home = () => {
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const {pathname} = useLocation();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate(login)
+      dispatch(addOneNotification({ type: "error", message: "Unauthorized" }));
+    }
+  },[pathname])
 
   return (
     <div

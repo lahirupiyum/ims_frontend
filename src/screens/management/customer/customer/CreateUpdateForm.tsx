@@ -1,23 +1,23 @@
+import { Box, MenuItem } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import PopupDialog from "../../../../components/popup-dialog";
+import CreateableAutoComplete from "../../../../components/textFields/CreateableAutoComplete";
+import FormField from "../../../../components/textFields/FormField";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { employeeSearchAction } from "../../../../redux/slices/inventory/employee/list";
+import {
+  customerCreateAction,
+  customerCreateReset,
+} from "../../../../redux/slices/customer/customer/create";
+import {
+  customerUpdateAction,
+  customerUpdateReset,
+} from "../../../../redux/slices/customer/customer/update";
+import { employeeListAction } from "../../../../redux/slices/inventory/employee/list";
 import {
   CustomerPriority,
   CustomerRequest,
   CustomerResponse,
 } from "../../../../types/customer/Customer";
-import PopupDialog from "../../../../components/popup-dialog";
-import FormField from "../../../../components/textFields/FormField";
-import { Box, MenuItem } from "@mui/material";
-import CreateableAutoComplete from "../../../../components/textFields/CreateableAutoComplete";
-import {
-  customerUpdateAction,
-  customerUpdateReset,
-} from "../../../../redux/slices/customer/customer/update";
-import {
-  customerCreateAction,
-  customerCreateReset,
-} from "../../../../redux/slices/customer/customer/create";
 
 type PropTypes = {
   open: boolean;
@@ -32,7 +32,6 @@ const initialCustomerForm: CustomerRequest = {
     name: "",
   },
   address: "",
-  asNumber: "",
   contactNo: "",
   priority: CustomerPriority.BRONZE,
   email: "",
@@ -58,6 +57,10 @@ const CreateUpdateForm = ({
   const { data: updatedData, loading: updateLoading } = useAppSelector(
     (state) => state.customer.update
   );
+
+  useEffect(() => {
+    dispatch(employeeListAction())
+  },[dispatch])
 
   useEffect(() => {
     if (!selectedCustomer) return;
@@ -86,10 +89,6 @@ const CreateUpdateForm = ({
     if (editMode && selectedCustomer)
       dispatch(customerUpdateAction(selectedCustomer.id, customerForm, index));
     else dispatch(customerCreateAction(customerForm));
-  };
-
-  const searchEmployee = (name: string) => {
-    dispatch(employeeSearchAction(name));
   };
 
   const handleChange = (
@@ -155,14 +154,8 @@ const CreateUpdateForm = ({
         gap={3}
       >
         <FormField
-          label="ASNumber"
-          name="asNumber"
-          onChange={handleChange}
-          value={customerForm.asNumber}
-        />
-        <FormField
           label="VSNL ID"
-          name="vsnl"
+          name="vsnlId"
           onChange={handleChange}
           value={customerForm.vsnlId}
         />
@@ -204,7 +197,6 @@ const CreateUpdateForm = ({
             }))
           }
           value={customerForm.accountManager}
-          onInputChange={(_, value) => searchEmployee(value)}
         />
       </Box>
     </Box>

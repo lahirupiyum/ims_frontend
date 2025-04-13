@@ -2,7 +2,7 @@ import { AssetRequest, AssetResponse } from "../../common/Asset"
 import { Employee } from "../Employee"
 
 type MobileAsset = {
-    assignedTo: Employee,
+    employee: Employee,
     warrantyExpireDate: number,
     purchaseDate: number,
     invoiceNumber: string

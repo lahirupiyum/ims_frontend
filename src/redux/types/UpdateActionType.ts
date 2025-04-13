@@ -5,7 +5,7 @@ type UpdateSliceActionType<T> = {
   request: ActionCreatorWithPayload<void, `${string}/request`>;
   success: ActionCreatorWithPayload<T, `${string}/success`>;
   reject: ActionCreatorWithPayload<string, `${string}/reject`>;
-  updateOneInList: ActionCreatorWithPayload<
+  updateOneInList?: ActionCreatorWithPayload<
     UpdateStateType<T>,
     `${string}/update`
   >; // this one should get from the page slice

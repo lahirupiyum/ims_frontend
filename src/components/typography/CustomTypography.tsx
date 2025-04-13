@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Typography, TypographyProps } from "@mui/material";
 import { forwardRef } from "react";
 import lightTheme from "../../assets/theme/light";
 
@@ -19,18 +19,17 @@ export enum fontSizes {
   xl = "24px",
 }
 
-enum fontColors {
+export enum fontColors {
   primary,
   secondary,
 }
 
-interface MUITypographyProps {
-  fontWeight: fontWeights;
-  fontSize: fontSizes;
-  fontColor: fontColors;
-  children: React.ReactNode;
-  [key: string]: any;
-}
+type MUITypographyProps = {
+  fontWeight?: fontWeights;
+  fontSize?: fontSizes | string;
+  fontColor?: fontColors | string;
+  children?: React.ReactNode;
+} & TypographyProps
 
 const CustomTypography = forwardRef<HTMLDivElement, MUITypographyProps>(
   ({ fontWeight, fontSize, fontColor, children, ...rest }, ref) => {

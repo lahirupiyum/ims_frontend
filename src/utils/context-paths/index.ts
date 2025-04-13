@@ -26,3 +26,5 @@ export const customer_ill_connection = mergeUrl(customer_connection, "ill");
 export const customer_mpls_connection = mergeUrl(customer_connection, "mpls");
 
 export const customer_new_connection = mergeUrl(customer_connection, "new");
+export const customer_ill_view_connection = mergeUrl(customer_ill_connection, "view");
+export const customer_mpls_view_connection = mergeUrl(customer_mpls_connection, "view");

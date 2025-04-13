@@ -3,13 +3,13 @@ import AutoCompleteFormField from "../../../../../components/textFields/AutoComp
 import FormField from "../../../../../components/textFields/FormField";
 import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
 import { networkSwitchSearchAction } from "../../../../../redux/slices/inventory/networkAssets/switch";
-import { PEConnectionRequset } from "../../../../../types/customer/PERouter";
+import { PEConnectionRequest } from "../../../../../types/customer/PERouter";
 import { useEffect } from "react";
 import { peRouterListAction } from "../../../../../redux/slices/inventory/networkAssets/list";
 
 type PropTypes = {
-  peConnectionForm: PEConnectionRequset,
-  setPEConnectionForm: React.Dispatch<React.SetStateAction<PEConnectionRequset>>
+  peConnectionForm: PEConnectionRequest,
+  setPEConnectionForm: React.Dispatch<React.SetStateAction<PEConnectionRequest>>
 }
 
 const PEConnectionForm = ({peConnectionForm, setPEConnectionForm}: PropTypes) => {
@@ -42,15 +42,15 @@ const PEConnectionForm = ({peConnectionForm, setPEConnectionForm}: PropTypes) =>
     <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
       <Box sx={{ display: "flex", gap: "20px" }}>
         <FormField
-          label="IP Address"
+          label="PE IP Address"
           name="ip"
           value={peConnectionForm?.ip || ""}
           onChange={handleChange}
         />
         <FormField
-          label="Port"
-          name="port"
-          value={peConnectionForm?.port || ""}
+          label="PE Interface"
+          name="peInterface"
+          value={peConnectionForm?.peInterface || ""}
           onChange={handleChange}
         />
       </Box>
@@ -61,7 +61,7 @@ const PEConnectionForm = ({peConnectionForm, setPEConnectionForm}: PropTypes) =>
         onChange={handleChange}
       />
       <AutoCompleteFormField
-        label="Provider Edge Router"
+        label="PE Router"
         options={peRoutersList}
         optionLabel={(option) => option.serialNumber}
         onChange={(_, value) =>
@@ -78,7 +78,7 @@ const PEConnectionForm = ({peConnectionForm, setPEConnectionForm}: PropTypes) =>
       />
 
       <AutoCompleteFormField
-        label="Network Switch"
+        label="PE Switch"
         options={networkSwitchList}
         optionLabel={(option) => option.serialNumber}
         onInputChange={(_, value) => searchNetworkSwitches(value)}
@@ -96,7 +96,7 @@ const PEConnectionForm = ({peConnectionForm, setPEConnectionForm}: PropTypes) =>
         }
       />
       <FormField
-        label="Switch Port"
+        label="PE Switch Port"
         name="switchPort"
         value={peConnectionForm?.switchPort || ""}
         onChange={handleChange}

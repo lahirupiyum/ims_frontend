@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { CiEdit, CiTrash } from "react-icons/ci";
+import { IoEyeOutline, IoPowerSharp } from "react-icons/io5";
 import { useAppDispatch } from "../../redux/hooks";
 import { PageState } from "../../redux/slices/config/globalPageSlice";
 import { fontSizes, fontWeights } from "../typography/CustomTypography";
@@ -37,7 +38,7 @@ const CustomTable = <ResponseType,>({
   const [page, setPage] = useState(0);
 
   const dispatch = useAppDispatch();
-  const { data, totalCount, loading } = pageState;
+  const { data, totalCount, loading, actionType } = pageState;
 
   const handleChangePage = (_event: any, newPage: number) => {
     setPage(newPage);
@@ -110,7 +111,7 @@ const CustomTable = <ResponseType,>({
             </TableBody>
           </Table>
         </TableContainer>
-        <Paper
+        {actionType === "page" && <Paper
           sx={{
             boxShadow: "none",
             position: "absolute",
@@ -130,7 +131,7 @@ const CustomTable = <ResponseType,>({
               setRowsPerPage(event.target.value as unknown as number)
             }
           />
-        </Paper>
+        </Paper>}
         {rows.length === 0 && !loading ? (
           <Box sx={{ position: "absolute", top:"55%", left:"55%", zIndex:10 }}>No data found!</Box>
         ) : loading? <Box sx={{ position: "absolute", top:"55%", left:"55%", zIndex:10 }}><CircularProgress /></Box>: null}
@@ -147,6 +148,9 @@ export interface Column {
 export enum ActionIcontype {
   edit,
   delete,
+  view,
+  power,
+  activate
 }
 
 const getActionTypeIcon = (icon: ActionIcontype) => {
@@ -155,6 +159,11 @@ const getActionTypeIcon = (icon: ActionIcontype) => {
       return <CiEdit />;
     case ActionIcontype.delete:
       return <CiTrash />;
+    case ActionIcontype.view:
+      return <IoEyeOutline />;
+    case ActionIcontype.power:
+      return <IoPowerSharp  />
+    case ActionIcontype.activate:
     default:
       return null;
   }
@@ -163,8 +172,10 @@ const getActionTypeIcon = (icon: ActionIcontype) => {
 export const actionButton = (
   icon: ActionIcontype,
   onClick: () => void,
-  key: number
+  key: number,
+  hidden?:boolean
 ) => {
+  if (hidden) return null;
   return (
     <IconButton key={key} sx={{ fontSize: fontSizes.md }} onClick={onClick}>
       {getActionTypeIcon(icon)}
@@ -181,7 +192,7 @@ export const wrapActionButtons = (
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        gap: "10px",
+        gap: "0px",
       }}
     >
       {actionButtonList.map((actionButton) => actionButton)}

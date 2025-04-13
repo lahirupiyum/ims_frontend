@@ -1,4 +1,4 @@
-import { PEConnectionRequset, PEConnectionResponse } from "../../../../types/customer/PERouter";
+import { PEConnectionRequest, PEConnectionResponse } from "../../../../types/customer/PERouter";
 import { peRouterUrl } from "../../../../utils/url-properties/urls/customer/router";
 import globalCreateAction from "../../../actions/globalCreateAction";
 import CreateSliceActionType from "../../../types/CreateActionType";
@@ -16,8 +16,8 @@ const createActionTypes: CreateSliceActionType<PEConnectionResponse> = {
   addOnetoList: null,
 };
 
-export const peConnectionCreateAction = (data: PEConnectionRequset) =>
-  globalCreateAction<PEConnectionRequset, PEConnectionResponse>(data, peRouterUrl, createActionTypes);
+export const peConnectionCreateAction = (data: PEConnectionRequest) =>
+  globalCreateAction<PEConnectionRequest, PEConnectionResponse>(data, peRouterUrl, createActionTypes);
 
 export const { reset: peConnectionCreateReset } =
   peConnectionCreateSlice.actions;

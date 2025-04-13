@@ -1,12 +1,59 @@
-import { Box } from "@mui/material";
-import React from "react";
+import { Box, CircularProgress } from "@mui/material";
+import axios from "axios";
+import React, { ChangeEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import TataCommunicationsImage from "../../assets/images/tata-communications.png";
 import ContainedButton from "../../components/buttons/ContainedButton";
-import CustomTypography, { fontSizes, fontWeights } from "../../components/typography/CustomTypography";
 import OutlinedPasswordField from "../../components/textFields/OutlinedPasswordField";
 import OutlinedTextField from "../../components/textFields/OutlinedTextField";
-import TataCommunicationsImage from "../../assets/images/tata-communications.png"
+import CustomTypography, {
+  fontSizes,
+  fontWeights,
+} from "../../components/typography/CustomTypography";
+import { useAppDispatch } from "../../redux/hooks";
+import { addOneNotification } from "../../redux/slices/notificationSlice";
+import { home } from "../../utils/context-paths";
+import { authUrl } from "../../utils/url-properties/urls/auth";
 
 const Login = () => {
+  const [authRequest, setAuthRequest] = useState({
+    username: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    await axios
+      .post(authUrl, authRequest)
+      .then((res) => {
+        const token = res.data.token;
+        localStorage.setItem("token", token);
+        navigate(home);
+      })
+      .catch(() => {
+        dispatch(
+          addOneNotification({
+            type: "error",
+            message: "Username or password is invalid",
+          })
+        );
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const handleChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target;
+    setAuthRequest((prev) => ({ ...prev, [name]: value }));
+  };
+
   return (
     <div
       style={{
@@ -15,7 +62,7 @@ const Login = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background:"rgba(0, 0, 0, 0.5)"
+        background: "rgba(0, 0, 0, 0.5)",
       }}
     >
       <img src={TataCommunicationsImage} height="400px" />
@@ -23,7 +70,7 @@ const Login = () => {
         sx={{
           bgcolor: "white",
           width: "550px",
-          height:"400px",
+          height: "400px",
           padding: "50px 50px",
           display: "flex",
           flexDirection: "column",
@@ -62,20 +109,39 @@ const Login = () => {
             flexDirection="column"
             gap={"15px"}
           >
-            <Box width={"100%"} display={"flex"} flexDirection={"column"} gap={"5px"}>
-              <FieldName>Email</FieldName>
+            <Box
+              width={"100%"}
+              display={"flex"}
+              flexDirection={"column"}
+              gap={"5px"}
+            >
+              <FieldName>Username</FieldName>
               <OutlinedTextField
                 fullWidth
-                placeholder="Enter your email address"
+                placeholder="Enter your username"
+                name="username"
+                onChange={handleChange}
               />
             </Box>
-            <Box width={"100%"} display={"flex"} flexDirection={"column"} gap={"5px"}>
+            <Box
+              width={"100%"}
+              display={"flex"}
+              flexDirection={"column"}
+              gap={"5px"}
+            >
               <FieldName>Password</FieldName>
-              <OutlinedPasswordField fullWidth placeholder="Enter password" />
+              <OutlinedPasswordField
+                fullWidth
+                placeholder="Enter password"
+                name="password"
+                onChange={handleChange}
+              />
             </Box>
           </Box>
         </Box>
-        <ContainedButton fullWidth>Log In</ContainedButton>
+        <ContainedButton onClick={handleSubmit} fullWidth>
+          {loading ? <CircularProgress sx={{color:"white"}} size="24px"  /> : "Log In"}
+        </ContainedButton>
       </Box>
     </div>
   );

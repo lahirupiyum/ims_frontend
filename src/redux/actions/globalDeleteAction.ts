@@ -2,12 +2,13 @@ import axios from "axios";
 import { useAppDispatch } from "../hooks";
 import DeleteSliceActionType from "../types/DeleteActionType";
 import { addOneNotification } from "../slices/notificationSlice";
+import { handleLogoutIfUnauthorized } from "./utils";
 
 const globalDeleteAction =
   <ResponseType>(
     url: string,
     actionTypes: DeleteSliceActionType<ResponseType>,
-    pageAction: (
+    pageAction?: (
         page: number,
         pageSize: number
       ) => (dispath: ReturnType<typeof useAppDispatch>) => Promise<void>
@@ -15,16 +16,21 @@ const globalDeleteAction =
   async (dispatch: ReturnType<typeof useAppDispatch>) => {
     const { request, success, reject } = actionTypes;
     dispatch(request());
-    await axios.delete(url)
+
+    const token = localStorage.getItem("token");
+
+    await axios.delete(url, {headers: {Authorization: "Bearer " + token}})
     .then(res => {
         const { data: responseData, message } = res.data;
         dispatch(success(responseData));
-        dispatch(pageAction(0, 10));
+        if (pageAction) dispatch(pageAction(0, 10));
         dispatch(addOneNotification({type:"success", message}));
     })
     .catch(err => {
-        dispatch(reject(err.message));
-        
+        handleLogoutIfUnauthorized(err)
+        const errorMessage = err.response.data.message;
+        dispatch(reject(errorMessage));
+        dispatch(addOneNotification({ type: "error", message: errorMessage }));
     })
   };
 
